@@ -1,0 +1,31 @@
+2014/10/06 23:42:43 [notice] 3128#3620: signal process started
+2014/10/06 23:42:56 [notice] 5440#4920: signal process started
+2014/10/06 23:42:56 [error] 5440#4920: CreateFile() "C:\Users\jiajie\Desktop\nginx_1.7.4_rtmp_1.1.4/logs/nginx.pid" failed (2: The system cannot find the file specified)
+2014/10/06 23:43:46 [notice] 1532#4544: signal process started
+2014/10/07 00:30:27 [notice] 2884#8116: signal process started
+2014/10/07 00:30:34 [notice] 7556#4300: signal process started
+2014/10/07 00:30:34 [error] 7556#4300: CreateFile() "C:\Users\jiajie\Desktop\nginx_1.7.4_rtmp_1.1.4/logs/nginx.pid" failed (2: The system cannot find the file specified)
+2014/10/07 00:30:39 [notice] 2536#5312: signal process started
+2014/10/07 00:45:22 [notice] 4164#6296: signal process started
+2014/10/07 13:32:12 [notice] 8296#8424: signal process started
+2014/10/14 14:48:11 [emerg] 7440#4836: host not found in url "local/live1/1080" in C:\Users\KT\Desktop\School\Media Tech 1\nginx_1.7.4_rtmp_1.1.4/conf/nginx.conf:53
+2014/10/14 14:48:50 [emerg] 7016#6132: host not found in url "local/live1/1080" in C:\Users\KT\Desktop\School\Media Tech 1\nginx_1.7.4_rtmp_1.1.4/conf/nginx.conf:53
+2014/10/14 14:51:57 [emerg] 7072#3840: host not found in url "local/live1/1080" in C:\Users\KT\Desktop\School\Media Tech 1\nginx_1.7.4_rtmp_1.1.4/conf/nginx.conf:53
+2014/10/14 14:51:59 [emerg] 7224#1760: host not found in url "local/live1/1080" in C:\Users\KT\Desktop\School\Media Tech 1\nginx_1.7.4_rtmp_1.1.4/conf/nginx.conf:53
+2014/10/14 15:05:24 [emerg] 4772#7460: host not found in url "local/live1/1080" in C:\Users\KT\Desktop\School\Media Tech 1\nginx_1.7.4_rtmp_1.1.4/conf/nginx.conf:53
+2014/10/14 15:55:13 [emerg] 5852#4432: host not found in url "local/live1/1080" in C:\Users\KT\Desktop\School\Media Tech 1\nginx_1.7.4_rtmp_1.1.4/conf/nginx.conf:53
+2014/10/14 15:56:32 [emerg] 5424#3676: host not found in url "local/live1/1080" in C:\Users\KT\Desktop\School\Media Tech 1\nginx_1.7.4_rtmp_1.1.4/conf/nginx.conf:53
+2014/10/14 15:56:35 [emerg] 6544#2088: host not found in url "local/live1/1080" in C:\Users\KT\Desktop\School\Media Tech 1\nginx_1.7.4_rtmp_1.1.4/conf/nginx.conf:53
+2014/10/14 16:10:30 [emerg] 5772#3736: host not found in url "local/live1/1080" in C:\Users\KT\Desktop\School\Media Tech 1\nginx_1.7.4_rtmp_1.1.4/conf/nginx.conf:53
+2014/10/14 16:10:39 [emerg] 5964#1492: host not found in url "local/live1/1080" in C:\Users\KT\Desktop\School\Media Tech 1\nginx_1.7.4_rtmp_1.1.4/conf/nginx.conf:53
+2014/10/14 16:13:52 [emerg] 3888#2388: host not found in url "local/live1/1080" in C:\Users\KT\Desktop\School\Media Tech 1\nginx_1.7.4_rtmp_1.1.4/conf/nginx.conf:53
+2014/10/14 16:13:59 [emerg] 5500#5900: host not found in url "local/live1/1080" in C:\Users\KT\Desktop\School\Media Tech 1\nginx_1.7.4_rtmp_1.1.4/conf/nginx.conf:53
+2014/10/14 16:14:02 [emerg] 1380#4384: host not found in url "local/live1/1080" in C:\Users\KT\Desktop\School\Media Tech 1\nginx_1.7.4_rtmp_1.1.4/conf/nginx.conf:53
+2014/10/14 17:18:29 [emerg] 1472#3572: host not found in url "local/live1/1080" in C:\Users\KT\Desktop\School\Media Tech 1\nginx_1.7.4_rtmp_1.1.4/conf/nginx.conf:53
+2014/10/14 17:18:35 [emerg] 3484#3284: host not found in url "local/live1/1080" in C:\Users\KT\Desktop\School\Media Tech 1\nginx_1.7.4_rtmp_1.1.4/conf/nginx.conf:53
+2014/10/14 17:19:02 [emerg] 1248#1472: host not found in url "local/live1/1080" in C:\Users\KT\Desktop\School\Media Tech 1\nginx_1.7.4_rtmp_1.1.4/conf/nginx.conf:53
+2014/10/14 17:19:04 [emerg] 1784#6272: host not found in url "local/live1/1080" in C:\Users\KT\Desktop\School\Media Tech 1\nginx_1.7.4_rtmp_1.1.4/conf/nginx.conf:53
+2014/10/14 17:19:08 [emerg] 5676#6988: host not found in url "local/live1/1080" in C:\Users\KT\Desktop\School\Media Tech 1\nginx_1.7.4_rtmp_1.1.4/conf/nginx.conf:53
+2014/10/14 17:19:37 [emerg] 2824#6060: host not found in url "local/live1/1080" in C:\Users\KT\Desktop\School\Media Tech 1\nginx_1.7.4_rtmp_1.1.4/conf/nginx.conf:53
+2014/10/14 17:19:40 [emerg] 4424#2348: host not found in url "local/live1/1080" in C:\Users\KT\Desktop\School\Media Tech 1\nginx_1.7.4_rtmp_1.1.4/conf/nginx.conf:53
+2014/10/14 17:21:05 [emerg] 5628#6040: host not found in url "local/live1/1080" in C:\Users\KT\Desktop\School\Media Tech 1\nginx_1.7.4_rtmp_1.1.4/conf/nginx.conf:53
