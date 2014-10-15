@@ -13,73 +13,31 @@
 
 			$source = getBestSource();
 		?>
-		<div class="navbar navbar-default navbar-fixed-top">
-			<div class="container">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="#">Gently</a>
-				</div>
-				<div class="navbar-collapse collapse navbar-responsive-collapse">
-					<ul class="nav navbar-nav">
-						<li class="active"><a href="#">Jacky</a></li>
-						<li><a href="#">Much</a></li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Swag <b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<li><a href="#">Action</a></li>
-								<li><a href="#">Another action</a></li>
-								<li><a href="#">Something else here</a></li>
-								<li class="divider"></li>
-								<li class="dropdown-header">Dropdown header</li>
-								<li><a href="#">Separated link</a></li>
-								<li><a href="#">One more separated link</a></li>
-							</ul>
-						</li>
-					</ul>
-					<form id="form" class="navbar-form navbar-right">
-						<input id="search" type="text" class="form-control col-lg-8" placeholder="Search">
-					</form>
-					<ul class="nav navbar-nav navbar-right">
-						<li><a href="#">Link</a></li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Account <b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<li><a href="#">Action</a></li>
-								<li><a href="#">Another action</a></li>
-								<li><a href="#">Something else here</a></li>
-								<li class="divider"></li>
-								<li><a href="#">Separated link</a></li>
-							</ul>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
+		
+		<?php include 'navbar.php';?>
 		<div class="container">
 			<div class="row">
-				<div class="col-md-12">
-					<h1>SUPER AWESOME CHANNEL!!!</h1>
+				<h1>Favourites</h1>
+				<div class="col-md-4">
+					<a href="channel/user1.php"><img src="http://static-cdn.jtvnw.net/previews-ttv/live_user_fragbitelive-320x240.jpg"><br><h4>User1's cool channel</h2></a>
+				</div>
+				<div class="col-md-4">
+					<a href="channel/user2.php"><img src="http://static-cdn.jtvnw.net/previews-ttv/live_user_amazhs-320x240.jpg"><br><h4>User2's awesome channel</h2></a>
+				</div>
+				<div class="col-md-4">
+					<a href="channel/user3.php"><img src="http://static-cdn.jtvnw.net/previews-ttv/live_user_versuta-320x240.jpg"><br><h4>User3's fun channel</h2></a>
 				</div>
 			</div>
 			<div class="row">
-				<div id="video" class="col-md-9">
-					<div id="myElement">Loading the player...</div>
+				<h1>Popular</h1>
+				<div class="col-md-4">
+					<a href="channel/user4.php"><img src="http://static-cdn.jtvnw.net/previews-ttv/live_user_bdutch-320x200.jpg"><br><h4>User4's happy channel</h2></a>
 				</div>
-
-				<div id="chat" class="col-md-3">
-					<iframe frameborder="0" scrolling="no" src="http://twitch.tv/twitchplayspokemon/chat?popout=" height=476px width=100%></iframe>
+				<div class="col-md-4">
+					<a href="channel/user5.php"><img src="http://static-cdn.jtvnw.net/previews-ttv/live_user_billyboyfrombel-320x200.jpg"><br><h4>User5's boring channel</h2></a>
 				</div>
-			</div>
-			<br>
-			<div class="row">
-				<div class="col-md-12">
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices eu nunc vitae gravida. Interdum et malesuada fames ac ante ipsum primis in faucibus. Curabitur sagittis dapibus tellus vitae vulputate. Praesent placerat enim vitae lorem accumsan, vitae iaculis leo lacinia. Cras commodo velit non leo convallis bibendum. Nullam elementum nunc eu quam tempor vulputate. Quisque egestas sagittis dapibus. Mauris aliquet non leo a dignissim. Quisque vitae sem eget dui placerat cursus bibendum a leo. Vivamus blandit sodales mauris. Phasellus hendrerit ipsum quis auctor vehicula. Duis vel tellus erat. Duis venenatis metus quis quam cursus, a elementum mi tincidunt. Quisque sodales mattis pharetra.
-
-					In egestas, lacus at vulputate condimentum, nisl nisl lacinia diam, in laoreet nulla mi eget purus. Aliquam varius eros ac elit euismod viverra eu ac tortor. Nam tempus magna magna, vitae suscipit ipsum convallis nec. Proin eu dolor at lectus venenatis congue sit amet id dui. Pellentesque iaculis mi nec elit maximus, non lacinia turpis convallis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque lobortis interdum massa, at luctus arcu. Praesent vehicula orci eget urna iaculis, a cursus felis malesuada.
+				<div class="col-md-4">
+					<a href="channel/user6.php"><img src="http://static-cdn.jtvnw.net/previews-ttv/live_user_gbxlcartman61-320x200.jpg"><br><h4>User6's dead channel</h2></a>
 				</div>
 			</div>
 		</div>
@@ -90,16 +48,10 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script type="text/javascript">
-			jwplayer("myElement").setup({
-				file: <?php echo json_encode($source); ?>,
-				width: "100%",
-				aspectratio: "16:9",
-				autostart: true,
-				mute: true
-			});
+			
 			
 			$('#search').on('input', function() { 
-				var mega = "MEGAMAN PORN. Has anyone really been far even as decided to use even go want to do look more like? You've got to be kidding me. I've been further even more decided to use even go need to do look more as anyone can. Can you really be far even as decided half as much to use go wish for that? My guess is that when one really been far even as decided once to use even go want, it is then that he has really been far even as decided to use even go want to do look more like. It's just common sense.";
+				var mega = "MEGAMAN. Has anyone really been far even as decided to use even go want to do look more like? You've got to be kidding me. I've been further even more decided to use even go need to do look more as anyone can. Can you really be far even as decided half as much to use go wish for that? My guess is that when one really been far even as decided once to use even go want, it is then that he has really been far even as decided to use even go want to do look more like. It's just common sense.";
 				var length = $("#search").val().length;
 				$("#search").val(mega.substring(0,length));
 			});
