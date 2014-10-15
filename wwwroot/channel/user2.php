@@ -1,8 +1,8 @@
 <html>
 	<head>
 		<title>Gently down the stream~</title>
-		<link href="/gently/css/bootstrap.min.css" rel="stylesheet">
-		<script src="/gently/jwplayer/jwplayer.js" ></script>
+		<link href="/css/bootstrap.min.css" rel="stylesheet">
+		<script src="/jwplayer/jwplayer.js" ></script>
 	</head>
 	<body>
 		<?php
