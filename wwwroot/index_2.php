@@ -4,11 +4,11 @@
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<script src="jwplayer/jwplayer.js" ></script>
 	</head>
-	<body>
-		<?php include 'navbar.php';?>
+	<body>		
+		<?php include 'navbar_2.php';?>
 		<div class="container">
 			<div class="row">
-				<h1>Favourites</h1>
+				<h1>Popular</h1>
 				<div class="col-md-4">
 					<a href="channel/user1.php"><img src="http://static-cdn.jtvnw.net/previews-ttv/live_user_taketvred-320x240.jpg"><br><h4>MEGAMAN SPEED RUN!</h4></a>69 viewers watching User1
 				</div>
@@ -19,8 +19,8 @@
 					<a href="channel/user3.php"><img src="http://static-cdn.jtvnw.net/previews-ttv/live_user_weplaydota2tv_2-320x240.jpg"><br><h4>Watch me play blindfolded!</h4></a>39 viewers watching User3
 				</div>
 			</div>
+			<br>
 			<div class="row">
-				<h1>Popular</h1>
 				<div class="col-md-4">
 					<a href="channel/user4.php"><img src="http://static-cdn.jtvnw.net/previews-ttv/live_user_nocturnalsmoker-320x240.jpg"><br><h4>Untitled Channel</h4></a>1 viewer watching User4
 				</div>

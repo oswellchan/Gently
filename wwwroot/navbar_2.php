@@ -18,17 +18,8 @@
 					<input id="search" type="text" class="form-control col-lg-8" placeholder="Search">
 				</form>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="/channel/user1.php">User1</a></li>
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Account <b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="#">Account settings</a></li>
-							<li><a href="#">Channel settings</a></li>
-							<li><a href="#">Manage favourites</a></li>
-							<li class="divider"></li>
-							<li><a href="/index_2.php">Sign out</a></li>
-						</ul>
-					</li>
+					<li><a href="/index.php">Log in</a></li>
+					<li><a href="/index.php">Sign up</a></li>
 				</ul>
 			</div>
 		</div>
