@@ -7,7 +7,6 @@ import java.net.*;
 class MMSWeb implements Runnable {
     
     private static ServerSocket _serverSocket;
-    private InternalMemory _internalMem;
     
     //Constructor
     MMSWeb(int portNo) throws IOException {
@@ -75,16 +74,18 @@ final class MMSWebRequestProcessor implements Runnable{
 	    
 	    String serverIP = null;
 	    
-	    for (Server s : preferenceList) {
-		boolean isSuccessful = s.isSuccessfulInAddingUser();
-		
-		if (isSuccessful) {
-		    //contact server s to get stream
-		    
-		    serversWithStream.add(s);
-		    serverIP = s.getServerIP();
-		    break;
-		}
+	    if (serversWithStream != null) {
+		 for (Server s : preferenceList) {
+			boolean isSuccessful = s.isSuccessfulInAddingUser();
+			
+			if (isSuccessful) {
+			    //contact server s to get stream
+			    
+			    serversWithStream.add(s);
+			    serverIP = s.getServerIP();
+			    break;
+			}
+		 }
 	    }
 	    
 	    if (serverIP == null) {
@@ -99,7 +100,7 @@ final class MMSWebRequestProcessor implements Runnable{
 	    s.close();
 			
 	} catch (Exception ex){
-	    System.out.println(ex);
+	    ex.printStackTrace();
 	}
     }	
 }

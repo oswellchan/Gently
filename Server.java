@@ -5,14 +5,14 @@ import java.util.*;
 
 public class Server {
     String _serverIP;
-    BigInteger _maxLoad;
-    BigInteger _currentLoad;
+    float _maxLoad;
+    float _currentLoad;
     boolean _inUse;
     
     Server(float bandwith, float usage, String serverIP) {
 	_serverIP = serverIP;
-	_maxLoad = new BigInteger(Math.floor(bandwith/usage) + "");
-	_currentLoad = new BigInteger("0");
+	_maxLoad = (float) Math.floor(bandwith/usage);
+	_currentLoad = 0;
 	_inUse = false;
     }
     
@@ -23,7 +23,7 @@ public class Server {
     
     //check if server can still take in any more users
     private boolean canService() {
-	if (_currentLoad.compareTo(_maxLoad) == 1) {
+	if (_currentLoad < _maxLoad) {
 	    return true;
 	}
 	return false;
@@ -43,7 +43,7 @@ public class Server {
 	_inUse = true;
 	
 	if (canService()) {
-	    _currentLoad.add(BigInteger.ONE);
+	    _currentLoad++;
 	    isSuccessful = true;
 	}
 	
