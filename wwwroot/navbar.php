@@ -11,7 +11,7 @@
 			</div>
 			<div class="navbar-collapse collapse navbar-responsive-collapse">
 				<ul class="nav navbar-nav">
-					<li><a href="#">Browse</a></li>
+					<li><a href="/search.php?search=user">Browse</a></li>
 					<li><a href="/channel/random.php">Random</a></li>
 				</ul>
 				<form id="form" class="navbar-form navbar-right">
@@ -22,9 +22,11 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Account <b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><a href="#">Settings</a></li>
+							<li><a href="#">Account settings</a></li>
+							<li><a href="#">Channel settings</a></li>
+							<li><a href="#">Manage favourites</a></li>
 							<li class="divider"></li>
-							<li><a href="#">Sign out</a></li>
+							<li><a href="/index_2.php">Sign out</a></li>
 						</ul>
 					</li>
 				</ul>

@@ -19,7 +19,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-					<h1>User5's boring channel</h1>
+					<h1>sitting around doing nothing</h1>
 				</div>
 			</div>
 			<div class="row">

@@ -5,39 +5,30 @@
 		<script src="jwplayer/jwplayer.js" ></script>
 	</head>
 	<body>
-		<?php
-			function getBestSource() {
-				// OSWELL DO THIS SHIT
-				return "rtmp://fms.12E5.edgecastcdn.net/0012E5/mp4:videos/8Juv1MVa-485.mp4";
-			}
-
-			$source = getBestSource();
-		?>
-		
 		<?php include 'navbar.php';?>
 		<div class="container">
 			<div class="row">
 				<h1>Favourites</h1>
 				<div class="col-md-4">
-					<a href="channel/user1.php"><img src="http://static-cdn.jtvnw.net/previews-ttv/live_user_fragbitelive-320x240.jpg"><br><h4>User1's cool channel</h2></a>
+					<a href="channel/user1.php"><img src="http://static-cdn.jtvnw.net/previews-ttv/live_user_taketvred-320x240.jpg"><br><h4>MEGAMAN SPEED RUN!</h4></a>69 viewers watching User1
 				</div>
 				<div class="col-md-4">
-					<a href="channel/user2.php"><img src="http://static-cdn.jtvnw.net/previews-ttv/live_user_amazhs-320x240.jpg"><br><h4>User2's awesome channel</h2></a>
+					<a href="channel/user2.php"><img src="http://static-cdn.jtvnw.net/previews-ttv/live_user_riotgames-320x240.jpg"><br><h4>2014 World Championship</h4></a>10 viewers watching User2
 				</div>
 				<div class="col-md-4">
-					<a href="channel/user3.php"><img src="http://static-cdn.jtvnw.net/previews-ttv/live_user_versuta-320x240.jpg"><br><h4>User3's fun channel</h2></a>
+					<a href="channel/user3.php"><img src="http://static-cdn.jtvnw.net/previews-ttv/live_user_weplaydota2tv_2-320x240.jpg"><br><h4>Watch me play blindfolded!</h4></a>39 viewers watching User3
 				</div>
 			</div>
 			<div class="row">
 				<h1>Popular</h1>
 				<div class="col-md-4">
-					<a href="channel/user4.php"><img src="http://static-cdn.jtvnw.net/previews-ttv/live_user_bdutch-320x200.jpg"><br><h4>User4's happy channel</h2></a>
+					<a href="channel/user4.php"><img src="http://static-cdn.jtvnw.net/previews-ttv/live_user_nocturnalsmoker-320x240.jpg"><br><h4>Untitled Channel</h4></a>1 viewer watching User4
 				</div>
 				<div class="col-md-4">
-					<a href="channel/user5.php"><img src="http://static-cdn.jtvnw.net/previews-ttv/live_user_billyboyfrombel-320x200.jpg"><br><h4>User5's boring channel</h2></a>
+					<a href="channel/user5.php"><img src="http://static-cdn.jtvnw.net/previews-ttv/live_user_starladder1-320x240.jpg"><br><h4>sitting around doing nothing</h4></a>729 viewers watching User5
 				</div>
 				<div class="col-md-4">
-					<a href="channel/user6.php"><img src="http://static-cdn.jtvnw.net/previews-ttv/live_user_gbxlcartman61-320x200.jpg"><br><h4>User6's dead channel</h2></a>
+					<a href="channel/user6.php"><img src="http://static-cdn.jtvnw.net/previews-ttv/live_user_beyondthesummit-320x240.jpg"><br><h4>Worst Channel Ever</h4></a>9283 viewers watching User6
 				</div>
 			</div>
 		</div>
