@@ -5,24 +5,18 @@
 		<script src="/jwplayer/jwplayer.js" ></script>
 	</head>
 	<body>
-		<?php
-			function getBestSource() {
-				$ip = $_SERVER['REMOTE_ADDR'];
-                $channel = 1;
-                // insert magic fairy here
-                return "rtmp://fms.12E5.edgecastcdn.net/0012E5/mp4:videos/8Juv1MVa-485.mp4";
-			}
-
-			$source = getBestSource();
+		<?php 
+			include 'connect.php';
+			include '../navbar.php';
 		?>
-		<?php include '../navbar.php';?>
+        
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1">
 					<h1>2014 World Championship</h1>
 				</div>
 			</div>
-			<div class="row fluid">
+			<div class="row">
 				<div id="video" class="col-md-9">
 					<div id="myElement">Loading the player...</div>
 				</div>
