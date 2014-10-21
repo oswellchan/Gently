@@ -1,4 +1,4 @@
-package gently;
+package gently.MMS;
 
 import java.util.*;
 import java.io.*;
