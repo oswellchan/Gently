@@ -19,6 +19,7 @@ class MMSWeb implements Runnable {
 	    Socket s = null;
 	    
 	    try {
+		System.out.println("waiting");
 		s = _serverSocket.accept();
 	    } catch (IOException e) {
 		// TODO Auto-generated catch block
