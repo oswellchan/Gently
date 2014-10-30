@@ -1,0 +1,1 @@
+ffmpeg -i rtmp://localhost/live1/1080 -vcodec flv -acodec copy -s 720x360 -r 20 -f flv rtmp://localhost/live1/1080
