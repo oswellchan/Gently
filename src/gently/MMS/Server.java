@@ -4,12 +4,14 @@ import java.util.*;
 
 public class Server {
     String _serverIP;
+    String _serverName;
     float _maxLoad;
     float _currentLoad;
     boolean _inUse;
     
-    Server(float bandwith, float usage, String serverIP) {
+    Server(float bandwith, float usage, String serverIP, String serverName) {
 	_serverIP = serverIP;
+	_serverName = serverName;
 	_maxLoad = (float) Math.floor(bandwith/usage);
 	_currentLoad = 0;
 	_inUse = false;
