@@ -39,15 +39,10 @@ if (isset ( $_GET ['id'] )) {
 <body>
 		<?php
 		include 'navbar.php';
-		include 'channel/connect.php';
+		include 'connect.php';
 		?>
         
 		<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-10 col-md-offset-1">
-				<h1><?php echo $chnrow["name"]; ?></h1>
-			</div>
-		</div>
 		<div class="row">
 			<div id="video" class="col-md-9">
 				<div id="myElement">Loading the player...</div>
@@ -59,7 +54,12 @@ if (isset ( $_GET ['id'] )) {
 					width=100%></iframe>
 			</div>
 		</div>
-		<br>
+		
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<h1><?php echo $chnrow["name"]; ?></h1>
+			</div>
+		</div>
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
 				<?php echo $chnrow["description"]; ?>

@@ -71,12 +71,12 @@ echo '
 if (isset ( $_SESSION ['username'] )) {
 	echo '
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="/channel/user1.php">' . $_SESSION ["username"] . '</a></li>
+					<li><a href="/channel.php?id='.$_SESSION ["username"].'">' . $_SESSION ["username"] . '</a></li>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Account <b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<li><a href="#">Account settings</a></li>
-							<li><a href="#">Channel settings</a></li>
+							<li><a href="/channelsettings.php">Channel settings</a></li>
 							<li><a href="#">Manage favourites</a></li>
 							<li class="divider"></li>
 							<li><a href="';

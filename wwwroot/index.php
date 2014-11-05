@@ -14,17 +14,17 @@
 			<div class="row">
 				<h1>Favourites</h1>
 				<div class="col-md-4">
-					<a href="channel/user1.php"> <img
+					<a href="channel.php?id=user1"> <img
 						src="images/320px-Placeholder.jpg"><br>
 						<h4>MEGAMAN SPEED RUN!</h4></a>69 viewers watching User1
 				</div>
 				<div class="col-md-4">
-					<a href="channel/user2.php"><img
+					<a href="channel.php?id=user2"><img
 						src="images/320px-Placeholder.jpg"><br>
 						<h4>2014 World Championship</h4></a>10 viewers watching User2
 				</div>
 				<div class="col-md-4">
-					<a href="channel/user3.php"><img
+					<a href="channel.php?id=user3"><img
 						src="images/320px-Placeholder.jpg"><br>
 						<h4>Watch me play blindfolded!</h4></a>39 viewers watching User3
 				</div>
@@ -34,17 +34,17 @@
 		<div class="row">
 			<h1>Popular</h1>
 			<div class="col-md-4">
-				<a href="channel/user4.php"><img
+				<a href="channel.php?id=user4"><img
 					src="images/320px-Placeholder.jpg"><br>
 					<h4>Untitled Channel</h4></a>1 viewer watching User4
 			</div>
 			<div class="col-md-4">
-				<a href="channel/user5.php"><img
+				<a href="channel.php?id=user5"><img
 					src="images/320px-Placeholder.jpg"><br>
 					<h4>sitting around doing nothing</h4></a>729 viewers watching User5
 			</div>
 			<div class="col-md-4">
-				<a href="channel/user6.php"><img
+				<a href="channel.php?id=user6"><img
 					src="images/320px-Placeholder.jpg"><br>
 					<h4>Worst Channel Ever</h4></a>9283 viewers watching User6
 			</div>
