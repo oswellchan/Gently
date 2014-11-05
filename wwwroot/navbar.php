@@ -5,7 +5,8 @@ if (isset ( $_GET ['logout'] )) {
 	echo '
 	<script type="text/javascript">
 	var url = location.href;
-	url=url.split("?")[0];
+	url=url.replace("?logout=true","");
+	url=url.replace("&logout=true","");
 	location.href =url;
 	</script>
 	';
@@ -60,7 +61,7 @@ echo '
 			<div class="navbar-collapse collapse navbar-responsive-collapse">
 				<ul class="nav navbar-nav">
 					<li><a href="/search.php?search=user">Browse</a></li>
-					<li><a href="/channel/random.php">Random</a></li>
+					<li><a href="/random.php">Random</a></li>
 				</ul>
 				<form id="form" class="navbar-form navbar-right">
 					<input id="search" type="text" class="form-control col-lg-8" placeholder="Search">
@@ -78,7 +79,16 @@ if (isset ( $_SESSION ['username'] )) {
 							<li><a href="#">Channel settings</a></li>
 							<li><a href="#">Manage favourites</a></li>
 							<li class="divider"></li>
-							<li><a href="?logout=true">Sign out</a></li>
+							<li><a href="';
+	if (isset ( $_GET ['id'] )) {
+		$id = str_replace('#', '', $_GET ['id']);
+		echo '?id='.$id.'&logout=true';
+	} else {
+		echo '?logout=true';
+	}
+							
+	echo	
+							'">Sign out</a></li>
 						</ul>
 					</li>
 				</ul>

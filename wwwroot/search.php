@@ -1,5 +1,9 @@
 <?php
-$searchkey = $_GET ['search'];
+if (isset ( $_GET ['search'] )) {
+	$searchkey = $_GET ['search'];
+} else {
+	header ( "Location: ../browse.php" );
+}
 ?>
 
 <html>
