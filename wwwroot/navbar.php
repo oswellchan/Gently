@@ -75,7 +75,7 @@ if (isset ( $_SESSION ['username'] )) {
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Account <b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><a href="#">Account settings</a></li>
+							<li><a href="/accountsettings.php">Account settings</a></li>
 							<li><a href="/channelsettings.php">Channel settings</a></li>
 							<li><a href="#">Manage favourites</a></li>
 							<li class="divider"></li>
