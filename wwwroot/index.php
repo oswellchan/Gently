@@ -6,6 +6,7 @@
 </head>
 <body>
 <?php include 'navbar.php';?>
+
 <div class="container">
 	<?php
 		if (isset ( $_SESSION ['username'] )) {
@@ -50,25 +51,11 @@
 		</div>
 	</div>
 
-	<script type="text/javascript">
-
-</script>
+	
+    
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-	<script type="text/javascript">
-
-
-$('#search').on('input', function() { 
-	var mega = "MEGAMAN. Has anyone really been far even as decided to use even go want to do look more like? You've got to be kidding me. I've been further even more decided to use even go need to do look more as anyone can. Can you really be far even as decided half as much to use go wish for that? My guess is that when one really been far even as decided once to use even go want, it is then that he has really been far even as decided to use even go want to do look more like. It's just common sense.";
-	var length = $("#search").val().length;
-	$("#search").val(mega.substring(0,length));
-});
-$("#form").submit(function( event ) {
-	event.preventDefault();
-	alert( "fuck you" );
-});
-
-</script>
+	
 </body>
 </html>

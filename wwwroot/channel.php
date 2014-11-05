@@ -32,7 +32,7 @@ if (isset ( $_GET ['id'] )) {
 ?>
 <html>
 <head>
-<title><?php echo $chnrow["name"]; ?></title>
+<title><?php echo $chnrow["name"]; ?> - Gently</title>
 <link href="/css/bootstrap.min.css" rel="stylesheet">
 <script src="/jwplayer/jwplayer.js"></script>
 </head>

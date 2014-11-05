@@ -1,11 +1,3 @@
-<?php
-if (isset ( $_GET ['search'] )) {
-	$searchkey = $_GET ['search'];
-} else {
-	header ( "Location: ../browse.php" );
-}
-?>
-
 <html>
 <head>
 <title>Gently down the stream~</title>
@@ -18,7 +10,7 @@ if (isset ( $_GET ['search'] )) {
 		<div class="row">
 
 			<div class="col-md-10 col-md-offset-1">
-				<h1>Search result: <?php echo "$searchkey"; ?></h1>
+				<h1>Browse</h1>
 			</div>
 			<div class="col-md-8 col-md-offset-2">
 			
@@ -35,7 +27,7 @@ if (!$conn) {
 	die("Connection failed: " . mysqli_connect_error());
 }
 
-$sql = "SELECT * FROM `channel` WHERE `username` LIKE '%".$searchkey."%' UNION SELECT * FROM `channel` WHERE `name` LIKE '%".$searchkey."%' UNION SELECT * FROM `channel` WHERE `description` LIKE '%".$searchkey."%' ORDER BY viewers DESC";
+$sql = "SELECT * FROM `channel` ORDER BY viewers DESC";
 $result = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($result) > 0) {
@@ -57,7 +49,6 @@ if (mysqli_num_rows($result) > 0) {
 				</div>
 		';
 	}
-	echo '<br> <a href="#">&lt;&lt; Previous</a> | <a href="#">Next &gt;&gt; </a>';
 } else {
 	echo "0 results";
 }
@@ -65,7 +56,7 @@ if (mysqli_num_rows($result) > 0) {
 mysqli_close($conn);
 ?>			
 			
-				
+				<br> <a href="#">&lt;&lt; Previous</a> | <a href="#">Next &gt;&gt; </a>
 
 			</div>
 		</div>

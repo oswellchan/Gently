@@ -60,11 +60,11 @@ echo '
 			</div>
 			<div class="navbar-collapse collapse navbar-responsive-collapse">
 				<ul class="nav navbar-nav">
-					<li><a href="/search.php?search=user">Browse</a></li>
+					<li><a href="/browse.php">Browse</a></li>
 					<li><a href="/random.php">Random</a></li>
 				</ul>
-				<form id="form" class="navbar-form navbar-right">
-					<input id="search" type="text" class="form-control col-lg-8" placeholder="Search">
+				<form id="form" class="navbar-form navbar-right" method="get" action="search.php">
+					<input id="search" name="search" type="text" class="form-control col-lg-8" placeholder="Search">
 				</form>
 ';
 
@@ -131,4 +131,12 @@ echo '
 		</div>
 	</div>
 ';
+
+
+echo '
+	<div class="footer">
+    	<div class="container">
+        	<p class="text-muted">Copyright © 2014 Gently</p>
+    	</div>
+    </div>';
 ?>
