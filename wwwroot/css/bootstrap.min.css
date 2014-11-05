@@ -6764,8 +6764,8 @@ button.close {
 }
 
 body {
-	padding-top: 50px;
-	margin-bottom: 80px;
+	margin-top: 50px;
+	margin-bottom: 50px;
 }
 
 html {
@@ -6778,7 +6778,7 @@ html {
   bottom: 0;
   width: 100%;
   /* Set the fixed height of the footer here */
-  height: 60px;
+  height: 50px;
   background-color: #f5f5f5;
 }
 
@@ -6789,4 +6789,37 @@ html {
 .footer > .container {
   padding-right: 15px;
   padding-left: 15px;
+}
+
+#chat {
+	display:table-cell;
+	vertical-align:bottom;
+	height: 100%;
+	width: 100%;
+	min-height: 1px;
+	padding: 15px;}
+	
+#chatbox {
+    text-align:left;
+    padding:15px;
+    padding-top: 25px;
+    background:#fff;
+    height:100%;
+    width:100%;
+    border: 1px solid #cccccc;
+	border-radius: 4px;
+    margin-bottom:15px;
+    overflow:auto;
+}
+  
+#usermsg {
+	float:left;
+    width:80%;
+	display: inline-block;
+}
+  
+#submitmsg {
+	float: right;
+	width: 20%; 
+	display: inline-block;
 }

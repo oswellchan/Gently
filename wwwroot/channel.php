@@ -44,14 +44,30 @@ if (isset ( $_GET ['id'] )) {
         
 		<div class="container-fluid">
 		<div class="row">
-			<div id="video" class="col-md-9">
+			<div id="video" class="col-md-9" onresize="resizeScript">
 				<div id="myElement">Loading the player...</div>
 			</div>
 
-			<div id="chat" class="col-md-3">
-				<iframe frameborder="0" scrolling="no"
-					src="http://twitch.tv/twitchplayspokemon/chat?popout=" height=476px
-					width=100%></iframe>
+			<div id="chat">
+					<div id="chatbox">
+						<?php
+						if(file_exists("chat/".$_GET ['id'].".html") && filesize("chat/".$_GET ['id'].".html") > 0){
+						    $handle = fopen("chat/".$_GET ['id'].".html", "r");
+						    $contents = fread($handle, filesize("chat/".$_GET ['id'].".html"));
+						    fclose($handle);
+						     
+						    echo $contents;
+						} else {
+							fopen("chat/".$_GET ['id'].".html", "w");
+						}
+						?>
+					</div>
+	     			<div id="msgbox">
+					    <form class="form-inline" name="message" action="#">
+					        <input class="form-control" name="usermsg" type="text" id="usermsg" size="63" />
+					        <button class="btn btn-primary " name="submitmsg" type="submit"  id="submitmsg">Send</button>
+					    </form>
+				    </div>
 			</div>
 		</div>
 		
@@ -82,16 +98,55 @@ if (isset ( $_GET ['id'] )) {
 				mute: true
 			});
 			
-			$('#search').on('input', function() { 
-				var mega = "MEGAMAN PORN. Has anyone really been far even as decided to use even go want to do look more like? You've got to be kidding me. I've been further even more decided to use even go need to do look more as anyone can. Can you really be far even as decided half as much to use go wish for that? My guess is that when one really been far even as decided once to use even go want, it is then that he has really been far even as decided to use even go want to do look more like. It's just common sense.";
-				var length = $("#search").val().length;
-				$("#search").val(mega.substring(0,length));
-			});
-			$("#form").submit(function( event ) {
-				event.preventDefault();
-				alert( "fuck you" );
+			$(window).load(function() {
+				$("#chat").height($("#video").height()-15);
 			});
 			
+			$(window).resize(function(){
+				$("#chat").height($("#video").height()-15);
+			});
+			
+			//If user submits the form
+			$("#submitmsg").click(function(){	
+				var clientmsg = $("#usermsg").val();
+				var board = getQueryVariable("id");
+				$.post("post.php", {text: clientmsg, id: board});				
+				$("#usermsg").val("");
+				return false;
+			});
+
+			//Load the file containing the chat log
+			function loadLog(){		
+				var oldscrollHeight = $("#chatbox").attr("scrollHeight") - 20; //Scroll height before the request
+				var path = "chat/";
+				path += getQueryVariable("id");
+				path += ".html";
+				$.ajax({
+					url: path,
+					cache: false,
+					success: function(html){		
+						$("#chatbox").html(html); //Insert chat log into the #chatbox div	
+						
+						//Auto-scroll			
+						var newscrollHeight = $("#chatbox").attr("scrollHeight") - 20; //Scroll height after the request
+						if(newscrollHeight > oldscrollHeight){
+							$("#chatbox").animate({ scrollTop: newscrollHeight }, 'normal'); //Autoscroll to bottom of div
+						}
+				  	},
+				});
+			}
+			
+			setInterval (loadLog, 1000);
+			function getQueryVariable(variable)
+			{
+			       var query = window.location.search.substring(1);
+			       var vars = query.split("&");
+			       for (var i=0;i<vars.length;i++) {
+			               var pair = vars[i].split("=");
+			               if(pair[0] == variable){return pair[1];}
+			       }
+			       return(false);
+			}
 		</script>
 </body>
 </html>
