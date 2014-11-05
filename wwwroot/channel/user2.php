@@ -1,53 +1,76 @@
 <html>
-	<head>
-		<title>Gently down the stream~</title>
-		<link href="/css/bootstrap.min.css" rel="stylesheet">
-		<script src="/jwplayer/jwplayer.js" ></script>
-	</head>
-	<body>
-		<?php 
-			include 'connect.php';
-			include '../navbar.php';
+<head>
+<title>Gently down the stream~</title>
+<link href="/css/bootstrap.min.css" rel="stylesheet">
+<script src="/jwplayer/jwplayer.js"></script>
+</head>
+<body>
+		<?php
+		include 'connect.php';
+		include '../navbar.php';
 		?>
         
 		<div class="container-fluid">
-			<div class="row">
-				<div class="col-md-10 col-md-offset-1">
-					<h1>2014 World Championship</h1>
-				</div>
-			</div>
-			<div class="row">
-				<div id="video" class="col-md-9">
-					<div id="myElement">Loading the player...</div>
-				</div>
-
-				<div id="chat" class="col-md-3">
-					<iframe frameborder="0" scrolling="no" src="http://twitch.tv/twitchplayspokemon/chat?popout=" height=476px width=100%></iframe>
-				</div>
-			</div>
-			<br>
-			<div class="row">
-				<div class="col-md-10 col-md-offset-1">
-					<div class="media">
-						<a class="pull-left" href="#">
-							<img class="media-object" src="http://static-cdn.jtvnw.net/jtv_user_pictures/panel-36029255-image-01752031c532a07c-320.png">
-						</a>
-						<div class="media-body">
-
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultrices eu nunc vitae gravida. Interdum et malesuada fames ac ante ipsum primis in faucibus. Curabitur sagittis dapibus tellus vitae vulputate. Praesent placerat enim vitae lorem accumsan, vitae iaculis leo lacinia. Cras commodo velit non leo convallis bibendum. Nullam elementum nunc eu quam tempor vulputate. Quisque egestas sagittis dapibus. Mauris aliquet non leo a dignissim. Quisque vitae sem eget dui placerat cursus bibendum a leo. Vivamus blandit sodales mauris. Phasellus hendrerit ipsum quis auctor vehicula. Duis vel tellus erat. Duis venenatis metus quis quam cursus, a elementum mi tincidunt. Quisque sodales mattis pharetra.</p>
-							<p>In egestas, lacus at vulputate condimentum, nisl nisl lacinia diam, in laoreet nulla mi eget purus. Aliquam varius eros ac elit euismod viverra eu ac tortor. Nam tempus magna magna, vitae suscipit ipsum convallis nec. Proin eu dolor at lectus venenatis congue sit amet id dui. Pellentesque iaculis mi nec elit maximus, non lacinia turpis convallis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque lobortis interdum massa, at luctus arcu. Praesent vehicula orci eget urna iaculis, a cursus felis malesuada.</p>
-
-						</div>
-					</div></div>
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<h1>2014 World Championship</h1>
 			</div>
 		</div>
+		<div class="row">
+			<div id="video" class="col-md-9">
+				<div id="myElement">Loading the player...</div>
+			</div>
 
-		<script type="text/javascript">
+			<div id="chat" class="col-md-3">
+				<iframe frameborder="0" scrolling="no"
+					src="http://twitch.tv/twitchplayspokemon/chat?popout=" height=476px
+					width=100%></iframe>
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<div class="media">
+					<a class="pull-left" href="#"> <img class="media-object"
+						src="http://static-cdn.jtvnw.net/jtv_user_pictures/panel-36029255-image-01752031c532a07c-320.png">
+					</a>
+					<div class="media-body">
+
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+							ultrices eu nunc vitae gravida. Interdum et malesuada fames ac
+							ante ipsum primis in faucibus. Curabitur sagittis dapibus tellus
+							vitae vulputate. Praesent placerat enim vitae lorem accumsan,
+							vitae iaculis leo lacinia. Cras commodo velit non leo convallis
+							bibendum. Nullam elementum nunc eu quam tempor vulputate. Quisque
+							egestas sagittis dapibus. Mauris aliquet non leo a dignissim.
+							Quisque vitae sem eget dui placerat cursus bibendum a leo.
+							Vivamus blandit sodales mauris. Phasellus hendrerit ipsum quis
+							auctor vehicula. Duis vel tellus erat. Duis venenatis metus quis
+							quam cursus, a elementum mi tincidunt. Quisque sodales mattis
+							pharetra.</p>
+						<p>In egestas, lacus at vulputate condimentum, nisl nisl lacinia
+							diam, in laoreet nulla mi eget purus. Aliquam varius eros ac elit
+							euismod viverra eu ac tortor. Nam tempus magna magna, vitae
+							suscipit ipsum convallis nec. Proin eu dolor at lectus venenatis
+							congue sit amet id dui. Pellentesque iaculis mi nec elit maximus,
+							non lacinia turpis convallis. Interdum et malesuada fames ac ante
+							ipsum primis in faucibus. Pellentesque lobortis interdum massa,
+							at luctus arcu. Praesent vehicula orci eget urna iaculis, a
+							cursus felis malesuada.</p>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
 
 		</script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-		<script type="text/javascript">
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
 			jwplayer("myElement").setup({
 				file: <?php echo json_encode($source); ?>,
 				width: "100%",
@@ -67,5 +90,5 @@
 			});
 			
 		</script>
-	</body>
+</body>
 </html>
