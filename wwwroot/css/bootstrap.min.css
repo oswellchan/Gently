@@ -6797,7 +6797,12 @@ html {
 	height: 100%;
 	width: 100%;
 	min-height: 1px;
-	padding: 15px;}
+	padding: 15px;
+}
+
+#video {
+	margin-top:5px;
+}
 	
 #chatbox {
     text-align:left;

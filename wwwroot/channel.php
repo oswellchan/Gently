@@ -99,11 +99,11 @@ if (isset ( $_GET ['id'] )) {
 			});
 			
 			$(window).load(function() {
-				$("#chat").height($("#video").height()-15);
+				$("#chat").height($("#video").height()-10);
 			});
 			
 			$(window).resize(function(){
-				$("#chat").height($("#video").height()-15);
+				$("#chat").height($("#video").height()-10);
 			});
 			
 			//If user submits the form
@@ -112,6 +112,7 @@ if (isset ( $_GET ['id'] )) {
 				var board = getQueryVariable("id");
 				$.post("post.php", {text: clientmsg, id: board});				
 				$("#usermsg").val("");
+				loadLog();
 				return false;
 			});
 
@@ -147,6 +148,10 @@ if (isset ( $_GET ['id'] )) {
 			       }
 			       return(false);
 			}
+		
+			jwplayer().onMeta(function(event) {
+				console.log(event.metadata);
+			});
 		</script>
 </body>
 </html>
