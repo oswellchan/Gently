@@ -31,8 +31,17 @@ if (isset ( $_POST ['username'] )) {
 	$result = mysqli_query($conn, $sql);
 	
 	if (mysqli_num_rows($result) == 0 && $_POST ['password']==$_POST ['password2']) {
+		$key = rand(1000000, 9999999);
+		$sql = "SELECT streamkey FROM channel WHERE streamkey='".$key."'";
+		$result = mysqli_query($conn, $sql);
+		while (mysqli_num_rows($result) > 0) {
+			$key = rand(1000000, 9999999);
+			$sql = "SELECT streamkey FROM channel WHERE streamkey='".$key."'";
+			$result = mysqli_query($conn, $sql);
+		}
+		
 		$sql1 = "INSERT INTO login (username, password) VALUES ('".$_POST ['username']."', '".$_POST ['password']."')";
-		$sql2 = "INSERT INTO channel (username, name, description) VALUES ('".$_POST ['username']."', 'Untitled Channel', '')";
+		$sql2 = "INSERT INTO channel (username, streamkey, name, description) VALUES ('".$_POST ['username']."',".$key.", 'Untitled Channel', '')";
 		if (mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2)) {
 		    echo '<div class="alert alert-success" role="success"><center>Account successfully created.</center></div>';
 		} else {
@@ -63,20 +72,20 @@ if (isset ( $_POST ['username'] )) {
 			
 			<!-- Text input-->
 			<div class="form-group">
-			  	<label for="username">Username</label>
-			  	<input class="form-control" id="username" name="username" type="text" required="">
+			  	<label for="username">Username <small>(5-32 characters)</small></label>
+			  	<input class="form-control" id="username" name="username" type="text" required pattern="^[a-zA-Z0-9]{5,32}$" title="5-32 alphanumeric characters">
 			</div>
 			
 			<!-- Text input-->
 			<div class="form-group">
-			  	<label for="password">Password</label>
-			  	<input class="form-control" id="password" name="password" type="password" required="">
+			  	<label for="password">Password <small>(7-32 characters)</small></label>
+			  	<input class="form-control" id="password" name="password" type="password" required pattern=".{7,32}" title="7-32 characters">
 			</div>
 			
 			<!-- Text input-->
 			<div class="form-group">
 			  	<label for="password2">Repeat password</label>
-			  	<input class="form-control" id="password2" name="password2" type="password" required="">
+			  	<input class="form-control" id="password2" name="password2" type="password" required pattern=".{7,32}" title="7-32 characters">
 			</div>
 			
 			<!-- Button -->

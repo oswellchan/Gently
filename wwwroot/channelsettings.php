@@ -76,6 +76,12 @@ mysqli_close($conn);
 				<span class="help-block">HTML is supported.</span>
 			</div>
 			
+			<!-- Text input-->
+			<div class="form-group">
+			  	<label for="channelName">Stream key <small>for setting up OBS</small></label>
+			  	<input class="form-control" id="channelName" name="channelName" type="text" required="" value="<?php echo $row["streamkey"];?>" disabled>
+			</div>
+			
 			<!-- Button -->
 			<div class="form-group">
 				<button class="btn btn-success">Save</button>

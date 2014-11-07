@@ -67,19 +67,19 @@ if (isset ( $_POST ['oldPassword'] )) {
 			<!-- Text input-->
 			<div class="form-group">
 			  	<label for="oldPassword">Old password</label>
-			  	<input class="form-control" id="oldPassword" name="oldPassword" type="password" required="">
+			  	<input class="form-control" id="oldPassword" name="oldPassword" type="password" required pattern=".{7,32}">
 			</div>
 			
 			<!-- Text input-->
 			<div class="form-group">
-			  	<label for="newPassword">New password</label>
-			  	<input class="form-control" id="newPassword" name="newPassword" type="password" required="">
+			  	<label for="newPassword">New password <small>(minimum 7-32 characters)</small></label>
+			  	<input class="form-control" id="newPassword" name="newPassword" type="password" required pattern=".{7,32}">
 			</div>
 			
 			<!-- Text input-->
 			<div class="form-group">
 			  	<label for="newPassword2">Repeat new password</label>
-			  	<input class="form-control" id="newPassword2" name="newPassword2" type="password" required="">
+			  	<input class="form-control" id="newPassword2" name="newPassword2" type="password" required pattern=".{7,32}">
 			</div>
 			
 			<!-- Button -->

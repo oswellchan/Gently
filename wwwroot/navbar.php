@@ -136,7 +136,7 @@ echo '
 echo '
 	<div class="footer">
     	<div class="container">
-        	<p class="text-muted">Copyright © 2014 Gently</p>
+        	<p class="text-muted">Copyright &copy; 2014 Gently</p>
     	</div>
     </div>';
 ?>
