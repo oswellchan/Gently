@@ -70,7 +70,7 @@ final class MMSWebRequestProcessor implements Runnable{
 	    InternalMemory mem = InternalMemory.getInstance();
 	    
 	    String location = mem.getLocationOfIP(clientIP);
-	    ArrayList<Server> preferenceList = mem.getPreferenceList(location);
+	    ArrayList<Server> preferenceList = null;
 	    ArrayList<Server> serversWithStream = mem.getExistingServersStreaming(streamerID);
 	    
 	    String serverIP = null;
