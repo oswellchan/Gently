@@ -46,6 +46,15 @@ if (isset ( $_GET ['id'] )) {
 		<div class="row">
 			<div id="video" class="col-md-9" onresize="resizeScript">
 				<div id="myElement">Loading the player...</div>
+				<script>
+				jwplayer("myElement").setup({
+					file: <?php echo json_encode($source); ?>,
+					width: "100%",
+					aspectratio: "16:9",
+					autostart: true,
+					mute: true
+				});
+				</script>
 			</div>
 
 			<div id="chat">
@@ -59,13 +68,14 @@ if (isset ( $_GET ['id'] )) {
 						    echo $contents;
 						} else {
 							fopen("chat/".$_GET ['id'].".html", "w");
+							
 						}
 						?>
 					</div>
 	     			<div id="msgbox">
 					    <form class="form-inline" name="message" action="#">
-					        <input class="form-control" name="usermsg" type="text" id="usermsg" size="63" />
-					        <button class="btn btn-primary " name="submitmsg" type="submit"  id="submitmsg">Send</button>
+					        <input class="form-control" name="usermsg" type="text" id="usermsg" size="63" <?php if (!isset($_SESSION['username'])) echo 'disabled value="Sign in to chat"';?>/>
+					        <button class="btn btn-primary " name="submitmsg" type="submit"  id="submitmsg" <?php if (!isset($_SESSION['username'])) echo 'disabled';?>>Send</button>
 					    </form>
 				    </div>
 			</div>
@@ -90,20 +100,13 @@ if (isset ( $_GET ['id'] )) {
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
-			jwplayer("myElement").setup({
-				file: <?php echo json_encode($source); ?>,
-				width: "100%",
-				aspectratio: "16:9",
-				autostart: true,
-				mute: true
-			});
-			
 			$(window).load(function() {
-				$("#chat").height($("#video").height()-10);
+				$("#chat").height($("#video").height()-20);
+				$('#chatbox').animate({ scrollTop: $('#chatbox')[0].scrollHeight}, 0);
 			});
 			
 			$(window).resize(function(){
-				$("#chat").height($("#video").height()-10);
+				$("#chat").height($("#video").height()-20);
 			});
 			
 			//If user submits the form
@@ -118,7 +121,7 @@ if (isset ( $_GET ['id'] )) {
 
 			//Load the file containing the chat log
 			function loadLog(){		
-				var oldscrollHeight = $("#chatbox").attr("scrollHeight") - 20; //Scroll height before the request
+				var oldscrollHeight = $('#chatbox')[0].scrollHeight; //Scroll height before the request
 				var path = "chat/";
 				path += getQueryVariable("id");
 				path += ".html";
@@ -129,15 +132,16 @@ if (isset ( $_GET ['id'] )) {
 						$("#chatbox").html(html); //Insert chat log into the #chatbox div	
 						
 						//Auto-scroll			
-						var newscrollHeight = $("#chatbox").attr("scrollHeight") - 20; //Scroll height after the request
+						var newscrollHeight = $('#chatbox')[0].scrollHeight; //Scroll height after the request
 						if(newscrollHeight > oldscrollHeight){
-							$("#chatbox").animate({ scrollTop: newscrollHeight }, 'normal'); //Autoscroll to bottom of div
+							$("#chatbox").animate({ scrollTop: $('#chatbox')[0].scrollHeight}, 0);
 						}
 				  	},
 				});
+				$("#chat").height($("#video").height()-20);
 			}
 			
-			setInterval (loadLog, 1000);
+			setInterval (loadLog, 500);
 			function getQueryVariable(variable)
 			{
 			       var query = window.location.search.substring(1);

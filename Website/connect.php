@@ -2,7 +2,7 @@
 $ip = $_SERVER ['REMOTE_ADDR'];
 $channel = "user1";
 $address = 'mediatech-i.comp.nus.edu.sg';
-$port = 9000;
+$port = 9001;
 
 $input = '';
 $input .= $ip;
@@ -29,5 +29,5 @@ socket_close ( $socket );
 
 $source = $out;
 
-$source = "rtmp://fms.12E5.edgecastcdn.net/0012E5/mp4:videos/8Juv1MVa-485.mp4";
+//$source = 'rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:123';
 ?>
