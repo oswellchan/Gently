@@ -1,0 +1,5 @@
+*.classpath
+MMS/.project
+MMS/bin/GUIController.class
+*.class
+MMS/bin/MMSGUI.fxml
