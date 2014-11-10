@@ -87,13 +87,13 @@ final class MMSWebRequestProcessor implements Runnable{
 //			}
 //		 }
 //	    }
-	    s.close();
 	    
 	    if (serverIP == null) {
 	    	//error in allocation
 	    } else {
 	    	output.writeBytes(serverIP);
 	    }
+	    s.close();
 	    
 	} catch (Exception ex){
 	    ex.printStackTrace();
