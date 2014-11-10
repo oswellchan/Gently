@@ -1,5 +1,3 @@
-package gently.MMS;
-
 public class MMSEdge implements Runnable{
 
     @Override

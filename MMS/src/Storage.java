@@ -1,13 +1,9 @@
-package gently.MMS;	
-
 import java.util.*;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONML;
 import org.json.JSONObject;
-
-import gently.MMS.Server;
 
 public class Storage {
 	

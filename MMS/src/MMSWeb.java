@@ -1,5 +1,3 @@
-package gently.MMS;
-
 import java.util.*;
 import java.io.*;
 import java.net.*;

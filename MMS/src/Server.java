@@ -1,5 +1,3 @@
-package gently.MMS;
-
 import java.util.*;
 
 public class Server {
