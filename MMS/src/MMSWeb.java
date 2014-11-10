@@ -94,9 +94,6 @@ final class MMSWebRequestProcessor implements Runnable{
 	    }
 	    
 	    output.close();
-	    
-	    // close current connection
-	    s.close();
 			
 	} catch (Exception ex){
 	    ex.printStackTrace();
