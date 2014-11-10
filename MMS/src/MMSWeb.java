@@ -54,6 +54,7 @@ final class MMSWebRequestProcessor implements Runnable{
 	
     public void run() {
 	try{
+		
 	    //Create a reader to read from webComponent
 	    BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
 	    String input = br.readLine();
@@ -72,7 +73,7 @@ final class MMSWebRequestProcessor implements Runnable{
 //	    ArrayList<Server> serversWithStream = mem.getExistingServersStreaming(streamerID);
 	    
 	    String serverIP = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:123";
-	    
+	    serverIP += "\n";
 //	    if (serversWithStream != null) {
 //		 for (Server s : preferenceList) {
 //			boolean isSuccessful = s.isSuccessfulInAddingUser();
@@ -86,15 +87,14 @@ final class MMSWebRequestProcessor implements Runnable{
 //			}
 //		 }
 //	    }
+	    s.close();
 	    
 	    if (serverIP == null) {
-		//error in allocation
+	    	//error in allocation
 	    } else {
-		output.writeBytes(serverIP);
+	    	output.writeBytes(serverIP);
 	    }
 	    
-	    output.close();
-			
 	} catch (Exception ex){
 	    ex.printStackTrace();
 	}
