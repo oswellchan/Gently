@@ -1,5 +1,8 @@
 *.classpath
-MMS/.project
-MMS/bin/GUIController.class
+*.project
+*.buildpath
 *.class
-MMS/bin/MMSGUI.fxml
+bin/
+Website/others/
+Website/chat/
+.settings/
