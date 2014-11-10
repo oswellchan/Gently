@@ -17,8 +17,9 @@ class MMSWeb implements Runnable {
 	    Socket s = null;
 	    
 	    try {
-		System.out.println("waiting");
+		System.out.println("Waiting for connection at " + _serverSocket.getLocalPort());
 		s = _serverSocket.accept();
+		System.out.println("Connection established from " + s.getInetAddress());
 	    } catch (IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -58,10 +59,10 @@ final class MMSWebRequestProcessor implements Runnable{
 	    //Create a reader to read from webComponent
 	    BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
 	    String input = br.readLine();
-			
+		System.out.println("Input	: " + input);
 	    //Create outputstream to return to reader
 	    DataOutputStream output = new DataOutputStream(s.getOutputStream());
-			
+		
 	    String[] splitInput = input.split(" ");
 	    String clientIP = splitInput[0];
 	    String streamerID = splitInput[1];
@@ -92,6 +93,7 @@ final class MMSWebRequestProcessor implements Runnable{
 	    	//error in allocation
 	    } else {
 	    	output.writeBytes(serverIP);
+	    	System.out.println("Output	: " + serverIP);
 	    }
 	    s.close();
 	    

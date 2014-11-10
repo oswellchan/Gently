@@ -1,6 +1,6 @@
 <?php
 $ip = $_SERVER ['REMOTE_ADDR'];
-$channel = "user1";
+$channel = $_GET['id'];
 $address = 'mediatech-i.comp.nus.edu.sg';
 $port = 9001;
 
