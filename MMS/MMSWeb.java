@@ -69,25 +69,25 @@ final class MMSWebRequestProcessor implements Runnable{
 	    
 	    InternalMemory mem = InternalMemory.getInstance();
 	    
-	    String location = mem.getLocationOfIP(clientIP);
-	    ArrayList<Server> preferenceList = null;
-	    ArrayList<Server> serversWithStream = mem.getExistingServersStreaming(streamerID);
+//	    String location = mem.getLocationOfIP(clientIP);
+//	    ArrayList<Server> preferenceList = null;
+//	    ArrayList<Server> serversWithStream = mem.getExistingServersStreaming(streamerID);
 	    
-	    String serverIP = null;
+	    String serverIP = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:123";
 	    
-	    if (serversWithStream != null) {
-		 for (Server s : preferenceList) {
-			boolean isSuccessful = s.isSuccessfulInAddingUser();
-			
-			if (isSuccessful) {
-			    //contact server s to get stream
-			    
-			    serversWithStream.add(s);
-			    serverIP = s.getServerIP();
-			    break;
-			}
-		 }
-	    }
+//	    if (serversWithStream != null) {
+//		 for (Server s : preferenceList) {
+//			boolean isSuccessful = s.isSuccessfulInAddingUser();
+//			
+//			if (isSuccessful) {
+//			    //contact server s to get stream
+//			    
+//			    serversWithStream.add(s);
+//			    serverIP = s.getServerIP();
+//			    break;
+//			}
+//		 }
+//	    }
 	    
 	    if (serverIP == null) {
 		//error in allocation
