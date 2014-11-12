@@ -1,3 +1,7 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.*;
 import java.io.*;
 import java.net.*;
@@ -66,10 +70,10 @@ final class MMSWebRequestProcessor implements Runnable{
 	    String[] splitInput = input.split(" ");
 	    String clientIP = splitInput[0];
 	    String streamerID = splitInput[1];
+	    String clientLocation = getLocationOfIPaddress(clientIP);
 	    
 	    InternalMemory mem = InternalMemory.getInstance();
 	    
-//	    String location = mem.getLocationOfIP(clientIP);
 //	    ArrayList<Server> preferenceList = null;
 //	    ArrayList<Server> serversWithStream = mem.getExistingServersStreaming(streamerID);
 	    
@@ -90,7 +94,7 @@ final class MMSWebRequestProcessor implements Runnable{
 //	    }
 	    
 	    if (serverIP == null) {
-	    	//error in allocation
+	    //error in allocation
 	    } else {
 	    	output.writeBytes(serverIP);
 	    	System.out.println("Output	: " + serverIP);
@@ -101,4 +105,48 @@ final class MMSWebRequestProcessor implements Runnable{
 	    ex.printStackTrace();
 	}
     }	
+    
+    //Given a IP, return the geo-location of that IP address
+    private static String getLocationOfIPaddress(String clientIP) {
+   		Connection conn;
+       	try {
+       		conn = DriverManager.getConnection("jdbc:mysql://localhost/gently", "root", "");
+       		
+       		double ipNum = convertToIPNumber(clientIP);
+       		
+       		String query = "SELECT `country_name` FROM `ip2location_db1` WHERE "
+       				+ "(`ip_from` <=" + ipNum + ") AND (`ip_to` >=" + ipNum + "16785407)";
+       		Statement stmt = conn.createStatement();
+       		ResultSet rs = stmt.executeQuery(query);
+       		
+       		while(rs.next()) {
+       			return rs.getString("country_name");
+       		} 
+       		
+       	} catch (Exception e) {
+       		System.err.println(e);
+       	}
+       	
+		return null;
+   	}
+    
+    //for IPV4
+    public static double convertToIPNumber(String IPAddress) {
+    	
+    	String[] arrDec;
+    	double IPNum = 0;
+    	
+    	
+    	if (IPAddress == "") {
+    		return 0;
+    	} else {
+    		arrDec = IPAddress.split("\\.");
+    		for (int i=0; i<arrDec.length; i++) {
+    			IPNum += ((Integer.parseInt(arrDec[i])%256) * Math.pow(256 ,(3 - i )));
+    		}
+ 
+    		return IPNum;
+    	}
+    	
+    }
 }
