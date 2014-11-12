@@ -66,7 +66,7 @@ if (isset ( $_GET ['id'] )) {
 						    $contents = fread($handle, filesize("chat/".$_GET ['id'].".html"));
 						    fclose($handle);
 						     
-						    echo $contents;
+						    //echo $contents;
 						} else {
 							fopen("chat/".$_GET ['id'].".html", "w");
 							
@@ -101,6 +101,7 @@ if (isset ( $_GET ['id'] )) {
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
+			
 			$(window).load(function() {
 				$("#chat").height($("#video").height()-20);
 				$('#chatbox').animate({ scrollTop: $('#chatbox')[0].scrollHeight}, 0);
@@ -122,6 +123,8 @@ if (isset ( $_GET ['id'] )) {
 
 			//Load the file containing the chat log
 			function loadLog(){		
+				//$("#chatbox").width($("#chatbox").width());
+				$("#chatbox").width($(window).width()*0.25 - 73);
 				var oldscrollHeight = $('#chatbox')[0].scrollHeight; //Scroll height before the request
 				var path = "chat/";
 				path += getQueryVariable("id");
