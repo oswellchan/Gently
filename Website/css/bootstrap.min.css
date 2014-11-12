@@ -6823,3 +6823,9 @@ html {
 	width: 19%; 
 	display: inline-block;
 }
+
+.navbar-brand-img {
+    margin-top: -6;
+    margin-right: 10px;
+	
+}

@@ -33,6 +33,7 @@ if (isset ( $_GET ['id'] )) {
 <html>
 <head>
 <title><?php echo $chnrow["name"]; ?> - Gently</title>
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 <link href="/css/bootstrap.min.css" rel="stylesheet">
 <script src="/jwplayer/jwplayer.js"></script>
 </head>
