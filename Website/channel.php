@@ -112,12 +112,16 @@ if (isset ( $_GET ['id'] )) {
 			});
 			
 			//If user submits the form
-			$("#submitmsg").click(function(){	
+			$("#submitmsg").click(function(){
 				var clientmsg = $("#usermsg").val();
-				var board = getQueryVariable("id");
-				$.post("post.php", {text: clientmsg, id: board});				
+				clientmsg = clientmsg.trim();
+				if (clientmsg != ""){
+					var board = getQueryVariable("id");
+					$.post("post.php", {text: clientmsg, id: board});
+					loadLog();
+				}
+				
 				$("#usermsg").val("");
-				loadLog();
 				return false;
 			});
 

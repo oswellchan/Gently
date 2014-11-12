@@ -38,8 +38,13 @@ if (isset ( $_POST ['channelName'] )) {
 	}
 }
 
-
-
+if (isset ( $_GET ['deleted'] )) {
+	if ($_GET ['deleted'] == "true") {
+		echo '<div class="alert alert-success" role="success"><center>Chat log deleted.</center></div>';
+	} else {
+		echo '<div class="alert alert-warning" role="warning"><center>Error deleting chat log.</center></div>';	
+	}
+}
 
 $sql = "SELECT * FROM `channel` WHERE username='".$_SESSION['username']."'";
 $result = mysqli_query($conn, $sql);
@@ -89,7 +94,16 @@ mysqli_close($conn);
 			</div>
 			
 			</fieldset>
+			
 			</form>
+			
+			<fieldset>
+			<legend>Chatbox</legend>
+			<div class="form-group">
+			  	<label for="channelName">Delete chat log</label><br>
+			  	<button class="btn btn-danger" onclick="deleteConfirm()">Delete</button>
+			</div>
+			</fieldset>
 		</div>
 	</div>
 
@@ -98,6 +112,14 @@ mysqli_close($conn);
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script>
+		function deleteConfirm() {
+		    if (confirm("Chat log deletion is permanent! Proceed?") == true) {
+		    	location.href = "deletechat.php";
+		    } else {
+		    }
+		}
+	</script>
 	
 </body>
 </html>
