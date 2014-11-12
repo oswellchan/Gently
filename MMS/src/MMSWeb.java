@@ -71,13 +71,36 @@ final class MMSWebRequestProcessor implements Runnable{
 	    String clientIP = splitInput[0];
 	    String streamerID = splitInput[1];
 	    String clientLocation = getLocationOfIPaddress(clientIP);
+
+	    String serverIP;
 	    
 	    InternalMemory mem = InternalMemory.getInstance();
 	    
 //	    ArrayList<Server> preferenceList = null;
 //	    ArrayList<Server> serversWithStream = mem.getExistingServersStreaming(streamerID);
-	    
-	    String serverIP = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:123";
+	    switch (streamerID) {
+		case "user1":
+			serverIP = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:123";
+			break;
+		case "user2":
+			serverIP = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:456";
+			break;
+		case "user3":
+			serverIP = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:789";
+			break;
+		case "user4":
+			serverIP = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:321";
+			break;
+		case "user5":
+			serverIP = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:654";
+			break;
+		case "user6":
+			serverIP = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:987";
+			break;
+		default:
+			serverIP = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:123";
+			break;
+		}
 	    serverIP += "\n";
 //	    if (serversWithStream != null) {
 //		 for (Server s : preferenceList) {
