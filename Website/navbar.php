@@ -64,7 +64,7 @@ echo '
 					<li><a href="/random.php">Random</a></li>
 				</ul>
 				<form id="form" class="navbar-form navbar-right" method="get" action="search.php">
-					<input id="search" name="search" type="text" class="form-control col-lg-8" placeholder="Search">
+					<input id="search" name="search" type="text" class="form-control col-lg-8 navsearch" placeholder="Search">
 				</form>
 ';
 
