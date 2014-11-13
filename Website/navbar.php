@@ -77,7 +77,7 @@ if (isset ( $_SESSION ['username'] )) {
 						<ul class="dropdown-menu">
 							<li><a href="/accountsettings.php">Account settings</a></li>
 							<li><a href="/channelsettings.php">Channel settings</a></li>
-							<li><a href="#">Manage favourites</a></li>
+							<li><a href="managefavourites.php">Manage favourites</a></li>
 							<li class="divider"></li>
 							<li><a href="';
 	if (isset ( $_GET ['id'] )) {

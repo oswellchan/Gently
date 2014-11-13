@@ -34,7 +34,6 @@ if (isset ( $_POST ['channelName'] )) {
 		echo '<div class="alert alert-success" role="success"><center>Settings saved.</center></div>';
 	} else {
 		echo '<div class="alert alert-warning" role="warning"><center>Error updating record: '.$conn->error.'</center></div>';
-			
 	}
 }
 
@@ -106,7 +105,7 @@ mysqli_close($conn);
 			</fieldset>
 		</div>
 	</div>
-
+</div>
 	
     
 	<script
@@ -114,7 +113,7 @@ mysqli_close($conn);
 	<script src="js/bootstrap.min.js"></script>
 	<script>
 		function deleteConfirm() {
-		    if (confirm("Chat log deletion is permanent! Proceed?") == true) {
+		    if (confirm("Chat log deletion is permanent!\nProceed?") == true) {
 		    	location.href = "deletechat.php";
 		    } else {
 		    }

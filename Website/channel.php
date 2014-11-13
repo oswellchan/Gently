@@ -43,6 +43,36 @@ if (isset ( $_GET ['id'] )) {
 		include 'connect.php';
 		?>
         
+        <?php 
+	$id = str_replace('#', '', $_GET ['id']);
+	$servername = "localhost";
+	$username = "gently";
+	$password = "downthestream";
+	$dbname = "gently";
+	
+	// Create connection
+	$conn = mysqli_connect($servername, $username, $password, $dbname);
+	// Check connection
+	if (!$conn) {
+		die("Connection failed: " . mysqli_connect_error());
+	}
+	
+	$sql = "SELECT * FROM `favourites` WHERE username='".$_SESSION['username']."'";
+	$result = mysqli_query($conn, $sql);
+	
+	if (mysqli_num_rows($result) > 0) {
+		$row = mysqli_fetch_assoc($result);
+		$fav = $row['favourites'];
+		if (strpos($fav,$_GET['id']) !== false) {
+			$faved = true;
+		} else {
+			$faved = false;
+		}
+	}
+	
+	mysqli_close($conn);
+?>
+        
 		<div class="container-fluid">
 		<div class="row">
 			<div id="video" class="col-md-9" onresize="resizeScript">
@@ -84,7 +114,7 @@ if (isset ( $_GET ['id'] )) {
 		
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
-				<h1><?php echo $chnrow["name"]; ?></h1>
+				<h1 style="float: left"><?php echo $chnrow["name"]; ?> <button class="btn btn-success btn-xs" id="favbtn" style="margin-left: 10px" <?php if ($faved == true) echo 'disabled';?>>+ Favourites</button></h1>
 			</div>
 		</div>
 		<div class="row">
@@ -122,6 +152,13 @@ if (isset ( $_GET ['id'] )) {
 				}
 				
 				$("#usermsg").val("");
+				return false;
+			});
+
+			$("#favbtn").click(function(){
+				var chn = getQueryVariable("id");
+				$.post("addfav.php", {id: chn});
+				$("#favbtn").attr('disabled','disabled');
 				return false;
 			});
 

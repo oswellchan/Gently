@@ -4,7 +4,7 @@ if(isset($_SESSION['username'])){
 	$text = $_POST['text'];
 	 
 	$fp = fopen("chat/".$_POST['id'].".html", 'a');
-	fwrite($fp, "<div class='msgln'><span title='".date("D, d M Y, g:i A")."'><b>".$_SESSION['username']."</b>: ".stripslashes(htmlspecialchars($text))."</span><br></div>");
+	fwrite($fp, "<div class='msgln'><abbr title='".date("D, d M Y, g:i A")."'><b>".$_SESSION['username']."</b></abbr>: ".stripslashes(htmlspecialchars($text))."<br></div>");
 	fclose($fp);
 }
 ?>

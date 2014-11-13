@@ -11,44 +11,89 @@
 <div class="container">
 	<?php
 		if (isset ( $_SESSION ['username'] )) {
-			echo'
-			<div class="row">
-				<h1>Favourites</h1>
-				<div class="col-md-4">
-					<a href="channel.php?id=user1"> <img
-						src="images/320px-Placeholder.jpg"><br>
-						<h4>MEGAMAN SPEED RUN!</h4></a>69 viewers watching User1
-				</div>
-				<div class="col-md-4">
-					<a href="channel.php?id=user2"><img
-						src="images/320px-Placeholder.jpg"><br>
-						<h4>2014 World Championship</h4></a>10 viewers watching User2
-				</div>
-				<div class="col-md-4">
-					<a href="channel.php?id=user3"><img
-						src="images/320px-Placeholder.jpg"><br>
-						<h4>Watch me play blindfolded!</h4></a>39 viewers watching User3
-				</div>
-			</div>
-		';}
+			$servername = "localhost";
+			$username = "gently";
+			$password = "downthestream";
+			$dbname = "gently";
+			
+			// Create connection
+			$conn = mysqli_connect($servername, $username, $password, $dbname);
+			// Check connection
+			if (!$conn) {
+				die("Connection failed: " . mysqli_connect_error());
+			}
+			
+			$sql = "SELECT * FROM `favourites` WHERE username='".$_SESSION['username']."'";
+			$result = mysqli_query($conn, $sql);
+			if (mysqli_num_rows($result) > 0) {
+				$row = mysqli_fetch_assoc($result);
+				$fav = trim($row['favourites']);
+				$fav = str_replace(' ',"', '",$fav);
+				$fav = "'".$fav."'";
+				
+				$sql = "SELECT * FROM `channel` WHERE `username` IN (".$fav.") ORDER BY `viewers` DESC";
+				$result = mysqli_query($conn, $sql);
+				if (mysqli_num_rows($result) > 0) {
+					echo '<div class="row">
+			<h1>Favourites</h1>';
+					for ($i=0;$i<min(3,mysqli_num_rows($result));$i++){
+					$row = mysqli_fetch_assoc($result);
+					
+					echo '<div class="col-md-4">
+					<a href="channel.php?id='.$row["username"].'"><img
+					src="images/320px-Placeholder.jpg"><br>
+					<h4>'.$row["name"].'</h4></a>'.$row["viewers"].' viewers watching '.$row["username"].'
+							</div>
+					';
+					}
+					echo '</div>';
+				}
+			}
+
+			mysqli_close($conn);
+			
+			}
 	?>
 		<div class="row">
 			<h1>Popular</h1>
-			<div class="col-md-4">
-				<a href="channel.php?id=user4"><img
-					src="images/320px-Placeholder.jpg"><br>
-					<h4>Untitled Channel</h4></a>1 viewer watching User4
-			</div>
-			<div class="col-md-4">
-				<a href="channel.php?id=user5"><img
-					src="images/320px-Placeholder.jpg"><br>
-					<h4>sitting around doing nothing</h4></a>729 viewers watching User5
-			</div>
-			<div class="col-md-4">
-				<a href="channel.php?id=user6"><img
-					src="images/320px-Placeholder.jpg"><br>
-					<h4>Worst Channel Ever</h4></a>9283 viewers watching User6
-			</div>
+			
+			<?php 
+			
+			$servername = "localhost";
+			$username = "gently";
+			$password = "downthestream";
+			$dbname = "gently";
+			
+			// Create connection
+			$conn = mysqli_connect($servername, $username, $password, $dbname);
+			// Check connection
+			if (!$conn) {
+				die("Connection failed: " . mysqli_connect_error());
+			}
+			
+			$sql = "SELECT * FROM `channel` ORDER BY viewers DESC";
+			$result = mysqli_query($conn, $sql);
+			
+			if (mysqli_num_rows($result) > 0) {
+				// output data of each row
+				for ($i=0;$i<min(3,mysqli_num_rows($result));$i++){
+					$row = mysqli_fetch_assoc($result);
+					
+					echo '
+						<div class="col-md-4">
+							<a href="channel.php?id='.$row["username"].'"><img
+								src="images/320px-Placeholder.jpg"><br>
+								<h4>'.$row["name"].'</h4></a>'.$row["viewers"].' viewers watching '.$row["username"].'
+						</div>
+						';
+				}
+			} else {
+				echo "0 results";
+			}
+			
+			mysqli_close($conn);
+			
+			?>
 		</div>
 	</div>
 
