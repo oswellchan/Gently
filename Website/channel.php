@@ -63,7 +63,7 @@ if (isset ( $_GET ['id'] )) {
 	if (mysqli_num_rows($result) > 0) {
 		$row = mysqli_fetch_assoc($result);
 		$fav = $row['favourites'];
-		if (strpos($fav,$_GET['id']) !== false) {
+		if (strpos($fav,$_GET['id']) !== false || $_SESSION['username']==$_GET['id']) {
 			$faved = true;
 		} else {
 			$faved = false;
@@ -114,7 +114,7 @@ if (isset ( $_GET ['id'] )) {
 		
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
-				<h1 style="float: left"><?php echo $chnrow["name"]; ?> <button class="btn btn-success btn-xs" id="favbtn" style="margin-left: 10px" <?php if ($faved == true) echo 'disabled';?>>+ Favourites</button></h1>
+				<h1 style="float: left"><?php echo $chnrow["name"]; ?> <button class="btn btn-success btn-xs" id="favbtn" style="margin-left: 10px" <?php if ($faved == true) echo 'disabled';?>>+ Favourite</button></h1>
 			</div>
 		</div>
 		<div class="row">
