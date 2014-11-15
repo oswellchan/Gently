@@ -98,8 +98,9 @@ if (isset ( $_GET ['id'] )) {
 						     
 						    //echo $contents;
 						} else {
-							fopen("chat/".$_GET ['id'].".html", "w");
-							
+							$fp = fopen("chat/".$_GET ['id'].".html", "w");
+							fwrite($fp, "<div class='msgln'>There doesn't seem to be anything here. Start chatting!<br></div>");
+							fclose($fp);
 						}
 						?>
 					</div>
