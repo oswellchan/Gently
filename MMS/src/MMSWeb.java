@@ -76,6 +76,9 @@ final class MMSWebRequestProcessor implements Runnable{
 	    
 	    InternalMemory mem = InternalMemory.getInstance();
 	    
+	    //choose best server
+	    serverIP = mem.chooseBest(streamerID);
+	    
 //	    ArrayList<Server> preferenceList = null;
 //	    ArrayList<Server> serversWithStream = mem.getExistingServersStreaming(streamerID);
 	    switch (streamerID) {
@@ -101,6 +104,7 @@ final class MMSWebRequestProcessor implements Runnable{
 			serverIP = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:123";
 			break;
 		}
+	    
 	    serverIP += "\n";
 //	    if (serversWithStream != null) {
 //		 for (Server s : preferenceList) {

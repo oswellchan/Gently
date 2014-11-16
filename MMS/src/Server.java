@@ -51,4 +51,14 @@ public class Server {
 	
 	return isSuccessful;
     }
+    
+    public void removeUser() {
+	while (_inUse) {
+	    //wait to prevent concurrent modification
+	}
+	
+	_currentLoad--;
+	
+	_inUse = false;
+    }
 }
