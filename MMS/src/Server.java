@@ -59,6 +59,10 @@ public class Server {
 	
 	_currentLoad--;
 	
+	if (_currentLoad < 0) {
+		_currentLoad = 0;
+	}
+	
 	_inUse = false;
     }
 }

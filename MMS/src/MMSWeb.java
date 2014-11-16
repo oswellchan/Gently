@@ -70,40 +70,45 @@ final class MMSWebRequestProcessor implements Runnable{
 	    String[] splitInput = input.split(" ");
 	    String clientIP = splitInput[0];
 	    String streamerID = splitInput[1];
-	    String clientLocation = getLocationOfIPaddress(clientIP);
+	    //String clientLocation = getLocationOfIPaddress(clientIP);
 
 	    String serverIP;
 	    
 	    InternalMemory mem = InternalMemory.getInstance();
+	    mem.addCounter();
 	    
 	    //choose best server
 	    serverIP = mem.chooseBest(streamerID);
 	    
+	    if (serverIP == null) {
+	    	serverIP = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:123";
+	    }
+	    
 //	    ArrayList<Server> preferenceList = null;
 //	    ArrayList<Server> serversWithStream = mem.getExistingServersStreaming(streamerID);
-	    switch (streamerID) {
-		case "user1":
-			serverIP = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:123";
-			break;
-		case "user2":
-			serverIP = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:456";
-			break;
-		case "user3":
-			serverIP = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:789";
-			break;
-		case "user4":
-			serverIP = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:321";
-			break;
-		case "user5":
-			serverIP = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:654";
-			break;
-		case "user6":
-			serverIP = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:987";
-			break;
-		default:
-			serverIP = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:123";
-			break;
-		}
+//	    switch (streamerID) {
+//		case "user1":
+//			serverIP = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:123";
+//			break;
+//		case "user2":
+//			serverIP = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:456";
+//			break;
+//		case "user3":
+//			serverIP = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:789";
+//			break;
+//		case "user4":
+//			serverIP = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:321";
+//			break;
+//		case "user5":
+//			serverIP = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:654";
+//			break;
+//		case "user6":
+//			serverIP = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:987";
+//			break;
+//		default:
+//			serverIP = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:123";
+//			break;
+//		}
 	    
 	    serverIP += "\n";
 //	    if (serversWithStream != null) {
