@@ -64,6 +64,28 @@ public class InternalMemory {
 	counter++;
     }
     
+    public void setLoad(int viewer1, int viewer2) {
+	counter = viewer1 + viewer2;
+	
+	int es1Load = 0;
+	int es2Load = 0;
+	
+	if (viewer1 > 3) {
+	    es1Load = 3;
+	    es2Load = viewer1 - 3;
+	} else {
+	    es1Load = viewer1;
+	}
+	
+	es1._currentLoad = es1Load;
+	es0._currentLoad = es2Load;
+	es2._currentLoad = viewer2;
+	
+	System.out.println(es1._serverIP + " load is: " + es1._currentLoad);
+	System.out.println(es2._serverIP + " load is: " + es2._currentLoad);
+	System.out.println(es0._serverIP + " load is: " + es0._currentLoad);
+    }
+    
     public static void main(String[] args) {
     	
     }

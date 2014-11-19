@@ -65,4 +65,15 @@ public class Server {
 	
 	_inUse = false;
     }
+    
+    public void setUser(int users) {
+	while (_inUse) {
+	    //wait to prevent concurrent modification
+	}
+	
+	_currentLoad = users;
+	
+	
+	_inUse = false;
+    }
 }

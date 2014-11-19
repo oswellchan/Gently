@@ -10,6 +10,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 
@@ -22,11 +24,12 @@ public class GUIController {
     private URL location;
 
     @FXML
-    private TextArea outputWindow;
+    private static TextArea outputWindow;
 
     @FXML
     private Button startButton;
-
+    
+    static MMSWeb webComponent;
 
     @FXML
     void handleStartApplication(MouseEvent event) {
@@ -44,7 +47,7 @@ public class GUIController {
     
     public static void activate() {
 	try {
-	    MMSWeb webComponent = new MMSWeb(9001);
+	    webComponent = new MMSWeb(9001);
 	    System.out.println("starting");
 	    Thread webThread = new Thread(webComponent);
 	    
@@ -53,8 +56,22 @@ public class GUIController {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
-  }
-
+    }
+    
+    @FXML
+    public static void onEnter(KeyEvent event) {
+	if (event.getCode().equals(KeyCode.ENTER)) {
+	   
+	    String instruction = outputWindow.getText();
+	    String[] thing = instruction.split(" ");
+	    int v1 = Integer.parseInt(thing[0].trim());
+	    int v2 = Integer.parseInt(thing[1].trim());
+	    
+	    InternalMemory mem = InternalMemory.getInstance();
+	    mem.setLoad(v1, v2);
+	    outputWindow.clear();
+	}
+    }
 }
 
 
