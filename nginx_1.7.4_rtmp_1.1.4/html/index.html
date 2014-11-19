@@ -4,20 +4,16 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <title>Live 1 . 1080</title>
         
-        <script type="text/javascript" src="jwplayer.js"></script>
         </head>
     <body>
-    <div id="myElement">Loading the player....</div>
-        <script type ="text/javascript">
-        jwplayer("myElement").setup({
-            file: "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:1080",
-            height: 480,
-            width: 720});
-        
-        </script>
 
 	<div style="clear:both;float:left;font-size:10px;">
-			<iframe frameBorder="0" seamless src="http://mediatech-i.comp.nus.edu.sg:455/stat" width="900px" height="500px"></iframe>			
-		</div>
+		<iframe frameBorder="0" seamless src="http://mediatech-i.comp.nus.edu.sg:455/stat" width="900px" height="500px"></iframe>			
+	</div>
+	<scripttype="text/javascript">
+	setInterval(function() {
+        window.location.reload();
+       }, 5000); 
+				</script>
     </body>
 </html>

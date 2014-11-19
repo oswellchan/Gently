@@ -33,9 +33,10 @@
 				
 				$sql = "SELECT * FROM `channel` WHERE `username` IN (".$fav.") ORDER BY `viewers` DESC";
 				$result = mysqli_query($conn, $sql);
+				echo '<div class="row">
+				<h1>Favourites</h1>';
 				if (mysqli_num_rows($result) > 0) {
-					echo '<div class="row">
-			<h1>Favourites</h1>';
+					
 					for ($i=0;$i<min(3,mysqli_num_rows($result));$i++){
 					$row = mysqli_fetch_assoc($result);
 					
@@ -46,8 +47,11 @@
 							</div>
 					';
 					}
-					echo '</div>';
+					
+				} else {
+					echo 'Start adding some channels to your favourites!';
 				}
+				echo '</div>';
 			}
 
 			mysqli_close($conn);

@@ -43,7 +43,8 @@ if (isset ( $_POST ['username'] )) {
 		
 		$sql1 = "INSERT INTO login (username, password) VALUES ('".$_POST ['username']."', '".$_POST ['password']."')";
 		$sql2 = "INSERT INTO channel (username, streamkey, name, description) VALUES ('".$_POST ['username']."',".$key.", 'Untitled Channel', '')";
-		if (mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2)) {
+		$sql3 = "INSERT INTO favourites (username, favourites) VALUES ('".$_POST ['username']."', '')";
+		if (mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($conn, $sql3)) {
 		    echo '<div class="alert alert-success" role="success"><center>Account successfully created.</center></div>';
 		} else {
 		    echo "Error: " . $sql1 . "<br>" . mysqli_error($conn);
