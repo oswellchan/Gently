@@ -78,13 +78,69 @@ if (isset ( $_GET ['id'] )) {
 			<div id="video" class="col-md-9" onresize="resizeScript">
 				<div id="myElement">Loading the player...</div>
 				<script>
-				jwplayer("myElement").setup({
-					file: <?php echo json_encode($source); ?>,
-					width: "100%",
-					aspectratio: "16:9",
-					autostart: true,
-					mute: true
-				});
+				var source = null;
+				var serverstr = <?php echo json_encode($serverstr); ?>;
+				var esList = [];
+				var ipList = serverstr.split(" ");
+				for (var i = 0; i < ipList.length; i++) {
+				    esList.push({
+				        name: ipList[i],
+				        ping: -1,
+				        starttime: 0,
+				        status: 'nil'
+				    });
+				}
+
+				for (var i = 0; i < esList.length; i++) {
+				    ping(esList[i]);
+				}
+
+				function ping(server) {
+				    this.img = new Image();
+
+				    this.img.onload = function () {
+				        server.ping = Date.now() - server.starttime;
+				        server.status = 'responded';
+				        if (source == null) {
+				            source = server.name;
+							console.log("SELECTED: " + source);
+							
+				            jwplayer("myElement").setup({
+				                file: source,
+				                width: "100%",
+				                aspectratio: "16:9",
+				                autostart: true,
+				                mute: true
+				            });
+				        }
+				        console.log(server.ping);
+				    };
+
+				    this.img.onerror = function (e) {
+				        server.ping = Date.now() - server.starttime;
+				        server.status = 'responded';
+				        if (source == null) {
+				            source = server.name;
+							console.log("SELECTED: " + source);
+
+				            jwplayer("myElement").setup({
+				                file: source,
+				                width: "100%",
+				                aspectratio: "16:9",
+				                autostart: true,
+				                mute: true
+				            });
+				        }
+				        console.log(server.ping + " " + server.name);
+				    };
+
+				    server.starttime = Date.now();
+				    if (server.name.lastIndexOf("http://", 0) === 0) {
+				        this.img.src = server.name;
+				    } else {
+				        this.img.src = "http://" + server.name;
+				    }
+				}
 				</script>
 			</div>
 

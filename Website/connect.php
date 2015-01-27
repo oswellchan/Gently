@@ -26,9 +26,12 @@ socket_write ( $socket, $input );
 
 $out = socket_read ( $socket, 2048, PHP_NORMAL_READ );
 socket_close ( $socket );
+// expecting "http://www.w3schools.com imgur.com mediatech-i.comp.nus.edu.sg google.com" format for list of ES
+$serverstr = substr($out, 0, strlen($out)-1);
+$serverstr = "http://www.w3schools.com imgur.com mediatech-i.comp.nus.edu.sg google.com";
 
-$source = $out;
-$source = substr($out, 0, strlen($out)-1);
+
 
 //$source = 'rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:123';
+
 ?>
