@@ -38,12 +38,13 @@ if (isset ( $_GET ['id'] )) {
 <script src="/jwplayer/jwplayer.js"></script>
 </head>
 <body>
-		<?php
-		include 'navbar.php';
-		include 'connect.php';
-		?>
+<?php
+	include 'navbar.php';
+	include 'connect.php';
+?>
         
-        <?php 
+<?php 
+if (isset ( $_SESSION['username'] )) {
 	$id = str_replace('#', '', $_GET ['id']);
 	$servername = "localhost";
 	$username = "gently";
@@ -71,6 +72,7 @@ if (isset ( $_GET ['id'] )) {
 	}
 	
 	mysqli_close($conn);
+}
 ?>
         
 		<div class="container-fluid">
@@ -171,7 +173,7 @@ if (isset ( $_GET ['id'] )) {
 		
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
-				<h1 style="float: left"><?php echo $chnrow["name"]; ?> <button class="btn btn-success btn-xs" id="favbtn" style="margin-left: 10px" <?php if ($faved == true) echo 'disabled';?>>+ Favourite</button></h1>
+				<h1 style="float: left"><?php echo $chnrow["name"]; ?> <button class="btn btn-success btn-xs" id="favbtn" style="margin-left: 10px" <?php if (!isset($faved) || $faved == true) echo 'disabled';?>>+ Favourite</button></h1>
 			</div>
 		</div>
 		<div class="row">
