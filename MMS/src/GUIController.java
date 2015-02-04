@@ -1,17 +1,11 @@
-
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-import javafx.scene.input.ContextMenuEvent;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 
@@ -24,55 +18,52 @@ public class GUIController {
     private URL location;
 
     @FXML
-    private static TextArea outputWindow;
+    private Button addButton;
+
+    @FXML
+    private ImageView logo;
+
+    @FXML
+    private TextArea outputWindow;
+
+    @FXML
+    private Button removeButton;
 
     @FXML
     private Button startButton;
-    
-    static MMSWeb webComponent;
 
     @FXML
-    void handleStartApplication(MouseEvent event) {
-	System.out.println("activated");
-	activate();
+    private Button stopButton;
+
+
+    @FXML
+    void openAddWindow(MouseEvent event) {
+    }
+
+    @FXML
+    void removeSelection(MouseEvent event) {
+    }
+
+    @FXML
+    void startListeners(MouseEvent event) {
+	
+    }
+
+    @FXML
+    void stopListeners(MouseEvent event) {
     }
 
     @FXML
     void initialize() {
+        assert addButton != null : "fx:id=\"addButton\" was not injected: check your FXML file 'MMSGUI.fxml'.";
+        assert logo != null : "fx:id=\"logo\" was not injected: check your FXML file 'MMSGUI.fxml'.";
         assert outputWindow != null : "fx:id=\"outputWindow\" was not injected: check your FXML file 'MMSGUI.fxml'.";
+        assert removeButton != null : "fx:id=\"removeButton\" was not injected: check your FXML file 'MMSGUI.fxml'.";
         assert startButton != null : "fx:id=\"startButton\" was not injected: check your FXML file 'MMSGUI.fxml'.";
+        assert stopButton != null : "fx:id=\"stopButton\" was not injected: check your FXML file 'MMSGUI.fxml'.";
 
+        Image gentlyLogo  = new Image("file:logo.png");
+        logo.setImage(gentlyLogo);
+    }
 
-    }
-    
-    public static void activate() {
-	try {
-	    webComponent = new MMSWeb(9001);
-	    System.out.println("starting");
-	    Thread webThread = new Thread(webComponent);
-	    
-	    webThread.start();
-	} catch (IOException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-	}
-    }
-    
-    @FXML
-    public static void onEnter(KeyEvent event) {
-	if (event.getCode().equals(KeyCode.ENTER)) {
-	   
-	    String instruction = outputWindow.getText();
-	    String[] thing = instruction.split(" ");
-	    int v1 = Integer.parseInt(thing[0].trim());
-	    int v2 = Integer.parseInt(thing[1].trim());
-	    
-	    InternalMemory mem = InternalMemory.getInstance();
-	    mem.setLoad(v1, v2);
-	    outputWindow.clear();
-	}
-    }
 }
-
-
-

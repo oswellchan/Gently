@@ -25,31 +25,15 @@ public class MMSMain extends Application {
 		//Load resources needed, i.e. FXML file and font
 		AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("MMSGUI.fxml"));
 		
-		Button exitButton = initExitButton();
-		
-		//Add items to GUI
-		root.getChildren().add(exitButton);
-		
 		//Load CSS file used to style GUI
 		Scene scene = new Scene(root);
+		scene.getStylesheets().add(getClass().getResource("gently.css").toExternalForm());
 		primaryStage.setScene(scene);
 		primaryStage.show();
+		
 	    } catch(Exception e) {
 		e.printStackTrace();
 	    }
-    }
-    
-    private Button initExitButton() {
-	    Button startButton = new Button("Exit");
-	    startButton.setLayoutX(400);
-	    startButton.setLayoutY(20);
-	    
-	    startButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-	        public void handle(MouseEvent me) {
-	            System.exit(0);
-	        }
-	    });
-	    return startButton;
     }
 }
 

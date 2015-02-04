@@ -3,18 +3,26 @@
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
+<?scenebuilder-stylesheet ../gently.css?>
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="GUIController">
   <children>
-    <TextArea fx:id="outputWindow" layoutX="15.0" layoutY="72.0" onKeyReleased="#onEnter" prefHeight="314.0" prefWidth="572.0" wrapText="true" />
-    <Label layoutX="14.0" layoutY="14.0" prefHeight="48.0" prefWidth="124.0" text="Gently">
+    <TextArea fx:id="outputWindow" editable="false" layoutX="293.0" layoutY="86.0" prefHeight="244.0" prefWidth="286.0" wrapText="true" />
+    <Label layoutX="374.0" layoutY="23.0" prefHeight="48.0" prefWidth="124.0" text="Gently">
       <font>
         <Font name="Century Gothic" size="36.0" />
       </font>
     </Label>
-    <Button fx:id="startButton" layoutX="270.0" layoutY="23.0" mnemonicParsing="false" onMouseClicked="#handleStartApplication" prefHeight="31.0" prefWidth="63.0" text="Start" />
+    <ImageView fitHeight="45.0" fitWidth="60.0" layoutX="17.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true" />
+    <ListView layoutX="17.0" layoutY="86.0" prefHeight="300.0" prefWidth="259.0" />
+    <Button fx:id="addButton" layoutX="54.0" layoutY="50.0" mnemonicParsing="false" onMouseClicked="#openAddWindow" prefHeight="29.0" prefWidth="77.0" text="Add" />
+    <Button fx:id="removeButton" layoutX="160.0" layoutY="50.0" mnemonicParsing="false" onMouseClicked="#removeSelection" prefHeight="29.0" prefWidth="77.0" text="Remove" />
+    <Button fx:id="startButton" layoutX="336.0" layoutY="345.0" mnemonicParsing="false" onMouseClicked="#startListeners" prefHeight="29.0" prefWidth="77.0" text="Start" />
+    <Button fx:id="stopButton" layoutX="460.0" layoutY="345.0" mnemonicParsing="false" onMouseClicked="#stopListeners" prefHeight="29.0" prefWidth="77.0" text="Stop" />
+    <ImageView fx:id="logo" fitHeight="45.0" fitWidth="60.00000230031996" layoutX="496.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" />
   </children>
 </AnchorPane>
