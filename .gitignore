@@ -4,6 +4,5 @@
 *.class
 bin/
 Website/others/
-Website/chat/
 .settings/
 phpMyAdmin/
