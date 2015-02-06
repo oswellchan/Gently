@@ -9,6 +9,8 @@ import java.net.*;
 class MMSWeb implements Runnable {
     
     private static ServerSocket _serverSocket;
+    private static final String MSG_LISTENING = "Waiting for connection at port %1$s. \r";
+    private static final String MSG_ESTABLISHED = "Received connection from %1$s. \r";
     
     //Constructor
     MMSWeb(int portNo) throws IOException {
@@ -16,17 +18,24 @@ class MMSWeb implements Runnable {
     }
     
     public void run() {
+	
+	String response;
 
 	while (true) { 
 	    Socket s = null;
 	    
 	    try {
-		System.out.println("Waiting for connection at " + _serverSocket.getLocalPort());
+		response = String.format(MSG_LISTENING, _serverSocket.getLocalPort());
+		GUIController.outputText(response);
+		
 		s = _serverSocket.accept();
-		System.out.println("Connection established from " + s.getInetAddress());
+		
+		response = String.format(MSG_ESTABLISHED, _serverSocket.getInetAddress());
+		GUIController.outputText(response);
+		
 	    } catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+		response = e.getMessage();
+		GUIController.outputText(response);
 	    }
 			 
 	    MMSWebRequestProcessor reqProcessor = null;
@@ -34,14 +43,14 @@ class MMSWeb implements Runnable {
 	    try {
 		reqProcessor = new MMSWebRequestProcessor(s);
 	    } catch (Exception e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+		response = e.getMessage();
+		GUIController.outputText(response);
 	    }
 			 
 	    Thread thread = new Thread(reqProcessor);
-			 
+	    
 	    thread.start();	
-			 
+	    
 	}
     }
 }
@@ -63,74 +72,25 @@ final class MMSWebRequestProcessor implements Runnable{
 	    //Create a reader to read from webComponent
 	    BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
 	    String input = br.readLine();
-		System.out.println("Input	: " + input);
+	    
 	    //Create outputstream to return to reader
 	    DataOutputStream output = new DataOutputStream(s.getOutputStream());
+	    
+	    GUIController.outputText(input);
 		
 	    String[] splitInput = input.split(" ");
 	    String clientIP = splitInput[0];
 	    String streamerID = splitInput[1];
 	    //String clientLocation = getLocationOfIPaddress(clientIP);
-
-	    String serverIP;
 	    
 	    InternalMemory mem = InternalMemory.getInstance();
-	    mem.addCounter();
 	    
-	    //choose best server
-	    serverIP = mem.chooseBest(streamerID);
+	    String sources = mem.getStreamSourcesByID(streamerID);
 	    
-	    if (serverIP == null) {
-	    	serverIP = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:123";
-	    }
+	    output.writeBytes(sources + "\n");
 	    
-//	    ArrayList<Server> preferenceList = null;
-//	    ArrayList<Server> serversWithStream = mem.getExistingServersStreaming(streamerID);
-//	    switch (streamerID) {
-//		case "user1":
-//			serverIP = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:123";
-//			break;
-//		case "user2":
-//			serverIP = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:456";
-//			break;
-//		case "user3":
-//			serverIP = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:789";
-//			break;
-//		case "user4":
-//			serverIP = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:321";
-//			break;
-//		case "user5":
-//			serverIP = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:654";
-//			break;
-//		case "user6":
-//			serverIP = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:987";
-//			break;
-//		default:
-//			serverIP = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/flv:123";
-//			break;
-//		}
+	    GUIController.outputText(sources);
 	    
-	    serverIP += "\n";
-//	    if (serversWithStream != null) {
-//		 for (Server s : preferenceList) {
-//			boolean isSuccessful = s.isSuccessfulInAddingUser();
-//			
-//			if (isSuccessful) {
-//			    //contact server s to get stream
-//			    
-//			    serversWithStream.add(s);
-//			    serverIP = s.getServerIP();
-//			    break;
-//			}
-//		 }
-//	    }
-	    
-	    if (serverIP == null) {
-	    //error in allocation
-	    } else {
-	    	output.writeBytes(serverIP);
-	    	System.out.println("Output	: " + serverIP);
-	    }
 	    s.close();
 	    
 	} catch (Exception ex){
