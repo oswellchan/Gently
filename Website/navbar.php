@@ -27,21 +27,23 @@ if (isset ( $_POST ['usernameInput'] )) {
 	    die("Connection failed: " . mysqli_connect_error());
 	}
 	
-	$sql = "SELECT * FROM login WHERE username='".$_POST['usernameInput']."'";
-	$result = mysqli_query($conn, $sql);
-	
-	if (mysqli_num_rows($result) > 0) {
+	$stmt = mysqli_prepare($conn, "SELECT username,password FROM login WHERE username=?");
+	mysqli_stmt_bind_param($stmt, 's', $_POST['usernameInput']);
+	mysqli_stmt_execute($stmt);
+	mysqli_stmt_bind_result($stmt, $sqlusername, $sqlpassword);
+	mysqli_stmt_store_result($stmt);
+	if (mysqli_stmt_num_rows($stmt) > 0) {
 	    // output data of each row
-	    $row = mysqli_fetch_assoc($result);
-	    if ($row["username"] == $_POST['usernameInput'] && $row["password"]==$_POST['passwordInput']){
-	        $_SESSION ['username'] = stripslashes ( htmlspecialchars ( $_POST ['usernameInput'] ) );
-	    } else {
+	    mysqli_stmt_fetch($stmt);
+	    if ($sqlusername  == $_POST['usernameInput'] && $sqlpassword==$_POST['passwordInput']){
+	        $_SESSION ['username'] = $_POST ['usernameInput'];
+	    } else { // wrong password
 	    	echo '<div class="alert alert-warning" role="warning"><center>Incorrect username or password</center></div>';
 	    }
-	} else {
+	} else { // no such user
 	    echo '<div class="alert alert-warning" role="warning"><center>Incorrect username or password</center></div>';
 	}
-	
+	mysqli_stmt_close($stmt);
 	mysqli_close($conn);
 	
 	
@@ -136,7 +138,7 @@ echo '
 echo '
 	<div class="footer">
     	<div class="container">
-        	<p class="text-muted">Copyright &copy; 2014 Gently</p>
+        	<p class="text-muted">Copyright &copy; 2015 Gently</p>
     	</div>
     </div>';
 ?>

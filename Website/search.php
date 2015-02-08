@@ -35,25 +35,28 @@ $conn = mysqli_connect($servername, $username, $password, $dbname);
 if (!$conn) {
 	die("Connection failed: " . mysqli_connect_error());
 }
+$searchkey = "%".$searchkey."%";
+$stmt = mysqli_prepare($conn, "SELECT username, name, viewers FROM `channel` WHERE `username` LIKE ? UNION SELECT username, name, viewers FROM `channel` WHERE `name` LIKE ? UNION SELECT username, name, viewers FROM `channel` WHERE `description` LIKE ? ORDER BY viewers DESC");
+mysqli_stmt_bind_param($stmt, 'sss', $searchkey, $searchkey, $searchkey);
+mysqli_stmt_execute($stmt);
+mysqli_stmt_bind_result($stmt, $sqlusername, $sqlname, $sqlviewers);
+mysqli_stmt_store_result($stmt);
 
-$sql = "SELECT * FROM `channel` WHERE `username` LIKE '%".$searchkey."%' UNION SELECT * FROM `channel` WHERE `name` LIKE '%".$searchkey."%' UNION SELECT * FROM `channel` WHERE `description` LIKE '%".$searchkey."%' ORDER BY viewers DESC";
-$result = mysqli_query($conn, $sql);
-
-if (mysqli_num_rows($result) > 0) {
+if (mysqli_stmt_num_rows($stmt) > 0) {
 	// output data of each row
-	while($row = mysqli_fetch_assoc($result)) {
+	while(mysqli_stmt_fetch($stmt)) {
 		echo '
 				<div class="media">
-					<a class="pull-left" href="/channel.php?id='.$row["username"].'"> <img
+					<a class="pull-left" href="/channel.php?id='.$sqlusername.'"> <img
 						class="media-object"
 						src="images/320px-Placeholder.jpg"
 						height="100px">
 					</a>
 					<div class="media-body">
 						<h4 class="media-heading">
-							<a href="/channel.php?id='.$row["username"].'">'.$row["name"].'</a>
+							<a href="/channel.php?id='.$sqlusername.'">'.$sqlname.'</a>
 						</h4>
-						'.$row["username"].'<br> '.$row["viewers"].' viewers
+						'.$sqlusername.'<br> '.$sqlviewers.' viewers
 					</div>
 				</div>
 		';
@@ -62,7 +65,7 @@ if (mysqli_num_rows($result) > 0) {
 } else {
 	echo "0 results";
 }
-
+mysqli_stmt_close($stmt);
 mysqli_close($conn);
 ?>			
 			

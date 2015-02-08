@@ -13,16 +13,18 @@ if (isset ( $_GET ['id'] )) {
 		die("Connection failed: " . mysqli_connect_error());
 	}
 	
-	$sql = "SELECT * FROM channel WHERE username='".$id."'";
-	$result = mysqli_query($conn, $sql);
+	$stmt = mysqli_prepare($conn, "SELECT name,description FROM channel WHERE username=?");
+	mysqli_stmt_bind_param($stmt, 's', $id);
+	mysqli_stmt_execute($stmt);
+	mysqli_stmt_bind_result($stmt, $chnname, $chndescription);
+	mysqli_stmt_store_result($stmt);
 	
-	if (mysqli_num_rows($result) > 0) {
-		// output data of each row
-		$chnrow = mysqli_fetch_assoc($result);
+	if (mysqli_stmt_num_rows($stmt) > 0) {
+		mysqli_stmt_fetch($stmt);
 	} else {
 		echo '<div class="alert alert-warning" role="warning"><center>No user channel found</center></div>';
 	}
-	
+	mysqli_stmt_close($stmt);
 	mysqli_close($conn);
 	
 	
@@ -32,7 +34,7 @@ if (isset ( $_GET ['id'] )) {
 ?>
 <html>
 <head>
-<title><?php echo $chnrow["name"]; ?> - Gently</title>
+<title><?php echo $chnname; ?> - Gently</title>
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 <link href="/css/bootstrap.min.css" rel="stylesheet">
 <script src="/jwplayer/jwplayer.js"></script>
@@ -173,12 +175,12 @@ if (isset ( $_SESSION['username'] )) {
 		
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
-				<h1 style="float: left"><?php echo $chnrow["name"]; ?> <button class="btn btn-success btn-xs" id="favbtn" style="margin-left: 10px" <?php if (!isset($faved) || $faved == true) echo 'disabled';?>>+ Favourite</button></h1>
+				<h1 style="float: left"><?php echo $chnname; ?> <button class="btn btn-success btn-xs" id="favbtn" style="margin-left: 10px" <?php if (!isset($faved) || $faved == true) echo 'disabled';?>>+ Favourite</button></h1>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
-				<?php echo $chnrow["description"]; ?>
+				<?php echo $chndescription; ?>
 			</div>
 		</div>
 	</div>

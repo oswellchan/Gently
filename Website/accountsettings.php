@@ -28,25 +28,27 @@ if (isset ( $_POST ['oldPassword'] )) {
 	    die("Connection failed: " . mysqli_connect_error());
 	}
 	
-	$sql = "SELECT * FROM login WHERE username='".$_SESSION['username']."'";
-	$result = mysqli_query($conn, $sql);
-	
-	if (mysqli_num_rows($result) > 0) {
-	    // output data of each row
-	    $row = mysqli_fetch_assoc($result);
-	    if ($row["password"]==$_POST['oldPassword'] && $_POST['newPassword']==$_POST['newPassword2']){
-	    	$sql = "UPDATE login SET password='".$_POST ['newPassword']."' WHERE username='".$_SESSION['username']."'";
-	    	if ($conn->query($sql) === TRUE) {
-	    		echo '<div class="alert alert-success" role="success"><center>Password changed.</center></div>';
-	    	} else {
-	    		echo '<div class="alert alert-warning" role="warning"><center>Error updating record: '.$conn->error.'</center></div>';
-	    	}
-	    } else if ($_POST['newPassword']!=$_POST['newPassword2']){
-	    	echo '<div class="alert alert-warning" role="warning"><center>New password does not match.</center></div>';
-	    } else {
-	    	echo '<div class="alert alert-warning" role="warning"><center>Incorrect password.</center></div>';
-	    }
-	}
+	$stmt = mysqli_prepare($conn, "SELECT password FROM login WHERE username=?");
+	mysqli_stmt_bind_param($stmt, 's', $_SESSION['username']);
+	mysqli_stmt_execute($stmt);
+	mysqli_stmt_bind_result($stmt, $oldpassword);
+    mysqli_stmt_fetch($stmt);
+    mysqli_stmt_close($stmt);
+    
+    if ($oldpassword==$_POST['oldPassword'] && $_POST['newPassword']==$_POST['newPassword2']){
+    	$stmt = mysqli_prepare($conn, "UPDATE login SET password=? WHERE username=?");
+    	mysqli_stmt_bind_param($stmt, 'ss', $_POST ['newPassword'], $_SESSION['username']);
+    	if (mysqli_stmt_execute($stmt)) {
+    		echo '<div class="alert alert-success" role="success"><center>Password changed.</center></div>';
+    	} else {
+    		echo '<div class="alert alert-warning" role="warning"><center>Error updating record: '.$conn->error.'</center></div>';
+    	}
+    	mysqli_stmt_close($stmt);
+    } else if ($_POST['newPassword']!=$_POST['newPassword2']){
+    	echo '<div class="alert alert-warning" role="warning"><center>New password does not match.</center></div>';
+    } else {
+    	echo '<div class="alert alert-warning" role="warning"><center>Incorrect password.</center></div>';
+    }
 	
 	mysqli_close($conn);
 	

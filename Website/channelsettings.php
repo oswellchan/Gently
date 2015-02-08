@@ -27,14 +27,19 @@ if (!$conn) {
 }
 
 if (isset ( $_POST ['channelName'] )) {
-	$sql1 = "UPDATE channel SET name='".$_POST ['channelName']."' WHERE username='".$_SESSION['username']."'";
-	$sql2 = "UPDATE channel SET description='".$_POST ['channelDescription']."' WHERE username='".$_SESSION['username']."'";
+	$stmt1 = mysqli_prepare($conn, "UPDATE channel SET name=? WHERE username=?");
+	mysqli_stmt_bind_param($stmt1, 'ss', $_POST ['channelName'], $_SESSION['username']);
 	
-	if ($conn->query($sql1) === TRUE && $conn->query($sql2) === TRUE) {
+	$stmt2 = mysqli_prepare($conn, "UPDATE channel SET description=? WHERE username=?");
+	mysqli_stmt_bind_param($stmt2, 'ss', $_POST ['channelDescription'], $_SESSION['username']);
+	
+	if (mysqli_stmt_execute($stmt1) === TRUE && mysqli_stmt_execute($stmt2) === TRUE) {
 		echo '<div class="alert alert-success" role="success"><center>Settings saved.</center></div>';
 	} else {
 		echo '<div class="alert alert-warning" role="warning"><center>Error updating record: '.$conn->error.'</center></div>';
 	}
+	mysqli_stmt_close($stmt1);
+	mysqli_stmt_close($stmt2);
 }
 
 if (isset ( $_GET ['deleted'] )) {

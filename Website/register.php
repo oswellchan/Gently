@@ -28,10 +28,13 @@ if (isset ( $_POST ['username'] )) {
 	    die("Connection failed: " . mysqli_connect_error());
 	}
 	
-	$sql = "SELECT username FROM login WHERE username='".$_POST ['username']."'";
-	$result = mysqli_query($conn, $sql);
+	//$sql = "SELECT username FROM login WHERE username='".$_POST ['username']."'";
+	$stmt = mysqli_prepare($conn, "SELECT username FROM login WHERE username=?");
+	mysqli_stmt_bind_param($stmt, 's', $_POST ['username']);
+	mysqli_stmt_execute($stmt);
+	mysqli_stmt_store_result($stmt);
 	
-	if (mysqli_num_rows($result) == 0 && $_POST ['password']==$_POST ['password2']) {
+	if (mysqli_stmt_num_rows($stmt) == 0 && $_POST ['password']==$_POST ['password2']) {
 		$key = rand(1000000, 9999999);
 		$sql = "SELECT streamkey FROM channel WHERE streamkey='".$key."'";
 		$result = mysqli_query($conn, $sql);
@@ -41,20 +44,29 @@ if (isset ( $_POST ['username'] )) {
 			$result = mysqli_query($conn, $sql);
 		}
 		
-		$sql1 = "INSERT INTO login (username, password) VALUES ('".$_POST ['username']."', '".$_POST ['password']."')";
-		$sql2 = "INSERT INTO channel (username, streamkey, name, description) VALUES ('".$_POST ['username']."',".$key.", 'Untitled Channel', '')";
-		$sql3 = "INSERT INTO favourites (username, favourites) VALUES ('".$_POST ['username']."', '')";
-		if (mysqli_query($conn, $sql1) && mysqli_query($conn, $sql2) && mysqli_query($conn, $sql3)) {
-		    echo '<div class="alert alert-success" role="success"><center>Account successfully created.</center></div>';
+		$stmt1 = mysqli_prepare($conn, "INSERT INTO login (username, password) VALUES (?,?)");
+		mysqli_stmt_bind_param($stmt1, 'ss', $_POST ['username'], $_POST ['password']);
+		
+		$stmt2 = mysqli_prepare($conn, "INSERT INTO channel (username, streamkey, name, description) VALUES (?,?,'Untitled Channel', '')");
+		mysqli_stmt_bind_param($stmt2, 'ss', $_POST ['username'], $key);
+		
+		$stmt3 = mysqli_prepare($conn, "INSERT INTO favourites (username, favourites) VALUES (?,'')");
+		mysqli_stmt_bind_param($stmt3, 's', $_POST ['username']);
+		
+		if (mysqli_stmt_execute($stmt1) && mysqli_stmt_execute($stmt2) && mysqli_stmt_execute($stmt3)) {
+		    echo '<div class="alert alert-success" role="success"><center>Account successfully created. You can now sign in above!</center></div>';
 		} else {
-		    echo "Error: " . $sql1 . "<br>" . mysqli_error($conn);
+		    echo "Error: ". mysqli_error($conn);
 		}
 	} else if ($_POST ['password']!=$_POST ['password2']){
 		echo '<div class="alert alert-warning" role="warning"><center>Password does not match.</center></div>';
 	} else {
 		echo '<div class="alert alert-warning" role="warning"><center>Username already taken.</center></div>';
 	}
-	
+	mysqli_stmt_close($stmt);
+	mysqli_stmt_close($stmt1);
+	mysqli_stmt_close($stmt2);
+	mysqli_stmt_close($stmt3);
 	mysqli_close($conn);
 	
 	
