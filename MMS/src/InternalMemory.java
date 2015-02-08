@@ -6,12 +6,13 @@ public class InternalMemory {
     
     private static InternalMemory _internalMem;
     private static final String MSG_NOSOURCEFOUND = "NULL";
+    private int _webPortNo;
+    private int _serverPortNo;
     private static ConcurrentHashMap<String, ArrayList<String>> _streamerToStreamSourcesMap;
-    private static ArrayList<Thread> _threadArrayList; 
 	
     private InternalMemory() {
 	_streamerToStreamSourcesMap = new ConcurrentHashMap<String, ArrayList<String>>();
-	_threadArrayList = new ArrayList<Thread>();
+	
     }
     
     public static InternalMemory getInstance() {
@@ -39,14 +40,27 @@ public class InternalMemory {
 	return sources;
     }
     
-    public static void addToListOfThreads(Thread t) {
-	_threadArrayList.add(t);
+    public void updatePortNos(int webPort, int serverPort) {
+	_webPortNo = webPort;
+	_serverPortNo = serverPort;
+    }
+
+    public ConcurrentHashMap<String, ArrayList<String>> getStreamerToStreamMap() {
+	return _streamerToStreamSourcesMap;
+    }
+
+    public int getWebPort() {
+	return _webPortNo;
     }
     
-    public static void main(String[] args) {
-    	
+    public int getServerPort() {
+	return _serverPortNo;
     }
-    
+
+    public void setPortNumbers(int webPort, int serverPort) {
+	_webPortNo = webPort;
+	_serverPortNo = serverPort;
+    }
 }
 
 

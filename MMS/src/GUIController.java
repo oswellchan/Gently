@@ -1,9 +1,16 @@
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.json.JSONArray;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -16,6 +23,8 @@ public class GUIController {
     private static final String MSG_WRONGWEBPORT = "Invalid Web Port. Please choose a port between 1 to 65535.";
     private static final String MSG_WRONGSERVERPORT = "Invalid Server Port. Please choose a port between 1 to 65535.";
     private static final String MSG_SAMEPORTNO = "Web Port and Server Port cannot be the same. Please choose another.";
+    
+    InternalMemory IM;
     
     @FXML
     private ResourceBundle resources;
@@ -31,6 +40,9 @@ public class GUIController {
 
     @FXML
     protected static TextArea outputWindow;
+    
+    @FXML
+    private Label closeButton;
 
     @FXML
     private Button removeButton;
@@ -48,6 +60,11 @@ public class GUIController {
     private TextField webPortTextField;
 
 
+    @FXML
+    void closeApplication(MouseEvent event) {
+	System.exit(0);
+    }
+    
     @FXML
     void openAddWindow(MouseEvent event) {
     }
@@ -86,16 +103,30 @@ public class GUIController {
 		MMSWeb webComponent = new MMSWeb(webPort);
 		Thread webThread = new Thread(webComponent);
 		
+		InternalMemory mem = InternalMemory.getInstance();
+		mem.updatePortNos(webPort, serverPort);
+		
+		Storage.getInstance().saveStateToFile();
+		
 		webThread.start();
 	    } catch (Exception e) {
 		outputText("failed to start");
 	    }
 	}
-	
     }
 
     @FXML
     void stopListeners(MouseEvent event) {
+	ConcurrentHashMap<String, ArrayList<String>> streamerToStreamSourcesMap = IM.getStreamerToStreamMap();
+	    Set<Map.Entry<String, ArrayList<String>>> setOfEntries = streamerToStreamSourcesMap.entrySet();
+	    
+	    for (Map.Entry<String, ArrayList<String>> e : setOfEntries) {
+		
+		for (String source : e.getValue()) {
+		    outputText(e.getKey() + " " + source);
+		}
+	    }
+	
     }
 
     @FXML
@@ -109,8 +140,14 @@ public class GUIController {
         assert stopButton != null : "fx:id=\"stopButton\" was not injected: check your FXML file 'MMSGUI.fxml'.";
         assert webPortTextField != null : "fx:id=\"webPortTextField\" was not injected: check your FXML file 'MMSGUI.fxml'.";
         
+        closeButton.getStyleClass().add("closeButton");
+        
         Image gentlyLogo  = new Image("file:logo.png");
         logo.setImage(gentlyLogo);
+        
+        IM = InternalMemory.getInstance();
+        webPortTextField.setText("" + IM.getWebPort());
+        serverPortTextField.setText("" + IM.getServerPort());
     }
     
     private int parsePort(String s) {

@@ -33,9 +33,15 @@ class MMSWeb implements Runnable {
 		response = String.format(MSG_ESTABLISHED, _serverSocket.getInetAddress());
 		GUIController.outputText(response);
 		
-	    } catch (IOException e) {
-		response = e.getMessage();
-		GUIController.outputText(response);
+	    } catch (Exception e) {
+		
+		if (e instanceof InterruptedException) {
+		    System.out.println("exit");
+		} else {
+		    response = e.getMessage();
+		    GUIController.outputText(response);
+		}
+		
 	    }
 			 
 	    MMSWebRequestProcessor reqProcessor = null;

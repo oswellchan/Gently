@@ -1,4 +1,10 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -9,58 +15,70 @@ public class Storage {
 	
 	public static Storage _storage;
 	public JSONArray IPtoLocationFile;
-	public JSONArray ServerFile;
-	
-	public ArrayList<Server> serverList;
-    private ArrayList<Server> preferenceList;
-	
+	InternalMemory IM = InternalMemory.getInstance();
 	
 	private Storage() throws JSONException {
-		IPtoLocationFile = new JSONArray();
-		ServerFile = new JSONArray();
-		
-		initializeServerFile();
-		
+//		IPtoLocationFile = new JSONArray();
+//		
+//		initializeServerFile();
+//		
 		initializeInternalMemory();
+	    
+	    
 		
 	}
 	
-	private void initializeInternalMemory() throws JSONException {
-		InternalMemory IM = InternalMemory.getInstance();	
+	private void initializeInternalMemory() throws JSONException {	
+	    
+	    BufferedReader reader = null;
+	    
+	    try {
+		reader = new BufferedReader(new FileReader("save.txt"));
 		
-		fillIPtoLocationMap(IM);
+	    } catch (FileNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    }
+	    
+	    String JSONsource = null;
+	    
+	    try {
+		JSONsource = reader.readLine();
+	    } catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    }
+	    
+	    JSONObject savedState = new JSONObject(JSONsource);
+	    JSONObject portNumbers = savedState.getJSONObject("portNumbers");
+	    int webPort = portNumbers.getInt("webPort");
+	    int serverPort = portNumbers.getInt("serverPort");
+	    IM.setPortNumbers(webPort, serverPort);
+	    
+	    JSONObject streamerMap = savedState.getJSONObject("streamerMap");
+	    String[] arrayOfStreamers = JSONObject.getNames(streamerMap);
+	    
+	    if (arrayOfStreamers != null) {
+	    
+	    ConcurrentHashMap<String, ArrayList<String>> streamerToStreamSourcesMap = IM.getStreamerToStreamMap();
+	    
+	    for (String streamer : arrayOfStreamers) {
+		JSONArray JSONArrayOfSources = streamerMap.getJSONArray(streamer);
+		ArrayList<String> arrayOfSources = new ArrayList<String>();
 		
-		createServerList();
-
-		fillServerPreferenceList(IM);
-	}
-
-	private void fillIPtoLocationMap(InternalMemory IM) throws JSONException {
+		for (int i = 0; i < JSONArrayOfSources.length(); i++) {
+		    String source = JSONArrayOfSources.getString(i);
+		    arrayOfSources.add(source);
+		}
 		
-		
+		streamerToStreamSourcesMap.put(streamer, arrayOfSources);
+	    }
+	    }
 	}
 	
 	private void fillServerPreferenceList(InternalMemory IM) {
 		
 	}
-
-	//create a list of available servers from JSON file
-	private void createServerList() throws JSONException {
-		
-		for(int i=0; i<ServerFile.length(); i++) {
-			JSONObject obj = ServerFile.getJSONObject(i);
-			Server serverObj = createServerObject(100, 10, obj.getString("ServerIP"), obj.getString("ServerName"));
-			
-			serverList.add(serverObj);
-		}
-		
-	}
-	
-	public Server createServerObject(float bandwidth, float usage, String serverIP, String serverName) {
-    	return new Server(bandwidth, usage, serverIP, serverName);
-    }
-
-
 
 	public static Storage getInstance() throws JSONException {
 		if (_storage == null) {
@@ -71,18 +89,59 @@ public class Storage {
 	}
 	
 	
-	private void initializeServerFile() throws JSONException {
-		JSONObject obj = new JSONObject();
-		
-		obj.put("ServerName", "Cananda");
-		obj.put("ServerIP", "202.222.1.2");
-		
-		ServerFile.put(obj);
-		
+	public void saveStateToFile() throws JSONException {
+	    
+	    JSONObject file = new JSONObject();
+	    
+	    JSONObject portNumbers = portNumbersToJSONObj();
+	    JSONObject streamerMap = streamerMapToJSONObj();
+	    
+	    file.put("portNumbers", portNumbers);
+	    file.put("streamerMap", streamerMap);
+	    
+	    writeToFile(file);
 	}
 
+	private void writeToFile(JSONObject file) {
+	    try {
+		PrintWriter writer = new PrintWriter("save.txt");
+		writer.print("");
+		writer.write(file.toString());
+		
+		writer.flush();
+		writer.close();
+	    } catch (IOException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	    }
+	}
 
-	
+	private JSONObject portNumbersToJSONObj() throws JSONException {
+	    int webPort = IM.getWebPort();
+	    int serverPort = IM.getServerPort();
+	    
+	    JSONObject entry = new JSONObject();
+	    entry.put("webPort", webPort);
+	    entry.put("serverPort", serverPort);
+	    
+	    return entry;
+	}
 
-	
+	private JSONObject streamerMapToJSONObj() throws JSONException {
+	    JSONObject entry = new JSONObject();
+	    
+	    ConcurrentHashMap<String, ArrayList<String>> streamerToStreamSourcesMap = IM.getStreamerToStreamMap();
+	    Set<Map.Entry<String, ArrayList<String>>> setOfEntries = streamerToStreamSourcesMap.entrySet();
+	    
+	    for (Map.Entry<String, ArrayList<String>> e : setOfEntries) {
+		JSONArray streamSources = new JSONArray();
+		
+		for (String source : e.getValue()) {
+		    streamSources.put(source);
+		}
+		
+		entry.put(e.getKey(), streamSources);
+	    }
+	    return entry;
+	}
 }
