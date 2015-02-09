@@ -21,6 +21,7 @@ public class MMSMain extends Application {
     
     private double xOffset = 0;
     private double yOffset = 0;
+    private static FXMLLoader loader;
     
     public static void main(String[] args) {
         launch(args);
@@ -49,7 +50,8 @@ public class MMSMain extends Application {
 
     private void initialiseGUI(Stage primaryStage) throws IOException {
 	//Load resources needed, i.e. FXML file and font
-	AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("MMSGUI.fxml"));
+	loader = new FXMLLoader(getClass().getResource("MMSGUI.fxml"));
+	AnchorPane root = (AnchorPane) loader.load();
 	root.getStyleClass().add("anchor");
 	
 	//Load CSS file used to style GUI
@@ -81,6 +83,10 @@ public class MMSMain extends Application {
 		    primaryStage.setY(event.getScreenY() - yOffset);
 		}
 	    });
+    }
+    
+    public static GUIController getController() {
+	return loader.<GUIController>getController();
     }
 }
 

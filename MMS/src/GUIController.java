@@ -39,7 +39,7 @@ public class GUIController {
     private ImageView logo;
 
     @FXML
-    protected static TextArea outputWindow;
+    protected TextArea outputWindow;
     
     @FXML
     private Label closeButton;
@@ -167,7 +167,7 @@ public class GUIController {
 	return i;
     }
     
-    public static void outputText(String s) {
+    public void outputText(String s) {
 	String timeStamp = createTimeStamp();
 	outputWindow.appendText(timeStamp + s + "\n");
     }

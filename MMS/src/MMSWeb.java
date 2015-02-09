@@ -26,12 +26,12 @@ class MMSWeb implements Runnable {
 	    
 	    try {
 		response = String.format(MSG_LISTENING, _serverSocket.getLocalPort());
-		GUIController.outputText(response);
+		MMSMain.getController().outputText(response);
 		
 		s = _serverSocket.accept();
 		
 		response = String.format(MSG_ESTABLISHED, _serverSocket.getInetAddress());
-		GUIController.outputText(response);
+		MMSMain.getController().outputText(response);
 		
 	    } catch (Exception e) {
 		
@@ -39,7 +39,7 @@ class MMSWeb implements Runnable {
 		    System.out.println("exit");
 		} else {
 		    response = e.getMessage();
-		    GUIController.outputText(response);
+		    MMSMain.getController().outputText(response);
 		}
 		
 	    }
@@ -50,7 +50,7 @@ class MMSWeb implements Runnable {
 		reqProcessor = new MMSWebRequestProcessor(s);
 	    } catch (Exception e) {
 		response = e.getMessage();
-		GUIController.outputText(response);
+		MMSMain.getController().outputText(response);
 	    }
 			 
 	    Thread thread = new Thread(reqProcessor);
@@ -82,7 +82,7 @@ final class MMSWebRequestProcessor implements Runnable{
 	    //Create outputstream to return to reader
 	    DataOutputStream output = new DataOutputStream(s.getOutputStream());
 	    
-	    GUIController.outputText(input);
+	    MMSMain.getController().outputText(input);
 		
 	    String[] splitInput = input.split(" ");
 	    String clientIP = splitInput[0];
@@ -95,7 +95,7 @@ final class MMSWebRequestProcessor implements Runnable{
 	    
 	    output.writeBytes(sources + "\n");
 	    
-	    GUIController.outputText(sources);
+	    MMSMain.getController().outputText(input);
 	    
 	    s.close();
 	    
