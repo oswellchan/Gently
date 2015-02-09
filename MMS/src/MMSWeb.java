@@ -6,6 +6,8 @@ import java.util.*;
 import java.io.*;
 import java.net.*;
 
+import javafx.application.Platform;
+
 class MMSWeb implements Runnable {
     
     private static ServerSocket _serverSocket;
@@ -20,28 +22,48 @@ class MMSWeb implements Runnable {
     }
     
     public void run() {
-	
-	String response;
 
 	while (true) { 
 	    Socket s = null;
 	    
 	    try {
-		response = String.format(MSG_LISTENING, _serverSocket.getLocalPort());
-		controller.outputText(response);
+		final String res = String.format(MSG_LISTENING, _serverSocket.getLocalPort());
+		
+		Platform.runLater(new Runnable() {
+    		
+    		@Override
+    		public void run() {
+    			controller.outputText(res);
+    		}
+    	});
+		
 		
 		s = _serverSocket.accept();
 		
-		response = String.format(MSG_ESTABLISHED, _serverSocket.getInetAddress());
-		controller.outputText(response);
+		final String res2 = String.format(MSG_ESTABLISHED, _serverSocket.getInetAddress());
+		
+		Platform.runLater(new Runnable() {
+    		
+    		@Override
+    		public void run() {
+    			controller.outputText(res2);
+    		}
+    	});
 		
 	    } catch (Exception e) {
 		
 		if (e instanceof InterruptedException) {
 		    System.out.println("exit");
 		} else {
-		    response = e.getMessage();
-		    controller.outputText(response);
+		    final String res3 = e.getMessage();
+		    
+		    Platform.runLater(new Runnable() {
+	    		
+	    		@Override
+	    		public void run() {
+	    			controller.outputText(res3);
+	    		}
+	    	});
 		}
 		
 	    }
@@ -51,8 +73,14 @@ class MMSWeb implements Runnable {
 	    try {
 		reqProcessor = new MMSWebRequestProcessor(s);
 	    } catch (Exception e) {
-		response = e.getMessage();
-		controller.outputText(response);
+		final String res4 = e.getMessage();
+		Platform.runLater(new Runnable() {
+    		
+    		@Override
+    		public void run() {
+    			controller.outputText(res4);
+    		}
+    	});
 	    }
 			 
 	    Thread thread = new Thread(reqProcessor);
@@ -86,7 +114,7 @@ final class MMSWebRequestProcessor implements Runnable{
 	    //Create outputstream to return to reader
 	    DataOutputStream output = new DataOutputStream(s.getOutputStream());
 	    
-	    controller.outputText(input);
+	    //controller.outputText(input);
 		
 	    String[] splitInput = input.split(" ");
 	    String clientIP = splitInput[0];
@@ -99,7 +127,7 @@ final class MMSWebRequestProcessor implements Runnable{
 	    
 	    output.writeBytes(sources + "\n");
 	    
-	    controller.outputText(sources);
+	    //controller.outputText(sources);
 	    
 	    s.close();
 	    
