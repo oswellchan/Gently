@@ -24,6 +24,7 @@ public class GUIController {
     private static final String MSG_WRONGSERVERPORT = "Invalid Server Port. Please choose a port between 1 to 65535.";
     private static final String MSG_SAMEPORTNO = "Web Port and Server Port cannot be the same. Please choose another.";
     
+    static GUIController controller;
     InternalMemory IM;
     
     @FXML
@@ -148,6 +149,14 @@ public class GUIController {
         IM = InternalMemory.getInstance();
         webPortTextField.setText("" + IM.getWebPort());
         serverPortTextField.setText("" + IM.getServerPort());
+        
+        controller = this;
+    }
+    
+    public static GUIController getInstance() {
+	
+	return controller;
+	
     }
     
     private int parsePort(String s) {

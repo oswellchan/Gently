@@ -84,9 +84,5 @@ public class MMSMain extends Application {
 		}
 	    });
     }
-    
-    public static GUIController getController() {
-	return loader.<GUIController>getController();
-    }
 }
 
