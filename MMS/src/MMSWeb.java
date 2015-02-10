@@ -11,7 +11,7 @@ import javafx.application.Platform;
 class MMSWeb implements Runnable {
     
     private static ServerSocket _serverSocket;
-    private static final String MSG_LISTENING = "Waiting for connection at port %1$s. \r";
+    private static final String MSG_LISTENING = "Web port waiting for connection at port %1$s. \r";
     private static final String MSG_ESTABLISHED = "Received connection from %1$s. \r";
     GUIController controller;
     

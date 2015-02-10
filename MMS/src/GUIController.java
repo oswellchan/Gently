@@ -105,12 +105,16 @@ public class GUIController {
 		MMSWeb webComponent = new MMSWeb(webPort);
 		Thread webThread = new Thread(webComponent);
 		
+		MMSEdge edgeComponent = new MMSEdge(serverPort);
+		Thread edgeThread = new Thread(edgeComponent);
+		
 		InternalMemory mem = InternalMemory.getInstance();
 		mem.updatePortNos(webPort, serverPort);
 		
 		Storage.getInstance().saveStateToFile();
 		
 		webThread.start();
+		edgeThread.start();
 	    } catch (Exception e) {
 		outputText("failed to start");
 	    }
