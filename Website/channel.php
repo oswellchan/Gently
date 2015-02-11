@@ -139,7 +139,7 @@ if (isset ( $_SESSION['username'] )) {
 				    };
 
 				    server.starttime = Date.now();
-				    if (server.name.lastIndexOf("http://", 0) === 0) {
+				    if (server.name.lastIndexOf("http://", 0) === 0 || server.name.lastIndexOf("https://", 0) === 0) {
 				        this.img.src = server.name;
 				    } else {
 				        this.img.src = "http://" + server.name;
