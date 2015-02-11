@@ -126,7 +126,7 @@ final class MMSWebRequestProcessor implements Runnable{
 	    String sources = mem.getStreamSourcesByID(streamerID);
 	    
 	    // temp hard coded links
-	    sources = "https://www.youtube.com/watch?v=ImXuRHAhgKA#t=10 https://www.youtube.com/watch?v=MiBT7PfAOqY https://www.youtube.com/watch?v=m-GaPdI2u28#t=25";
+	    sources = "https://www.youtube.com/watch?v=ImXuRHAhgKA https://www.youtube.com/watch?v=MiBT7PfAOqY https://www.youtube.com/watch?v=m-GaPdI2u28";
 	    
 	    output.writeBytes(sources + "\n");
 	    
