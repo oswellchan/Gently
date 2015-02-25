@@ -117,11 +117,13 @@ if (isset ( $_SESSION['username'] )) {
 				}
 
 				function ping(server) {
-				    this.img = new Image();
+				    this.file = new Image();
 
-				    this.img.onload = function () {
+				    this.file.onload = function () {
 				        server.ping = Date.now() - server.starttime;
 				        server.status = 'Responded';
+				        
+				        // Set first response as video source
 				        if (source == null) {
 				            source = server.stream;
 							console.log("SELECTED: " + source);
@@ -137,27 +139,15 @@ if (isset ( $_SESSION['username'] )) {
 				        console.log(server.ping + " " + server.status + " " + server.stream);
 				    };
 
-				    this.img.onerror = function (e) {
+				    this.file.onerror = function (e) {
 				        server.ping = Date.now() - server.starttime;
-				        server.status = 'Failed download';
-				        /* if (source == null) {
-				            source = server.stream;
-							console.log("SELECTED: " + source);
-
-				            jwplayer("myElement").setup({
-				                file: source,
-				                width: "100%",
-				                aspectratio: "16:9",
-				                autostart: true,
-				                mute: true
-				            });
-				        } */
+				        server.status = 'Test error';
 				        console.log(server.ping + " " + server.status + " " + server.stream);
 				    };
 
 				    server.starttime = Date.now();
 					
-				    this.img.src = "http://" + server.domain + "/speedtest.jpg?no-cache=" + Math.floor(Math.random() * 100000);
+				    this.file.src = "http://" + server.domain + "/speedtest?no-cache=" + Math.floor(Math.random() * 100000);
 				}
 				</script>
 			</div>
@@ -273,9 +263,9 @@ if (isset ( $_SESSION['username'] )) {
 			       return(false);
 			}
 		
-			jwplayer().onMeta(function(event) {
+			/* jwplayer().onMeta(function(event) {
 				console.log(event.metadata);
-			});
+			}); */
 		</script>
 </body>
 </html>
