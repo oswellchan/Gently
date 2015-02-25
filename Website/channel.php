@@ -88,7 +88,8 @@ if (isset ( $_SESSION['username'] )) {
 				var ipList = serverstr.split(" ");
 				for (var i = 0; i < ipList.length; i++) {
 				    esList.push({
-				        name: ipList[i],
+				        stream: ipList[i],
+				        domain: extractDomain(ipList[i]),
 				        ping: -1,
 				        starttime: 0,
 				        status: 'nil'
@@ -99,14 +100,30 @@ if (isset ( $_SESSION['username'] )) {
 				    ping(esList[i]);
 				}
 
+				function extractDomain(url) {
+				    var domain;
+				    //find & remove protocol (http, ftp, etc.) and get domain
+				    if (url.indexOf("://") > -1) {
+				        domain = url.split('/')[2];
+				    }
+				    else {
+				        domain = url.split('/')[0];
+				    }
+
+				    //find & remove port number
+				    domain = domain.split(':')[0];
+
+				    return domain;
+				}
+
 				function ping(server) {
 				    this.img = new Image();
 
 				    this.img.onload = function () {
 				        server.ping = Date.now() - server.starttime;
-				        server.status = 'responded';
+				        server.status = 'Responded';
 				        if (source == null) {
-				            source = server.name;
+				            source = server.stream;
 							console.log("SELECTED: " + source);
 							
 				            jwplayer("myElement").setup({
@@ -117,14 +134,14 @@ if (isset ( $_SESSION['username'] )) {
 				                mute: true
 				            });
 				        }
-				        console.log(server.ping);
+				        console.log(server.ping + " " + server.status + " " + server.stream);
 				    };
 
 				    this.img.onerror = function (e) {
 				        server.ping = Date.now() - server.starttime;
-				        server.status = 'responded';
-				        if (source == null) {
-				            source = server.name;
+				        server.status = 'Failed download';
+				        /* if (source == null) {
+				            source = server.stream;
 							console.log("SELECTED: " + source);
 
 				            jwplayer("myElement").setup({
@@ -134,16 +151,13 @@ if (isset ( $_SESSION['username'] )) {
 				                autostart: true,
 				                mute: true
 				            });
-				        }
-				        console.log(server.ping + " " + server.name);
+				        } */
+				        console.log(server.ping + " " + server.status + " " + server.stream);
 				    };
 
 				    server.starttime = Date.now();
-				    if (server.name.lastIndexOf("http://", 0) === 0 || server.name.lastIndexOf("https://", 0) === 0) {
-				        this.img.src = server.name;
-				    } else {
-				        this.img.src = "http://" + server.name;
-				    }
+					
+				    this.img.src = "http://" + server.domain + "/speedtest.jpg";
 				}
 				</script>
 			</div>
