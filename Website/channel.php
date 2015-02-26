@@ -1,4 +1,4 @@
-<?php 
+<?php //Load channel name and description
 if (isset ( $_GET ['id'] )) {
 	$id = str_replace('#', '', $_GET ['id']);
 	$servername = "localhost";
@@ -44,40 +44,8 @@ if (isset ( $_GET ['id'] )) {
 	include 'navbar.php';
 	include 'connect.php';
 ?>
-        
-<?php 
-if (isset ( $_SESSION['username'] )) {
-	$id = str_replace('#', '', $_GET ['id']);
-	$servername = "localhost";
-	$username = "gently";
-	$password = "downthestream";
-	$dbname = "gently";
-	
-	// Create connection
-	$conn = mysqli_connect($servername, $username, $password, $dbname);
-	// Check connection
-	if (!$conn) {
-		die("Connection failed: " . mysqli_connect_error());
-	}
-	
-	$sql = "SELECT * FROM `favourites` WHERE username='".$_SESSION['username']."'";
-	$result = mysqli_query($conn, $sql);
-	
-	if (mysqli_num_rows($result) > 0) {
-		$row = mysqli_fetch_assoc($result);
-		$fav = $row['favourites'];
-		if (strpos($fav,$_GET['id']) !== false || $_SESSION['username']==$_GET['id']) {
-			$faved = true;
-		} else {
-			$faved = false;
-		}
-	}
-	
-	mysqli_close($conn);
-}
-?>
-        
-		<div class="container-fluid">
+
+	<div class="container-fluid">
 		<div class="row">
 			<div id="video" class="col-md-9" onresize="resizeScript">
 				<div id="myElement">Loading the player...</div>
@@ -177,9 +145,38 @@ if (isset ( $_SESSION['username'] )) {
 			</div>
 		</div>
 		
+<?php // Check favourited state
+if (isset ( $_SESSION['username'] )) {
+	$id = str_replace('#', '', $_GET ['id']);
+	$servername = "localhost";
+	$username = "gently";
+	$password = "downthestream";
+	$dbname = "gently";
+	
+	// Create connection
+	$conn = mysqli_connect($servername, $username, $password, $dbname);
+	// Check connection
+	if (!$conn) {
+		die("Connection failed: " . mysqli_connect_error());
+	}
+	
+	$sql = "SELECT * FROM `favourites` WHERE username='".$_SESSION['username']."' AND  favourites='".$_GET ['id']."'";
+	$result = mysqli_query($conn, $sql);
+	
+	if (mysqli_num_rows($result) > 0) {
+		$faved = true;
+	} else {
+		$faved = false;
+	}
+	
+	mysqli_close($conn);
+} else {
+	$faved = true; // so that will be disabled
+}
+?>
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
-				<h1 style="float: left"><?php echo $chnname; ?> <button class="btn btn-success btn-xs" id="favbtn" style="margin-left: 10px" <?php if (!isset($faved) || $faved == true) echo 'disabled';?>>+ Favourite</button></h1>
+				<h1 style="float: left"><?php echo $chnname; ?> <button class="btn btn-success btn-xs" id="favbtn" style="margin-left: 10px" <?php if ($faved == true) echo 'disabled';?>>+ Favourite</button></h1>
 			</div>
 		</div>
 		<div class="row">
@@ -220,6 +217,7 @@ if (isset ( $_SESSION['username'] )) {
 				return false;
 			});
 
+			//Use addfav.php to add to favourites
 			$("#favbtn").click(function(){
 				var chn = getQueryVariable("id");
 				$.post("addfav.php", {id: chn});

@@ -28,20 +28,10 @@ if (isset ( $_GET ['remove'] )) {
 		die("Connection failed: " . mysqli_connect_error());
 	}
 
-	$sql = "SELECT * FROM `favourites` WHERE username='".$_SESSION['username']."'";
+	$sql = "DELETE FROM `favourites` WHERE username='".$_SESSION['username']."' AND  favourites='".$_GET ['remove']."'";
 	$result = mysqli_query($conn, $sql);
 
-	if (mysqli_num_rows($result) > 0) {
-		$row = mysqli_fetch_assoc($result);
-		$fav = $row['favourites'];
-		$fav = str_replace($_GET ['remove']." ", "", $fav);
-		$sql = "UPDATE favourites SET favourites='".$fav."' WHERE username='".$_SESSION['username']."'";
-		$conn->query($sql);
-	}
-
 	mysqli_close($conn);
-
-
 }
 ?>
 
@@ -63,10 +53,11 @@ $sql = "SELECT * FROM `favourites` WHERE username='".$_SESSION['username']."'";
 $result = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($result) > 0) {
-	$row = mysqli_fetch_assoc($result);
-	$fav = trim($row['favourites']);
-	$fav = str_replace(' ',"', '",$fav);
-	$fav = "'".$fav."'";
+	$fav = "";
+	while ($row = mysqli_fetch_assoc($result)){
+		$fav = $fav."','".$row['favourites'];
+	}
+	$fav = substr($fav, 2)."'";
 
 	$sql = "SELECT * FROM `channel` WHERE `username` IN (".$fav.") ORDER BY `username`";
 	$result = mysqli_query($conn, $sql);
@@ -102,7 +93,16 @@ if (mysqli_num_rows($result) > 0) {
 </div>
 	';
 } else {
-	echo "No favourites";
+	echo '
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<h1>Manage favourites</h1>
+			No channels in favourites
+		</div>
+	</div>	
+</div>
+			';
 }
 
 mysqli_close($conn);

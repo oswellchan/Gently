@@ -50,10 +50,7 @@ if (isset ( $_POST ['username'] )) {
 		$stmt2 = mysqli_prepare($conn, "INSERT INTO channel (username, streamkey, name, description) VALUES (?,?,'Untitled Channel', '')");
 		mysqli_stmt_bind_param($stmt2, 'ss', $_POST ['username'], $key);
 		
-		$stmt3 = mysqli_prepare($conn, "INSERT INTO favourites (username, favourites) VALUES (?,'')");
-		mysqli_stmt_bind_param($stmt3, 's', $_POST ['username']);
-		
-		if (mysqli_stmt_execute($stmt1) && mysqli_stmt_execute($stmt2) && mysqli_stmt_execute($stmt3)) {
+		if (mysqli_stmt_execute($stmt1) && mysqli_stmt_execute($stmt2)) {
 		    echo '<div class="alert alert-success" role="success"><center>Account successfully created. You can now sign in above!</center></div>';
 		} else {
 		    echo "Error: ". mysqli_error($conn);
@@ -66,7 +63,6 @@ if (isset ( $_POST ['username'] )) {
 	mysqli_stmt_close($stmt);
 	mysqli_stmt_close($stmt1);
 	mysqli_stmt_close($stmt2);
-	mysqli_stmt_close($stmt3);
 	mysqli_close($conn);
 	
 	
