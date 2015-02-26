@@ -43,9 +43,9 @@ if (isset ( $_POST ['username'] )) {
 			$sql = "SELECT streamkey FROM channel WHERE streamkey='".$key."'";
 			$result = mysqli_query($conn, $sql);
 		}
-		
-		$stmt1 = mysqli_prepare($conn, "INSERT INTO login (username, password) VALUES (?,?)");
-		mysqli_stmt_bind_param($stmt1, 'ss', $_POST ['username'], md5($_POST ['password']));
+		$salt = uniqid();
+		$stmt1 = mysqli_prepare($conn, "INSERT INTO login (username, password, salt) VALUES (?,?,?)");
+		mysqli_stmt_bind_param($stmt1, 'sss', $_POST ['username'], md5($_POST ['password'].$salt), $salt);
 		
 		$stmt2 = mysqli_prepare($conn, "INSERT INTO channel (username, streamkey, name, description) VALUES (?,?,'Untitled Channel', '')");
 		mysqli_stmt_bind_param($stmt2, 'ss', $_POST ['username'], $key);

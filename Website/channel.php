@@ -147,7 +147,7 @@ if (isset ( $_SESSION['username'] )) {
 
 				    server.starttime = Date.now();
 					
-				    this.file.src = "http://" + server.domain + "/speedtest?no-cache=" + Math.floor(Math.random() * 100000);
+				    this.file.src = "http://" + server.domain + "/speedtest.jpg?no-cache=" + Math.floor(Math.random() * 100000);
 				}
 				</script>
 			</div>
