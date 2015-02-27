@@ -17,11 +17,10 @@
       </font>
     </Label>
     <ImageView fitHeight="45.0" fitWidth="60.0" layoutX="17.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true" />
-    <ListView layoutX="17.0" layoutY="86.0" prefHeight="300.0" prefWidth="259.0" />
+    <ListView fx:id="serverList" layoutX="17.0" layoutY="86.0" prefHeight="300.0" prefWidth="260.0" styleClass="serverListView" />
     <Button fx:id="addButton" layoutX="54.0" layoutY="50.0" mnemonicParsing="false" onMouseClicked="#openAddWindow" prefHeight="29.0" prefWidth="77.0" text="Add" />
     <Button fx:id="removeButton" layoutX="160.0" layoutY="50.0" mnemonicParsing="false" onMouseClicked="#removeSelection" prefHeight="29.0" prefWidth="77.0" text="Remove" />
-    <Button fx:id="startButton" layoutX="349.0" layoutY="355.0" mnemonicParsing="false" onMouseClicked="#startListeners" prefHeight="29.0" prefWidth="77.0" text="Start" />
-    <Button fx:id="stopButton" layoutX="454.0" layoutY="355.0" mnemonicParsing="false" onMouseClicked="#stopListeners" prefHeight="29.0" prefWidth="77.0" text="Stop" />
+    <Button fx:id="startButton" layoutX="394.0" layoutY="355.0" mnemonicParsing="false" onMouseClicked="#startListeners" prefHeight="29.0" prefWidth="77.0" text="Start" />
     <ImageView fx:id="logo" fitHeight="45.0" fitWidth="60.00000230031996" layoutX="475.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" />
     <TextField id="webPort" fx:id="webPortTextField" layoutX="340.0" layoutY="319.0" prefHeight="29.0" prefWidth="77.0" />
     <TextField fx:id="serverPortTextField" layoutX="461.0" layoutY="319.0" prefHeight="29.0" prefWidth="77.0" />

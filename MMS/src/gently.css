@@ -1,6 +1,5 @@
 .root{
     -fx-focus-color: transparent;
-    
 }
 
 .closeButton{
@@ -9,4 +8,86 @@
 
 .anchor{
 	-fx-background-color: #e7f5fe;
+}
+
+.fontawesome12 {
+    -fx-font-family: FontAwesome;
+    -fx-font-size: 12;
+}
+
+.font20 {
+    -fx-font-size: 20;
+}
+
+/* ------------------------------------------------------------------------------------- */
+/** CSS for Server List **/
+/* ------------------------------------------------------------------------------------- */
+.serverListPanel {
+	-fx-background-color: #e8e8e2;
+} 
+
+.serverListCell {
+	-fx-background-color: white;
+}
+
+.serverListCell:selected .serverListPanel{
+	-fx-background-color: #d2d2cd;
+}
+
+.serverListCell:selected .text{
+	-fx-fill: black;
+}
+
+/* The main scrollbar CSS class of ListView */
+.serverListView .scroll-bar:horizontal ,
+.serverListView  .scroll-bar:vertical{
+    -fx-background-color:transparent;
+
+}
+
+/* The increment and decrement button CSS class of scrollbar */
+.serverListView .increment-button ,.serverListView .decrement-button {
+    -fx-background-color:#b3b3a6;
+	-fx-border-color: #b3b3a6;
+}
+
+/* The main scrollbar **track** CSS class  */
+.serverListView .scroll-bar:horizontal .track ,
+.serverListView .scroll-bar:vertical .track{
+     -fx-background-color: #dededc;
+	 -fx-border-color:#dededc;
+	 -fx-background-radius: 0em;
+	 -fx-opacity: 0.8;
+}
+
+/* The main scrollbar **thumb** CSS class which we drag every time (movable) */
+.serverListView .scroll-bar:horizontal .thumb,
+.serverListView .scroll-bar:vertical .thumb {
+    -fx-background-color:#b3b3a6;
+	-fx-background-insets: 0, 0, 0;
+	-fx-background-radius: 0em;
+
+}
+
+/* The main scrollbar **track** CSS class on event of "hover" and "pressed" */
+
+.serverListView .scroll-bar:horizontal:hover .track ,
+.serverListView .scroll-bar:horizontal:pressed .track ,
+.serverListView .scroll-bar:vertical:hover .track,
+.serverListView .scroll-bar:vertical:pressed .track{
+     -fx-background-color: #dededc;
+	 -fx-opacity: 0.8;
+	 -fx-background-radius: 0em;
+
+}
+
+/* The main scrollbar **thumb** CSS class on event of "hover" and "pressed" */
+.serverListView .scroll-bar .thumb:hover,
+.serverListView .scroll-bar .thumb:pressed{
+    -fx-background-color: #b3b3a6;
+}
+
+.serverListView .increment-button:hover ,.mylistview .decrement-button:hover {
+    -fx-background-color:#b3b3a6;
+	-fx-border-color:#b3b3a6;
 }

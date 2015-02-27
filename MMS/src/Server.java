@@ -1,79 +1,48 @@
 import java.util.*;
 
 public class Server {
-    String _serverIP;
-    String _serverName;
-    float _maxLoad;
-    float _currentLoad;
-    boolean _inUse;
-    
-    Server(float bandwith, float usage, String serverIP, String serverName) {
-	_serverIP = serverIP;
-	_serverName = serverName;
-	_maxLoad = (float) Math.floor(bandwith/usage);
-	_currentLoad = 0;
-	_inUse = false;
-    }
-    
-    //Get IP
-    public String getServerIP() {
-	return _serverIP;
-    }
-    
-    //check if server can still take in any more users
-    private boolean canService() {
-	if (_currentLoad < _maxLoad) {
-	    return true;
+	private String _serverIP;
+	private String _serverName;
+	private int _viewerCount;
+	private int _streamerCount;
+	
+	Server(String serverIP, String serverName, int viewerCount, int streamerCount) {
+		this._serverIP = serverIP;
+		this._serverName = serverName;
+		this._viewerCount = viewerCount;
+		this._streamerCount = streamerCount;
 	}
-	return false;
-    }
-    
-    /* Try to add a user to the server. If successful, return true.
-     * Else return false.
-     */
-    public boolean isSuccessfulInAddingUser() {
-	boolean isSuccessful = false;
-	
-	while (_inUse) {
-	    //wait to prevent concurrent modification
+
+	public String getServerIP() {
+		return _serverIP;
 	}
-	
-	//set flag so that other threads cannot modify
-	_inUse = true;
-	
-	if (canService()) {
-	    _currentLoad++;
-	    isSuccessful = true;
+
+	public void set_serverIP(String serverIP) {
+		this._serverIP = serverIP;
 	}
-	
-	//reset flag so that others can access server
-	_inUse = false;
-	
-	return isSuccessful;
-    }
-    
-    public void removeUser() {
-	while (_inUse) {
-	    //wait to prevent concurrent modification
+
+	public String getServerName() {
+		return _serverName;
 	}
-	
-	_currentLoad--;
-	
-	if (_currentLoad < 0) {
-		_currentLoad = 0;
+
+	public void setServerName(String serverName) {
+		this._serverName = serverName;
 	}
-	
-	_inUse = false;
-    }
-    
-    public void setUser(int users) {
-	while (_inUse) {
-	    //wait to prevent concurrent modification
+
+	public int getViewerCount() {
+		return _viewerCount;
 	}
-	
-	_currentLoad = users;
-	
-	
-	_inUse = false;
-    }
+
+	public void setViewerCount(int viewerCount) {
+		this._viewerCount = viewerCount;
+	}
+
+	public int getStreamerCount() {
+		return _streamerCount;
+	}
+
+	public void setStreamerCount(int streamerCount) {
+		this._streamerCount = streamerCount;
+	}
+
 }
