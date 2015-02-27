@@ -14,8 +14,8 @@ public class TCPClient {
 		// (note: NOT a good practice!)
 
 		// Connect to the server process running at host
-		// cf-bhojan-1.comp.nus.edu.sg and port 9000.
-		Socket s = new Socket("localhost", 9000);
+		// mediatech-i.comp.nus.edu.sg and port 9000.
+		Socket s = new Socket("mediatech-i.comp.nus.edu.sg", 9000);
 
 	    // The next 2 lines create a output stream we can
 		// write to.  (To write TO SERVER)
