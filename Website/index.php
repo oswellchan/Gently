@@ -42,7 +42,7 @@
 					
 					echo '<div class="col-md-4">
 					<a href="channel.php?id='.$row["username"].'"><img
-					src="images/320px-Placeholder.jpg"><br>
+					src="thumbnails/'.$row["thumbnail"].'" height="240" width="320"><br>
 					<h4>'.$row["name"].'</h4></a>'.$row["viewers"].' viewers watching '.$row["username"].'
 							</div>
 					';
@@ -86,7 +86,7 @@
 					echo '
 						<div class="col-md-4">
 							<a href="channel.php?id='.$row["username"].'"><img
-								src="images/320px-Placeholder.jpg"><br>
+								src="thumbnails/'.$row["thumbnail"].'" height="240" width="320"><br>
 								<h4>'.$row["name"].'</h4></a>'.$row["viewers"].' viewers watching '.$row["username"].'
 						</div>
 						';

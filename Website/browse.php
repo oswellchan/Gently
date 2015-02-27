@@ -38,8 +38,9 @@ if (mysqli_num_rows($result) > 0) {
 				<div class="media">
 					<a class="pull-left" href="/channel.php?id='.$row["username"].'"> <img
 						class="media-object"
-						src="images/320px-Placeholder.jpg"
-						height="100px">
+						src="thumbnails/'.$row["thumbnail"].'"
+						height="100"
+						width="133">
 					</a>
 					<div class="media-body">
 						<h4 class="media-heading">

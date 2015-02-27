@@ -5,5 +5,5 @@ if(file_exists("chat/".$_SESSION ['username'].".html") && filesize("chat/".$_SES
 	fwrite($fp, "<div class='msgln'>There doesn't seem to be anything here. Start chatting!<br></div>");
 	fclose($fp);
 }
-header ( "Location: channelsettings.php?deleted=true" );
+header ( "Location: channelsettings.php?chatdeleted=true" );
 ?>

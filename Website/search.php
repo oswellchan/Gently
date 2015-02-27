@@ -36,10 +36,10 @@ if (!$conn) {
 	die("Connection failed: " . mysqli_connect_error());
 }
 $searchkey = "%".$searchkey."%";
-$stmt = mysqli_prepare($conn, "SELECT username, name, viewers FROM `channel` WHERE `username` LIKE ? AND `enabled`=1 UNION SELECT username, name, viewers FROM `channel` WHERE `name` LIKE ? AND `enabled`=1 UNION SELECT username, name, viewers FROM `channel` WHERE `description` LIKE ? AND `enabled`=1 ORDER BY viewers DESC");
+$stmt = mysqli_prepare($conn, "SELECT username, name, viewers, thumbnail FROM `channel` WHERE `username` LIKE ? AND `enabled`=1 UNION SELECT username, name, viewers, thumbnail FROM `channel` WHERE `name` LIKE ? AND `enabled`=1 UNION SELECT username, name, viewers, thumbnail FROM `channel` WHERE `description` LIKE ? AND `enabled`=1 ORDER BY viewers DESC");
 mysqli_stmt_bind_param($stmt, 'sss', $searchkey, $searchkey, $searchkey);
 mysqli_stmt_execute($stmt);
-mysqli_stmt_bind_result($stmt, $sqlusername, $sqlname, $sqlviewers);
+mysqli_stmt_bind_result($stmt, $sqlusername, $sqlname, $sqlviewers, $thumbnail);
 mysqli_stmt_store_result($stmt);
 
 if (mysqli_stmt_num_rows($stmt) > 0) {
@@ -49,8 +49,9 @@ if (mysqli_stmt_num_rows($stmt) > 0) {
 				<div class="media">
 					<a class="pull-left" href="/channel.php?id='.$sqlusername.'"> <img
 						class="media-object"
-						src="images/320px-Placeholder.jpg"
-						height="100px">
+						src="thumbnails/'.$thumbnail.'"
+						height="100"
+						width="133">
 					</a>
 					<div class="media-body">
 						<h4 class="media-heading">
