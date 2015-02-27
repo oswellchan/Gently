@@ -1,5 +1,9 @@
 
-public class Streamer {
+public class Streamer implements java.io.Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6645364478542709823L;
 	private long streamkey = 0;
 	private int nviewers = 0;
 	private String pageurl = null;
