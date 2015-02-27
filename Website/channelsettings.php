@@ -32,14 +32,18 @@ if (isset ( $_POST ['channelName'] )) {
 	
 	$stmt2 = mysqli_prepare($conn, "UPDATE channel SET description=? WHERE username=?");
 	mysqli_stmt_bind_param($stmt2, 'ss', $_POST ['channelDescription'], $_SESSION['username']);
+
+	$stmt3 = mysqli_prepare($conn, "UPDATE channel SET enabled=? WHERE username=?");
+	mysqli_stmt_bind_param($stmt3, 'is', $_POST ['enable'], $_SESSION['username']);
 	
-	if (mysqli_stmt_execute($stmt1) === TRUE && mysqli_stmt_execute($stmt2) === TRUE) {
+	if (mysqli_stmt_execute($stmt1) === TRUE && mysqli_stmt_execute($stmt2) === TRUE && mysqli_stmt_execute($stmt3) === TRUE) {
 		echo '<div class="alert alert-success" role="success"><center>Settings saved.</center></div>';
 	} else {
 		echo '<div class="alert alert-warning" role="warning"><center>Error updating record: '.$conn->error.'</center></div>';
 	}
 	mysqli_stmt_close($stmt1);
 	mysqli_stmt_close($stmt2);
+	mysqli_stmt_close($stmt3);
 }
 
 if (isset ( $_GET ['deleted'] )) {
@@ -72,6 +76,16 @@ mysqli_close($conn);
 			
 			<!-- Form Name -->
 			<legend>Channel Settings</legend>
+			<label for="channelName">Channel</label><br>
+			<div class="btn-group" data-toggle="buttons">
+			  <label class="btn btn-primary <?php if ($row["enabled"]==1) {echo 'active';}?>">
+			    <input type="radio" name="enable" id="enable" value="1" autocomplete="off" <?php if ($row["enabled"]==1) {echo 'checked';}?>>Enable
+			  </label>
+			  <label class="btn btn-primary <?php if ($row["enabled"]==0) {echo 'active';}?>">
+			    <input type="radio" name="enable" id="disable" value="0" autocomplete="off" <?php if ($row["enabled"]==0) {echo 'checked';}?>>Disable
+			  </label>
+			</div>
+			<br><br>
 			
 			<!-- Text input-->
 			<div class="form-group">

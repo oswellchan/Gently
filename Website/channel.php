@@ -1,4 +1,8 @@
-<?php //Load channel name and description
+<?php 
+include 'navbar.php';
+include 'connect.php';
+
+//Load channel name and description
 if (isset ( $_GET ['id'] )) {
 	$id = str_replace('#', '', $_GET ['id']);
 	$servername = "localhost";
@@ -13,10 +17,10 @@ if (isset ( $_GET ['id'] )) {
 		die("Connection failed: " . mysqli_connect_error());
 	}
 	
-	$stmt = mysqli_prepare($conn, "SELECT name,description FROM channel WHERE username=?");
+	$stmt = mysqli_prepare($conn, "SELECT name,description,enabled FROM channel WHERE username=?");
 	mysqli_stmt_bind_param($stmt, 's', $id);
 	mysqli_stmt_execute($stmt);
-	mysqli_stmt_bind_result($stmt, $chnname, $chndescription);
+	mysqli_stmt_bind_result($stmt, $chnname, $chndescription, $enabled);
 	mysqli_stmt_store_result($stmt);
 	
 	if (mysqli_stmt_num_rows($stmt) > 0) {
@@ -25,10 +29,30 @@ if (isset ( $_GET ['id'] )) {
 		echo '<div class="alert alert-warning" role="warning"><center>No user channel found</center></div>';
 	}
 	mysqli_stmt_close($stmt);
+	
+	if ($enabled != 1) {
+		header ( "Location: ../browse.php" );
+	}
+	
+	// check for favourites if logged in
+	if (isset ( $_SESSION['username'] )) {
+		$sql = "SELECT * FROM `favourites` WHERE username='".$_SESSION['username']."' AND  favourites='".$_GET ['id']."'";
+		$result = mysqli_query($conn, $sql);
+		if (mysqli_num_rows($result) > 0) {
+			$faved = true;
+		} else {
+			$faved = false;
+		}
+	} else {
+		// true so that button is disabled
+		$faved = true;
+	}
+	
 	mysqli_close($conn);
 	
 	
 } else {
+	// no id provided
 	header ( "Location: ../browse.php" );
 }
 ?>
@@ -40,85 +64,11 @@ if (isset ( $_GET ['id'] )) {
 <script src="/jwplayer/jwplayer.js"></script>
 </head>
 <body>
-<?php
-	include 'navbar.php';
-	include 'connect.php';
-?>
-
 	<div class="container-fluid">
 		<div class="row">
 			<div id="video" class="col-md-9" onresize="resizeScript">
-				<div id="myElement">Loading the player...</div>
-				<script>
-				var source = null;
-				var serverstr = <?php echo json_encode($serverstr); ?>;
-				var esList = [];
-				var ipList = serverstr.split(" ");
-				for (var i = 0; i < ipList.length; i++) {
-				    esList.push({
-				        stream: ipList[i],
-				        domain: extractDomain(ipList[i]),
-				        ping: -1,
-				        starttime: 0,
-				        status: 'nil'
-				    });
-				}
-
-				for (var i = 0; i < esList.length; i++) {
-				    ping(esList[i]);
-				}
-
-				function extractDomain(url) {
-				    var domain;
-				    //find & remove protocol (http, ftp, etc.) and get domain
-				    if (url.indexOf("://") > -1) {
-				        domain = url.split('/')[2];
-				    }
-				    else {
-				        domain = url.split('/')[0];
-				    }
-
-				    //find & remove port number
-				    domain = domain.split(':')[0];
-
-				    return domain;
-				}
-
-				function ping(server) {
-				    this.file = new Image();
-
-				    this.file.onload = function () {
-				        server.ping = Date.now() - server.starttime;
-				        server.status = 'Responded';
-				        
-				        // Set first response as video source
-				        if (source == null) {
-				            source = server.stream;
-							console.log("SELECTED: " + source);
-							
-				            jwplayer("myElement").setup({
-				                file: source,
-				                width: "100%",
-				                aspectratio: "16:9",
-				                autostart: true,
-				                mute: true
-				            });
-				        }
-				        console.log(server.ping + " " + server.status + " " + server.stream);
-				    };
-
-				    this.file.onerror = function (e) {
-				        server.ping = Date.now() - server.starttime;
-				        server.status = 'Test error';
-				        console.log(server.ping + " " + server.status + " " + server.stream);
-				    };
-
-				    server.starttime = Date.now();
-					
-				    //this.file.src = "http://" + server.domain + "/speedtest.jpg?no-cache=" + Math.floor(Math.random() * 100000);
-				    this.file.src = "http://google.com/images/srpr/logo11w.png";
-				}
-				</script>
+				<div id="myElement"><center><h4>Loading the player...</h4></center></div>
+				
 			</div>
 
 			<div id="chat">
@@ -146,35 +96,6 @@ if (isset ( $_GET ['id'] )) {
 			</div>
 		</div>
 		
-<?php // Check favourited state
-if (isset ( $_SESSION['username'] )) {
-	$id = str_replace('#', '', $_GET ['id']);
-	$servername = "localhost";
-	$username = "gently";
-	$password = "downthestream";
-	$dbname = "gently";
-	
-	// Create connection
-	$conn = mysqli_connect($servername, $username, $password, $dbname);
-	// Check connection
-	if (!$conn) {
-		die("Connection failed: " . mysqli_connect_error());
-	}
-	
-	$sql = "SELECT * FROM `favourites` WHERE username='".$_SESSION['username']."' AND  favourites='".$_GET ['id']."'";
-	$result = mysqli_query($conn, $sql);
-	
-	if (mysqli_num_rows($result) > 0) {
-		$faved = true;
-	} else {
-		$faved = false;
-	}
-	
-	mysqli_close($conn);
-} else {
-	$faved = true; // so that will be disabled
-}
-?>
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
 				<h1 style="float: left"><?php echo $chnname; ?> <button class="btn btn-success btn-xs" id="favbtn" style="margin-left: 10px" <?php if ($faved == true) echo 'disabled';?>>+ Favourite</button></h1>
@@ -187,13 +108,84 @@ if (isset ( $_SESSION['username'] )) {
 		</div>
 	</div>
 
-	<script type="text/javascript">
-
-		</script>
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
+		var errorCount = 0;
+		var source = null;
+		var serverstr = <?php echo json_encode($serverstr); ?>;
+		var esList = [];
+		var ipList = serverstr.split(" ");
+		for (var i = 0; i < ipList.length; i++) {
+		    esList.push({
+		        stream: ipList[i],
+		        domain: extractDomain(ipList[i]),
+		        ping: -1,
+		        starttime: 0,
+		        status: 'nil'
+		    });
+		}
+		
+		for (var i = 0; i < esList.length; i++) {
+		    ping(esList[i]);
+		}
+		
+		function extractDomain(url) {
+		    var domain;
+		    // find & remove protocol (http, ftp, etc.) and get domain
+		    if (url.indexOf("://") > -1) {
+		        domain = url.split('/')[2];
+		    }
+		    else {
+		        domain = url.split('/')[0];
+		    }
+	
+		    // find & remove port number
+		    domain = domain.split(':')[0];
+	
+		    return domain;
+		}
+	
+		function ping(server) {
+		    this.file = new Image();
+	
+		    this.file.onload = function () {
+		        server.ping = Date.now() - server.starttime;
+		        server.status = 'Responded';
+		        
+		        // Set first response as video source
+		        if (source == null) {
+		            source = server.stream;
+					console.log("SELECTED: " + source);
+					
+		            jwplayer("myElement").setup({
+		                file: source,
+		                width: "100%",
+		                aspectratio: "16:9",
+		                autostart: true,
+		                mute: true
+		            });
+		        }
+		        console.log(server.ping + " " + server.status + " " + server.stream);
+		    };
+			
+		    this.file.onerror = function (e) {
+		        server.ping = Date.now() - server.starttime;
+		        server.status = 'Test error';
+		        console.log(server.ping + " " + server.status + " " + server.stream);
+
+		        errorCount++;
+		        // all servers error
+		        if (errorCount == esList.length){
+		        	$("#myElement").html("<center><h4>No streaming servers available</h4></center>");
+		        }
+		    };
+	
+		    server.starttime = Date.now();
+			
+		    //this.file.src = "http://" + server.domain + "/speedtest.jpg?no-cache=" + Math.floor(Math.random() * 100000);
+		    this.file.src = "http://google.com/images/srpr/logo11w.png";
+		}
 	
 		$(window).on('beforeunload', function(){
 			var chn = getQueryVariable("id");

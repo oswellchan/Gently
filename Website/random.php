@@ -13,7 +13,7 @@ if (!$conn) {
 	die("Connection failed: " . mysqli_connect_error());
 }
 
-$sql = "SELECT `username` FROM `channel` WHERE 1";
+$sql = "SELECT `username` FROM `channel` WHERE `enabled`=1";
 $result = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($result) > 0) {

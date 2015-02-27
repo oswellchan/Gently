@@ -28,7 +28,7 @@ if (!$conn) {
 	die("Connection failed: " . mysqli_connect_error());
 }
 
-$sql = "SELECT * FROM `channel` ORDER BY viewers DESC";
+$sql = "SELECT * FROM `channel` WHERE `enabled`=1 ORDER BY viewers DESC";
 $result = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($result) > 0) {

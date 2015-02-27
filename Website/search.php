@@ -36,7 +36,7 @@ if (!$conn) {
 	die("Connection failed: " . mysqli_connect_error());
 }
 $searchkey = "%".$searchkey."%";
-$stmt = mysqli_prepare($conn, "SELECT username, name, viewers FROM `channel` WHERE `username` LIKE ? UNION SELECT username, name, viewers FROM `channel` WHERE `name` LIKE ? UNION SELECT username, name, viewers FROM `channel` WHERE `description` LIKE ? ORDER BY viewers DESC");
+$stmt = mysqli_prepare($conn, "SELECT username, name, viewers FROM `channel` WHERE `username` LIKE ? AND `enabled`=1 UNION SELECT username, name, viewers FROM `channel` WHERE `name` LIKE ? AND `enabled`=1 UNION SELECT username, name, viewers FROM `channel` WHERE `description` LIKE ? AND `enabled`=1 ORDER BY viewers DESC");
 mysqli_stmt_bind_param($stmt, 'sss', $searchkey, $searchkey, $searchkey);
 mysqli_stmt_execute($stmt);
 mysqli_stmt_bind_result($stmt, $sqlusername, $sqlname, $sqlviewers);

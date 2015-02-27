@@ -31,7 +31,7 @@
 					$fav = $fav."','".$row['favourites'];
 				}
 				$fav = substr($fav, 2)."'";
-				$sql = "SELECT * FROM `channel` WHERE `username` IN (".$fav.") ORDER BY `viewers` DESC";
+				$sql = "SELECT * FROM `channel` WHERE `username` IN (".$fav.") AND `enabled`=1 ORDER BY `viewers` DESC";
 				$result = mysqli_query($conn, $sql);
 				echo '<div class="row">
 				<h1>Favourites</h1>';
