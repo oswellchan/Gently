@@ -122,26 +122,28 @@ public class JRecorder extends JFrame implements ScreenRecorderListener,
 
       if (!shuttingDown) {
 
-         UIManager.put("FileChooser.readOnly", true);
-         JFileChooser fileChooser = new JFileChooser();
-         FileExtensionFilter filter = new FileExtensionFilter();
-
-         filter = new FileExtensionFilter();
-         filter.addExtension("cap");
-         filter.setDescription("Screen Capture File");
-
-         fileChooser.setFileFilter(filter);
-         fileChooser.showSaveDialog(this);
-
-         File target = fileChooser.getSelectedFile();
-
-         if (target != null) {
-
-            if (!target.getName().endsWith(".cap"))
-               target = new File(target + ".cap");
-
-            FileHelper.copy(temp, target);
-         }
+//         UIManager.put("FileChooser.readOnly", true);
+//         JFileChooser fileChooser = new JFileChooser();
+//         FileExtensionFilter filter = new FileExtensionFilter();
+//
+//         filter = new FileExtensionFilter();
+//         filter.addExtension("cap");
+//         filter.setDescription("Screen Capture File");
+//
+//         fileChooser.setFileFilter(filter);
+//         fileChooser.showSaveDialog(this);
+//
+//         File target = fileChooser.getSelectedFile();
+//
+//         if (target != null) {
+//
+//            if (!target.getName().endsWith(".cap"))
+//               target = new File(target + ".cap");
+//
+//            FileHelper.copy(temp, target);
+//         }
+         
+         FileHelper.copy(temp, new File("capFile/test.cap"));
 
          FileHelper.delete(temp);
          recorder = null;

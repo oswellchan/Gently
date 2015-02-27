@@ -32,6 +32,7 @@ import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.OutputStream;
 import java.net.URL;
 
@@ -51,15 +52,16 @@ public class DesktopScreenRecorder extends ScreenRecorder {
 
          String mouseCursorFile;
 
-         if (useWhiteCursor)
-            mouseCursorFile = "white_cursor.png";
-         else
-            mouseCursorFile = "black_cursor.png";
-
-         URL cursorURL = getClass().getClassLoader().getResource(
-               "mouse_cursors/" + mouseCursorFile);
-
-         mouseCursor = ImageIO.read(cursorURL);
+//         if (useWhiteCursor)
+//            mouseCursorFile = "white_cursor.png";
+//         else
+//            mouseCursorFile = "black_cursor.png";
+//
+//         URL cursorURL = getClass().getClassLoader().getResource(
+//               "mouse_cursors/" + mouseCursorFile);
+//
+//         mouseCursor = ImageIO.read(cursorURL);
+//         //mouseCursor = ImageIO.read(new File("/black_cursor.png"));
 
       } catch (Exception e) {
          e.printStackTrace();
