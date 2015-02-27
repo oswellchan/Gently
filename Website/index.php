@@ -26,11 +26,11 @@
 			$sql = "SELECT * FROM `favourites` WHERE username='".$_SESSION['username']."'";
 			$result = mysqli_query($conn, $sql);
 			if (mysqli_num_rows($result) > 0) {
-				$row = mysqli_fetch_assoc($result);
-				$fav = trim($row['favourites']);
-				$fav = str_replace(' ',"', '",$fav);
-				$fav = "'".$fav."'";
-				
+				$fav = "";
+				while ($row = mysqli_fetch_assoc($result)){
+					$fav = $fav."','".$row['favourites'];
+				}
+				$fav = substr($fav, 2)."'";
 				$sql = "SELECT * FROM `channel` WHERE `username` IN (".$fav.") ORDER BY `viewers` DESC";
 				$result = mysqli_query($conn, $sql);
 				echo '<div class="row">

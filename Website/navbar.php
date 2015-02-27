@@ -27,15 +27,15 @@ if (isset ( $_POST ['usernameInput'] )) {
 	    die("Connection failed: " . mysqli_connect_error());
 	}
 	
-	$stmt = mysqli_prepare($conn, "SELECT username,password FROM login WHERE username=?");
+	$stmt = mysqli_prepare($conn, "SELECT username,password,salt FROM login WHERE username=?");
 	mysqli_stmt_bind_param($stmt, 's', $_POST['usernameInput']);
 	mysqli_stmt_execute($stmt);
-	mysqli_stmt_bind_result($stmt, $sqlusername, $sqlpassword);
+	mysqli_stmt_bind_result($stmt, $acctusername, $acctpassword, $acctsalt);
 	mysqli_stmt_store_result($stmt);
 	if (mysqli_stmt_num_rows($stmt) > 0) {
 	    // output data of each row
 	    mysqli_stmt_fetch($stmt);
-	    if ($sqlusername  == $_POST['usernameInput'] && $sqlpassword==$_POST['passwordInput']){
+	    if ($acctusername  == $_POST['usernameInput'] && $acctpassword==md5($_POST['passwordInput'].$acctsalt)){
 	        $_SESSION ['username'] = $_POST ['usernameInput'];
 	    } else { // wrong password
 	    	echo '<div class="alert alert-warning" role="warning"><center>Incorrect username or password</center></div>';
@@ -64,6 +64,7 @@ echo '
 				<ul class="nav navbar-nav">
 					<li><a href="/browse.php">Browse</a></li>
 					<li><a href="/random.php">Random</a></li>
+					<li><a href="/applet.php">Applet</a></li>
 				</ul>
 				<form id="form" class="navbar-form navbar-right" method="get" action="search.php">
 					<input id="search" name="search" type="text" class="form-control col-lg-8 navsearch" placeholder="Search">
