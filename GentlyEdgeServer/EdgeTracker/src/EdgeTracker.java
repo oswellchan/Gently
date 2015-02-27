@@ -15,27 +15,26 @@ public class EdgeTracker {
 	private static String[] flagArray = {"<application>", "<name>", "<stream>", "<name>", "<pageurl>"};
 	private static ArrayList<String> flagArList = new ArrayList<String>();
 	
+    //Object to be sent to MMS
+    private static ArrayList<Application> edgeTransferObject = new ArrayList<Application> ();
+	
 	public static void main (String args[]) {
-		// throws Exception here because don't want to deal
-				// with errors in the rest of the code for simplicity.
-				// (note: NOT a good practice!)
-
-				// Connect to the server process running at host
-				// mediatech-i.comp.nus.edu.sg and port 9000.
+		// Connect to the server process running at host
+		// mediatech-i.comp.nus.edu.sg and port 9000.
 		Socket s;
 		try {
 			s = new Socket("mediatech-i.comp.nus.edu.sg", 9000);
 
-		    // The next 2 lines create a output stream we can
+		    // The next 2 lines create a output stream we can 
 			// write to.  (To write TO SERVER)
 			OutputStream os= s.getOutputStream();
-			DataOutputStream serverWriter = new DataOutputStream(os); //to write string,otherwise, need to write byte array
-
+			//DataOutputStream serverWriter = new DataOutputStream(os); //to write string,otherwise, need towrite byte array
+			ObjectOutputStream serverWriter = new ObjectOutputStream(os);
+			
 			// The next 2 lines create a buffer reader that
 			// reads from the standard input. (to read stream FROM SERVER)
 			InputStreamReader isrServer = new InputStreamReader(s.getInputStream());
 			BufferedReader serverReader = new BufferedReader(isrServer);
-
 
 	        //create buffer reader to read input from user. Read the user input to string 'sentence'
 	        BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
@@ -45,14 +44,13 @@ public class EdgeTracker {
 	        // keep repeating until an empty line is read.
 			while (sentence.compareTo("") != 0) {
 	           // Send a user input to server
-	           serverWriter.writeBytes(sentence +"\n");
-
-			   // Server should convert to upper case and reply.
-			   // Read server's reply below and output to screen.
+				//serverWriter.writeBytes(sentence +"\n");
+				
 	           String response = serverReader.readLine();
 			   System.out.println(response);
 			   if (response.equals(EXTRACT))
-				   extractData();
+				   edgeTransferObject = extractData();
+			   		serverWriter.writeObject(edgeTransferObject);
 	           //read user input again
 	           sentence = inFromUser.readLine();
 	           }
@@ -68,7 +66,7 @@ public class EdgeTracker {
 		}	
 	}
 	
-	private static void extractData(){
+	private static ArrayList<Application> extractData(){
 		BufferedReader br = null;
 		InputStream is = null;
 	    String line = null;
@@ -79,8 +77,6 @@ public class EdgeTracker {
 	    int nstreamers = 0;
 	    int nviewers = 0; 
 	    
-	    //Object to be sent to MMS
-	    ArrayList<Application> edgeTransferObject = new ArrayList<Application> ();
 		Application tempApp = new Application();
 		Streamer tempStream = new Streamer();
 		ArrayList<Streamer> tempArList = new ArrayList<Streamer>();
@@ -142,8 +138,7 @@ public class EdgeTracker {
 							temp = getString(line, flag);							
 							tempStream.setPageurl(temp);
 						}
-					}
-					
+					}	
 				}
 			}
 		} catch (IOException ioe) {
@@ -156,7 +151,7 @@ public class EdgeTracker {
 	            // nothing to see here
 	        }
 		}
-		
+		return edgeTransferObject;
 	}	
 	private static BufferedReader downloader(InputStream is, BufferedReader br) {
 	    try {
