@@ -6,17 +6,21 @@ public class EdgeTracker {
 	public static final String STATS_FILE_LOCATION = "http://localhost/stat";	
 	public static final String BRACKETSLASH = "</";
 	public static final String EXTRACT = "EXTRACT";
-	public static final String CLIENT = "client";
+	public static final String CLIENT = "<client>";
 	public static final String PUBLISHING = "publishing";
-	public static final String ACTIVE = "active";
-	public static final String STREAM = "</stream>";
-	public static final String APPLICATION = "</application>";
-	//private static String[] flagArray = {"name", "bytes_in", "bytes_out", "address", "dropped", "width", "height", "frame_rate", "codec", "audio><codec", "nclients"};
-	private static String[] flagArray = {"<application>", "<name>", "<stream>", "<name>", "<pageurl>"};
-	private static ArrayList<String> flagArList = new ArrayList<String>();
+	public static final String ACTIVE = "<active>";
+	public static final String ENDSTREAM = "</stream>";
+	public static final String STREAM = "<stream>";
+	public static final String NAME = "<name>";
+	public static final String PAGEURL = "<pageurl>";
+	public static final String EDGESERVERNAME = "PLACEHOLDER NAME";
 	
     //Object to be sent to MMS
-    private static ArrayList<Application> edgeTransferObject = new ArrayList<Application> ();
+    private static EdgeServerTransferObject edgeTransferObject = new EdgeServerTransferObject();
+    
+    private static int nviewers = 0; 
+	private static Streamer tempStream = new Streamer();
+	private static ArrayList<Streamer> tempArList = new ArrayList<Streamer>();
 	
 	public static void main (String args[]) {
 		// Connect to the server process running at host
@@ -28,7 +32,7 @@ public class EdgeTracker {
 		    // The next 2 lines create a output stream we can 
 			// write to.  (To write TO SERVER)
 			OutputStream os= s.getOutputStream();
-			//DataOutputStream serverWriter = new DataOutputStream(os); //to write string,otherwise, need towrite byte array
+			//DataOutputStream serverWriter = new DataOutputStream(os); //to write string,otherwise, need to write byte array
 			ObjectOutputStream serverWriter = new ObjectOutputStream(os);
 			
 			// The next 2 lines create a buffer reader that
@@ -40,20 +44,22 @@ public class EdgeTracker {
 	        BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
 	        String sentence;
 	        sentence = inFromUser.readLine();
-
+	        
 	        // keep repeating until an empty line is read.
 			while (sentence.compareTo("") != 0) {
 	           // Send a user input to server
 				//serverWriter.writeBytes(sentence +"\n");
-				
-	           String response = serverReader.readLine();
-			   System.out.println(response);
-			   if (response.equals(EXTRACT))
+				//Scanner sc = new Scanner(System.in);
+	           //String response = serverReader.readLine();
+				//String
+			   System.out.println(sentence);
+			   if (sentence.equals(EXTRACT)) {
 				   edgeTransferObject = extractData();
 			   		serverWriter.writeObject(edgeTransferObject);
+			   }
 	           //read user input again
 	           sentence = inFromUser.readLine();
-	           }
+	       }
 
 			// Send an empty line to server to end communication.
 			serverWriter.writeBytes("\n");
@@ -66,79 +72,30 @@ public class EdgeTracker {
 		}	
 	}
 	
-	private static ArrayList<Application> extractData(){
+	private static EdgeServerTransferObject extractData(){
 		BufferedReader br = null;
 		InputStream is = null;
 	    String line = null;
-	    String flag = null;
 	    String temp = null;
-	    Iterator<String> flagIter = null;
-	    flagArList.addAll(Arrays.asList(flagArray));
-	    int nstreamers = 0;
-	    int nviewers = 0; 
-	    
-		Application tempApp = new Application();
-		Streamer tempStream = new Streamer();
-		ArrayList<Streamer> tempArList = new ArrayList<Streamer>();
-		br = downloader(is, br);
+	    br = statsDownloader(is, br);
 		
 		try {
 			while ((line = br.readLine()) != null) {
-				if(line.indexOf(CLIENT)>-1 ){
-					if(line.indexOf(PUBLISHING)>-1){
-						//System.out.println("This is a streamer");
-						nstreamers++;
-					}
-					else if(line.indexOf(ACTIVE)>-1){
-						//System.out.println("This is a viewer");
-						nviewers++;
-							if(line.indexOf(flagArList.get(1))==-1){
-								//System.out.println("This viewer is pushing the stream elsewhere. Get the destination from log");
-								//remember to implement said log later
-							}
+				nviewers = isViewerIncrement(line, nviewers);
+				if (line.indexOf(STREAM) > -1){
+					line = br.readLine();
+					if (line.indexOf(NAME) > -1){
+						temp = getString(line, NAME);							
+						tempStream.setStreamkey(Long.parseLong(temp));
 					}
 				}
-				else if(line.indexOf(STREAM)>-1){
-					//System.out.println("nstreamers = "+nstreamers);
-					//System.out.println("nviewers = "+nviewers);
-					tempStream.setNviewers(nviewers);
-					tempArList.add(tempStream);
-					tempStream = new Streamer();
-					nstreamers = 0;
-					nviewers = 0;
-				}
-				else if(line.indexOf(APPLICATION)>-1){
-					tempApp.setStreamer(tempArList);
-					edgeTransferObject.add(tempApp);
-					tempArList = new ArrayList<Streamer>();
-					tempApp = new Application();
-				}
-				flagIter = flagArList.iterator();
-				while(flagIter.hasNext()){
-					flag = flagIter.next();
-					if (line.indexOf(flag) > -1){
-						//System.out.println(flag+ " = " + temp);						
-						if(flag.equals(flagArList.get(0))){		//application
-							line = br.readLine();
-							flag = flagIter.next();
-							if (line.indexOf(flag) > -1){
-								temp = getString(line, flag);							
-								tempApp.setAppName(temp);
-							}
-						}
-						else if(flag.equals(flagArList.get(2))){		//stream
-							line = br.readLine();
-							flag = flagIter.next();
-							if (line.indexOf(flag) > -1){
-								temp = getString(line, flag);							
-								tempStream.setStreamkey(Long.parseLong(temp));
-							}
-						}
-						else if(flag.equals(flagArList.get(4))){		//pageurl
-							temp = getString(line, flag);							
-							tempStream.setPageurl(temp);
-						}
-					}	
+				else if (line.indexOf(PAGEURL) > -1){
+					temp = getString(line, PAGEURL);							
+					tempStream.setPageurl(temp);
+				}	
+				else if(line.indexOf(ENDSTREAM)>-1){
+					setNumberOfViewers();
+					addStreamerToArrayList();
 				}
 			}
 		} catch (IOException ioe) {
@@ -151,9 +108,33 @@ public class EdgeTracker {
 	            // nothing to see here
 	        }
 		}
-		return edgeTransferObject;
+		edgeTransferObject.setServerName(EDGESERVERNAME);
+		edgeTransferObject.setStreamer(tempArList);
+
+		return edgeTransferObject;		
+	}
+
+	private static void addStreamerToArrayList() {
+		tempArList.add(tempStream);
+		tempStream = new Streamer();
+	}
+
+	private static void setNumberOfViewers() {
+		tempStream.setNviewers(nviewers);
+		nviewers = 0;
+	}
+    
+	private static int isViewerIncrement(String line, int nviewers) {
+		if( (line.indexOf(CLIENT)>-1) && (line.indexOf(PUBLISHING)==-1) ){
+			nviewers++;
+			if(line.indexOf(PAGEURL)==-1){
+				//System.out.println("This viewer is pushing the stream elsewhere. Get the destination from log");
+				//remember to implement said log later
+			}
+		}
+		return nviewers;
 	}	
-	private static BufferedReader downloader(InputStream is, BufferedReader br) {
+	private static BufferedReader statsDownloader(InputStream is, BufferedReader br) {
 	    try {
 	        URL url = new URL(STATS_FILE_LOCATION);
 	        is = url.openStream();  
