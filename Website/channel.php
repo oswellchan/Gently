@@ -115,7 +115,8 @@ if (isset ( $_GET ['id'] )) {
 
 				    server.starttime = Date.now();
 					
-				    this.file.src = "http://" + server.domain + "/speedtest.jpg?no-cache=" + Math.floor(Math.random() * 100000);
+				    //this.file.src = "http://" + server.domain + "/speedtest.jpg?no-cache=" + Math.floor(Math.random() * 100000);
+				    this.file.src = "http://google.com/images/srpr/logo11w.png";
 				}
 				</script>
 			</div>
@@ -193,77 +194,84 @@ if (isset ( $_SESSION['username'] )) {
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
-			
-			$(window).load(function() {
-				$("#chat").height($("#video").height()-20);
-				$('#chatbox').animate({ scrollTop: $('#chatbox')[0].scrollHeight}, 0);
-			});
-			
-			$(window).resize(function(){
-				$("#chat").height($("#video").height()-20);
-			});
-			
-			//If user submits the form
-			$("#submitmsg").click(function(){
-				var clientmsg = $("#usermsg").val();
-				clientmsg = clientmsg.trim();
-				if (clientmsg != ""){
-					var board = getQueryVariable("id");
-					$.post("post.php", {text: clientmsg, id: board});
-					loadLog();
-				}
-				
-				$("#usermsg").val("");
-				return false;
-			});
+	
+		$(window).on('beforeunload', function(){
+			var chn = getQueryVariable("id");
+			$.post("counter.php", {id: chn,visit: 0});
+		});
 
-			//Use addfav.php to add to favourites
-			$("#favbtn").click(function(){
-				var chn = getQueryVariable("id");
-				$.post("addfav.php", {id: chn});
-				$("#favbtn").attr('disabled','disabled');
-				return false;
-			});
-
-			//Load the file containing the chat log
-			function loadLog(){		
-				//$("#chatbox").width($("#chatbox").width());
-				$("#chatbox").width($(window).width()*0.25 - 73);
-				var oldscrollHeight = $('#chatbox')[0].scrollHeight; //Scroll height before the request
-				var path = "chat/";
-				path += getQueryVariable("id");
-				path += ".html";
-				$.ajax({
-					url: path,
-					cache: false,
-					success: function(html){		
-						$("#chatbox").html(html); //Insert chat log into the #chatbox div	
-						
-						//Auto-scroll			
-						var newscrollHeight = $('#chatbox')[0].scrollHeight; //Scroll height after the request
-						if(newscrollHeight > oldscrollHeight){
-							$("#chatbox").animate({ scrollTop: $('#chatbox')[0].scrollHeight}, 0);
-						}
-				  	},
-				});
-				$("#chat").height($("#video").height()-20);
-			}
-			
-			setInterval (loadLog, 500);
-			function getQueryVariable(variable)
-			{
-			       var query = window.location.search.substring(1);
-			       var vars = query.split("&");
-			       for (var i=0;i<vars.length;i++) {
-			               var pair = vars[i].split("=");
-			               if(pair[0] == variable){return pair[1];}
-			       }
-			       return(false);
-			}
+		$(document).ready(function() {
+			$("#chat").height($("#video").height()-20);
+			$('#chatbox').animate({ scrollTop: $('#chatbox')[0].scrollHeight}, 0);
+			var chn = getQueryVariable("id");
+			$.post("counter.php", {id: chn,visit: 1});
+		});
 		
-			/* jwplayer().onMeta(function(event) {
-				console.log(event.metadata);
-			}); */
-		</script>
+		$(window).resize(function(){
+			//$("#chat").height($("#video").height()-20);
+		});
+		
+		//If user submits the form
+		$("#submitmsg").click(function(){
+			var clientmsg = $("#usermsg").val();
+			clientmsg = clientmsg.trim();
+			if (clientmsg != ""){
+				var board = getQueryVariable("id");
+				$.post("post.php", {text: clientmsg, id: board});
+				loadLog();
+			}
+			
+			$("#usermsg").val("");
+			return false;
+		});
+
+		//Use addfav.php to add to favourites
+		$("#favbtn").click(function(){
+			var chn = getQueryVariable("id");
+			$.post("addfav.php", {id: chn});
+			$("#favbtn").attr('disabled','disabled');
+			return false;
+		});
+
+		//Load the file containing the chat log
+		function loadLog(){		
+			//$("#chatbox").width($("#chatbox").width());
+			$("#chatbox").width($(window).width()*0.25 - 73);
+			var oldscrollHeight = $('#chatbox')[0].scrollHeight; //Scroll height before the request
+			var path = "chat/";
+			path += getQueryVariable("id");
+			path += ".html";
+			$.ajax({
+				url: path,
+				cache: false,
+				success: function(html){		
+					$("#chatbox").html(html); //Insert chat log into the #chatbox div	
+					
+					//Auto-scroll			
+					var newscrollHeight = $('#chatbox')[0].scrollHeight; //Scroll height after the request
+					if(newscrollHeight > oldscrollHeight){
+						$("#chatbox").animate({ scrollTop: $('#chatbox')[0].scrollHeight}, 0);
+					}
+			  	},
+			});
+			$("#chat").height($("#video").height()-20);
+		}
+		
+		setInterval (loadLog, 500);
+		function getQueryVariable(variable)
+		{
+		       var query = window.location.search.substring(1);
+		       var vars = query.split("&");
+		       for (var i=0;i<vars.length;i++) {
+		               var pair = vars[i].split("=");
+		               if(pair[0] == variable){return pair[1];}
+		       }
+		       return(false);
+		}
+	
+		/* jwplayer().onMeta(function(event) {
+			console.log(event.metadata);
+		}); */
+	</script>
 </body>
 </html>
