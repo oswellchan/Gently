@@ -1,17 +1,7 @@
 <?php
 session_start();
 if(isset($_SESSION['username'])){
-	$servername = "localhost";
-	$username = "gently";
-	$password = "downthestream";
-	$dbname = "gently";
-
-	// Create connection
-	$conn = mysqli_connect($servername, $username, $password, $dbname);
-	// Check connection
-	if (!$conn) {
-		die("Connection failed: " . mysqli_connect_error());
-	}
+	include 'connectsql.php';
 
 	$sql = "SELECT * FROM `channel` WHERE `username`='".$_SESSION['username']."'";
 	$result = mysqli_query($conn, $sql);
@@ -22,7 +12,6 @@ if(isset($_SESSION['username'])){
 	}
 	
 	$sql = "UPDATE channel SET thumbnail='default.jpg' WHERE `username`='".$_SESSION['username']."'";
-	echo $sql;
 	$result = mysqli_query($conn, $sql);
 
 	mysqli_close($conn);

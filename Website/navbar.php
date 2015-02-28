@@ -3,50 +3,42 @@ session_start ();
 if (isset ( $_GET ['logout'] )) {
 	session_destroy ();
 	echo '
-	<script type="text/javascript">
-	var url = location.href;
-	url=url.replace("?logout=true","");
-	url=url.replace("&logout=true","");
-	location.href =url;
-	</script>
+		<script type="text/javascript">
+			var url = location.href;
+			url=url.replace("?logout=true","");
+			url=url.replace("&logout=true","");
+			location.href =url;
+		</script>
 	';
 	
 	//header ( "Location: ../index.php" );
 }
 if (isset ( $_POST ['usernameInput'] )) {
-	
-	$servername = "localhost";
-	$username = "gently";
-	$password = "downthestream";
-	$dbname = "gently";
-	
-	// Create connection
-	$conn = mysqli_connect($servername, $username, $password, $dbname);
-	// Check connection
-	if (!$conn) {
-	    die("Connection failed: " . mysqli_connect_error());
-	}
+
+	include 'connectsql.php';
 	
 	$stmt = mysqli_prepare($conn, "SELECT username,password,salt FROM login WHERE username=?");
 	mysqli_stmt_bind_param($stmt, 's', $_POST['usernameInput']);
 	mysqli_stmt_execute($stmt);
 	mysqli_stmt_bind_result($stmt, $acctusername, $acctpassword, $acctsalt);
 	mysqli_stmt_store_result($stmt);
+	
 	if (mysqli_stmt_num_rows($stmt) > 0) {
-	    // output data of each row
-	    mysqli_stmt_fetch($stmt);
-	    if ($acctusername  == $_POST['usernameInput'] && $acctpassword==md5($_POST['passwordInput'].$acctsalt)){
-	        $_SESSION ['username'] = $_POST ['usernameInput'];
-	    } else { // wrong password
-	    	echo '<div class="alert alert-warning" role="warning"><center>Incorrect username or password</center></div>';
-	    }
-	} else { // no such user
-	    echo '<div class="alert alert-warning" role="warning"><center>Incorrect username or password</center></div>';
+		// output data of each row
+		mysqli_stmt_fetch($stmt);
+		if ($acctusername  == $_POST['usernameInput'] && $acctpassword==md5($_POST['passwordInput'].$acctsalt)){
+			$_SESSION ['username'] = $_POST ['usernameInput'];
+		} else {
+			// wrong password
+			echo '<div class="alert alert-warning" role="warning"><center>Incorrect username or password</center></div>';
+		}
+	} else {
+		// no such user
+		echo '<div class="alert alert-warning" role="warning"><center>Incorrect username or password</center></div>';
 	}
+	
 	mysqli_stmt_close($stmt);
 	mysqli_close($conn);
-	
-	
 }
 
 echo '
@@ -82,15 +74,20 @@ if (isset ( $_SESSION ['username'] )) {
 							<li><a href="/channelsettings.php">Channel settings</a></li>
 							<li><a href="managefavourites.php">Manage favourites</a></li>
 							<li class="divider"></li>
-							<li><a href="';
-	if (isset ( $_GET ['id'] )) {
-		$id = str_replace('#', '', $_GET ['id']);
-		echo '?id='.$id.'&logout=true';
-	} else {
-		echo '?logout=true';
-	}
-							
-	echo	
+							<li><a href="
+	';
+							if (isset ( $_GET ['id'] )) {
+								$id = str_replace('#', '', $_GET ['id']);
+								echo '
+									?id='.$id.'&logout=true
+								';
+							} else {
+								echo '
+									?logout=true
+								';
+							}
+
+	echo
 							'">Sign out</a></li>
 						</ul>
 					</li>
@@ -99,35 +96,34 @@ if (isset ( $_SESSION ['username'] )) {
 } else {
 	echo '
 				<ul class="nav navbar-nav navbar-right">
-				   <li class="dropdown">
-                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sign in <b class="caret"></b></a>
-                     <ul class="dropdown-menu" style="padding: 15px;min-width: 250px;">
-                        <li>
-                           <div class="row">
-                              <div class="col-md-12">
-                                 <form class="form" role="form" method="post" action="#" accept-charset="UTF-8" id="login-nav">
-                                    <div class="form-group">
-                                       <label class="sr-only" for="usernameInput">Username</label>
-                                       <input type="text" class="form-control" name="usernameInput" placeholder="Username" required>
-                                    </div>
-                                    <div class="form-group">
-                                       <label class="sr-only" for="passwordInput">Password</label>
-                                       <input type="password" class="form-control" name="passwordInput" placeholder="Password" required>
-                                    </div>
-                                    <div class="form-group">
-                                       <button type="submit" class="btn btn-success btn-block">Sign in</button>
-                                    </div>
-                                 </form>
-                              </div>
-                           </div>
-                        </li>
-                     </ul>
-                  </li>
-				  <li><a href="/register.php">Sign up</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Sign in <b class="caret"></b></a>
+						<ul class="dropdown-menu" style="padding: 15px;min-width: 250px;">
+							<li>
+								<div class="row">
+									<div class="col-md-12">
+										<form class="form" role="form" method="post" action="#" accept-charset="UTF-8" id="login-nav">
+											<div class="form-group">
+												<label class="sr-only" for="usernameInput">Username</label>
+												<input type="text" class="form-control" name="usernameInput" placeholder="Username" required>
+											</div>
+											<div class="form-group">
+												<label class="sr-only" for="passwordInput">Password</label>
+												<input type="password" class="form-control" name="passwordInput" placeholder="Password" required>
+											</div>
+											<div class="form-group">
+												<button type="submit" class="btn btn-success btn-block">Sign in</button>
+											</div>
+										</form>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</li>
+					<li><a href="/register.php">Sign up</a></li>
 				</ul>
 	';
 }
-;
 
 echo '
 			</div>
@@ -138,8 +134,9 @@ echo '
 
 echo '
 	<div class="footer">
-    	<div class="container">
-        	<p class="text-muted">Copyright &copy; 2015 Gently</p>
-    	</div>
-    </div>';
+		<div class="container">
+			<p class="text-muted">Copyright &copy; 2015 Gently</p>
+		</div>
+	</div>
+';
 ?>

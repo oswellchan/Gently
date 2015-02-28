@@ -1,23 +1,13 @@
 <?php 
 include 'navbar.php';
+include 'connectsql.php';
 include 'connect.php';
 
 //Load channel name and description
-if (isset ( $_GET ['id'] )) {
-	$id = str_replace('#', '', $_GET ['id']);
-	$servername = "localhost";
-	$username = "gently";
-	$password = "downthestream";
-	$dbname = "gently";
+if (isset($_GET['id'])) {
+	$id = str_replace('#', '', $_GET['id']);
 	
-	// Create connection
-	$conn = mysqli_connect($servername, $username, $password, $dbname);
-	// Check connection
-	if (!$conn) {
-		die("Connection failed: " . mysqli_connect_error());
-	}
-	
-	$stmt = mysqli_prepare($conn, "SELECT name,description,enabled FROM channel WHERE username=?");
+	$stmt = mysqli_prepare($conn, "SELECT `name`,`description`,`enabled` FROM `channel` WHERE `username`=?");
 	mysqli_stmt_bind_param($stmt, 's', $id);
 	mysqli_stmt_execute($stmt);
 	mysqli_stmt_bind_result($stmt, $chnname, $chndescription, $enabled);
@@ -35,9 +25,10 @@ if (isset ( $_GET ['id'] )) {
 	}
 	
 	// check for favourites if logged in
-	if (isset ( $_SESSION['username'] )) {
-		$sql = "SELECT * FROM `favourites` WHERE username='".$_SESSION['username']."' AND  favourites='".$_GET ['id']."'";
+	if (isset($_SESSION['username'])) {
+		$sql = "SELECT * FROM `favourites` WHERE `username`='".$_SESSION['username']."' AND  `favourites`='".$_GET['id']."'";
 		$result = mysqli_query($conn, $sql);
+		
 		if (mysqli_num_rows($result) > 0) {
 			$faved = true;
 		} else {
@@ -50,7 +41,6 @@ if (isset ( $_GET ['id'] )) {
 	
 	mysqli_close($conn);
 	
-	
 } else {
 	// no id provided
 	header ( "Location: ../browse.php" );
@@ -58,41 +48,40 @@ if (isset ( $_GET ['id'] )) {
 ?>
 <html>
 <head>
-<title><?php echo $chnname; ?> - Gently</title>
-<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-<link href="/css/bootstrap.min.css" rel="stylesheet">
-<script src="/jwplayer/jwplayer.js"></script>
+	<title><?php echo $chnname; ?> - Gently</title>
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<script src="/jwplayer/jwplayer.js"></script>
+	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
 </head>
 <body>
 	<div class="container-fluid">
 		<div class="row">
 			<div id="video" class="col-md-9" onresize="resizeScript">
 				<div id="myElement"><center><h4>Loading the player...</h4></center></div>
-				
 			</div>
 
 			<div id="chat">
-					<div id="chatbox">
-						<?php
-						if(file_exists("chat/".$_GET ['id'].".html") && filesize("chat/".$_GET ['id'].".html") > 0){
-						    $handle = fopen("chat/".$_GET ['id'].".html", "r");
-						    $contents = fread($handle, filesize("chat/".$_GET ['id'].".html"));
-						    fclose($handle);
-						     
-						    //echo $contents;
-						} else {
-							$fp = fopen("chat/".$_GET ['id'].".html", "w");
-							fwrite($fp, "<div class='msgln'>There doesn't seem to be anything here. Start chatting!<br></div>");
-							fclose($fp);
-						}
-						?>
-					</div>
-	     			<div id="msgbox">
-					    <form class="form-inline" name="message" action="#">
-					        <input class="form-control" name="usermsg" type="text" id="usermsg" size="63" <?php if (!isset($_SESSION['username'])) echo 'disabled value="Sign in to chat"';?>/>
-					        <button class="btn btn-primary " name="submitmsg" type="submit"  id="submitmsg" <?php if (!isset($_SESSION['username'])) echo 'disabled';?>>Send</button>
-					    </form>
-				    </div>
+				<div id="chatbox">
+					<?php
+					if(file_exists("chat/".$_GET['id'].".html") && filesize("chat/".$_GET['id'].".html") > 0){
+					    $handle = fopen("chat/".$_GET['id'].".html", "r");
+					    $contents = fread($handle, filesize("chat/".$_GET['id'].".html"));
+					    fclose($handle);
+					} else {
+						$fp = fopen("chat/".$_GET['id'].".html", "w");
+						fwrite($fp, "<div class='msgln'>There doesn't seem to be anything here. Start chatting!<br></div>");
+						fclose($fp);
+					}
+					?>
+				</div>
+     			<div id="msgbox">
+				    <form class="form-inline" name="message" action="#">
+				        <input class="form-control" name="usermsg" type="text" id="usermsg" size="63" <?php if (!isset($_SESSION['username'])) echo 'disabled value="Sign in to chat"';?>/>
+				        <button class="btn btn-primary " name="submitmsg" type="submit"  id="submitmsg" <?php if (!isset($_SESSION['username'])) echo 'disabled';?>>Send</button>
+				    </form>
+			    </div>
 			</div>
 		</div>
 		
@@ -108,26 +97,70 @@ if (isset ( $_GET ['id'] )) {
 		</div>
 	</div>
 
-	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script src="/js/bootstrap.min.js"></script>
+	
 	<script type="text/javascript">
-		var errorCount = 0;
-		var source = null;
-		var serverstr = <?php echo json_encode($serverstr); ?>;
-		var esList = [];
-		var ipList = serverstr.split(" ");
-		for (var i = 0; i < ipList.length; i++) {
-		    esList.push({
-		        stream: ipList[i],
-		        domain: extractDomain(ipList[i]),
-		        ping: -1,
-		        starttime: 0,
-		        status: 'nil'
-		    });
-		}
+		// set chatbox size to video height and increment viewer count
+		$(document).ready(function() {
+			$("#chat").height($("#video").height()-20);
+			$('#chatbox').animate({ scrollTop: $('#chatbox')[0].scrollHeight}, 0);
+			var chn = getQueryVariable("id");
+			$.post("counter.php", {id: chn,visit: 1});
+		});
+
+		// decrease viewer count
+		$(window).on('beforeunload', function(){
+			var chn = getQueryVariable("id");
+			$.post("counter.php", {id: chn,visit: 0});
+		});
 		
-		for (var i = 0; i < esList.length; i++) {
-		    ping(esList[i]);
+		//If user submits the form
+		$("#submitmsg").click(function(){
+			var clientmsg = $("#usermsg").val();
+			clientmsg = clientmsg.trim();
+			if (clientmsg != ""){
+				var board = getQueryVariable("id");
+				$.post("post.php", {text: clientmsg, id: board});
+				loadLog();
+			}
+			
+			$("#usermsg").val("");
+			return false;
+		});
+	
+		//Use addfav.php to add to favourites
+		$("#favbtn").click(function(){
+			var chn = getQueryVariable("id");
+			$.post("addfav.php", {id: chn});
+			$("#favbtn").attr('disabled','disabled');
+			return false;
+		});
+	
+		var source = chooseVideoSource();
+		
+		// updates chat board every 500ms
+		setInterval (loadLog, 500);
+
+		function chooseVideoSource() {
+			var errorCount = 0;
+			var source = null;
+			var serverstr = <?php echo json_encode($serverstr); ?>;
+			var esList = [];
+			var ipList = serverstr.split(" ");
+			for (var i = 0; i < ipList.length; i++) {
+			    esList.push({
+			        stream: ipList[i],
+			        domain: extractDomain(ipList[i]),
+			        ping: -1,
+			        starttime: 0,
+			        status: 'nil'
+			    });
+			}
+			
+			for (var i = 0; i < esList.length; i++) {
+			    ping(esList[i]);
+			}
+
+			return source;
 		}
 		
 		function extractDomain(url) {
@@ -186,44 +219,6 @@ if (isset ( $_GET ['id'] )) {
 		    //this.file.src = "http://" + server.domain + "/speedtest.jpg?no-cache=" + Math.floor(Math.random() * 100000);
 		    this.file.src = "http://google.com/images/srpr/logo11w.png";
 		}
-	
-		$(window).on('beforeunload', function(){
-			var chn = getQueryVariable("id");
-			$.post("counter.php", {id: chn,visit: 0});
-		});
-
-		$(document).ready(function() {
-			$("#chat").height($("#video").height()-20);
-			$('#chatbox').animate({ scrollTop: $('#chatbox')[0].scrollHeight}, 0);
-			var chn = getQueryVariable("id");
-			$.post("counter.php", {id: chn,visit: 1});
-		});
-		
-		$(window).resize(function(){
-			//$("#chat").height($("#video").height()-20);
-		});
-		
-		//If user submits the form
-		$("#submitmsg").click(function(){
-			var clientmsg = $("#usermsg").val();
-			clientmsg = clientmsg.trim();
-			if (clientmsg != ""){
-				var board = getQueryVariable("id");
-				$.post("post.php", {text: clientmsg, id: board});
-				loadLog();
-			}
-			
-			$("#usermsg").val("");
-			return false;
-		});
-
-		//Use addfav.php to add to favourites
-		$("#favbtn").click(function(){
-			var chn = getQueryVariable("id");
-			$.post("addfav.php", {id: chn});
-			$("#favbtn").attr('disabled','disabled');
-			return false;
-		});
 
 		//Load the file containing the chat log
 		function loadLog(){		
@@ -249,21 +244,16 @@ if (isset ( $_GET ['id'] )) {
 			$("#chat").height($("#video").height()-20);
 		}
 		
-		setInterval (loadLog, 500);
 		function getQueryVariable(variable)
 		{
-		       var query = window.location.search.substring(1);
-		       var vars = query.split("&");
-		       for (var i=0;i<vars.length;i++) {
-		               var pair = vars[i].split("=");
-		               if(pair[0] == variable){return pair[1];}
-		       }
-		       return(false);
+			var query = window.location.search.substring(1);
+	    	var vars = query.split("&");
+	     	for (var i=0;i<vars.length;i++) {
+        		var pair = vars[i].split("=");
+            	if(pair[0] == variable){return pair[1];}
+	    	}
+	    	return(false);
 		}
-	
-		/* jwplayer().onMeta(function(event) {
-			console.log(event.metadata);
-		}); */
 	</script>
 </body>
 </html>
