@@ -18,6 +18,8 @@ function getStreamkey($conn, $channel) {
 		echo '<div class="alert alert-warning" role="warning"><center>No user channel found</center></div>';
 	}
 	mysqli_stmt_close($stmt);
+	
+	return $streamkey;
 }
 
 // Query MMS for available stream servers

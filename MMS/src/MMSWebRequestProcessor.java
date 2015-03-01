@@ -37,10 +37,11 @@ public class MMSWebRequestProcessor extends RequestProcessor{
 	private void serviceRequest(BufferedReader br, DataOutputStream outputStream) throws IOException {
 		String input = br.readLine();
 		// controller.outputText(input);
+		System.out.println(input);
 
 		String[] splitInput = input.split(" ");
-		String clientIP = splitInput[0];
-		String streamerID = splitInput[1];
+		String streamerID = splitInput[0];
+		String clientIP = splitInput[1];
 		// String clientLocation =
 		// getLocationOfIPaddress(clientIP);
 
@@ -48,6 +49,10 @@ public class MMSWebRequestProcessor extends RequestProcessor{
 
 		String sources = mem.getStreamSourcesByID(streamerID);
 
+		// temp output for debug
+		sources = "https://www.youtube.com/watch?v=pY-4itAGyRU https://www.youtube.com/watch?v=TeRaOadQmuc https://www.youtube.com/watch?v=5_jDUdDRbkA https://www.youtube.com/watch?v=eWF8EmCn9GI";
+		
+		System.out.println(sources);
 		outputStream.writeBytes(sources + "\n");
 
 		// controller.outputText(sources);
