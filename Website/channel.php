@@ -3,7 +3,7 @@ include 'navbar.php';
 include 'connectsql.php';
 include 'connectMMS.php';
 
-//Load channel name and description
+// Load channel name and description
 if (isset($_GET['id'])) {
 	$id = str_replace('#', '', $_GET['id']);
 	
@@ -59,7 +59,7 @@ if (isset($_GET['id'])) {
 	<div class="container-fluid">
 		<div class="row">
 			<div id="video" class="col-md-9" onresize="resizeScript">
-				<div id="myElement"><center><h4>Loading the player...</h4></center></div>
+				<div id="playerElement"><center><h4>Loading the player...</h4></center></div>
 			</div>
 
 			<div id="chat">
@@ -100,76 +100,88 @@ if (isset($_GET['id'])) {
 	
 	<script type="text/javascript">
 		// set chatbox size to video height and increment viewer count
-		$(document).ready(function() {
-			$("#chat").height($("#video").height()-20);
-			$('#chatbox').animate({ scrollTop: $('#chatbox')[0].scrollHeight}, 0);
-			var chn = getQueryVariable("id");
-			$.post("counter.php", {id: chn,visit: 1});
-		});
-
-		// decrease viewer count
-		$(window).on('beforeunload', function(){
-			var chn = getQueryVariable("id");
-			$.post("counter.php", {id: chn,visit: 0});
-		});
-		
-		//If user submits the form
-		$("#submitmsg").click(function(){
-			var clientmsg = $("#usermsg").val();
-			clientmsg = clientmsg.trim();
-			if (clientmsg != ""){
-				var board = getQueryVariable("id");
-				$.post("post.php", {text: clientmsg, id: board});
-				loadLog();
-			}
-			
-			$("#usermsg").val("");
-			return false;
+		$(document).ready(function () {
+		    $("#chat").height($("#video").height() - 20);
+		    $('#chatbox').animate({
+		        scrollTop: $('#chatbox')[0].scrollHeight
+		    }, 0);
+		    var chn = getQueryVariable("id");
+		    $.post("counter.php", {
+		        id: chn,
+		        visit: 1
+		    });
 		});
 	
-		//Use addfav.php to add to favourites
-		$("#favbtn").click(function(){
-			var chn = getQueryVariable("id");
-			$.post("addfav.php", {id: chn});
-			$("#favbtn").attr('disabled','disabled');
-			return false;
+		// decrease viewer count
+		$(window).on('beforeunload', function () {
+		    var chn = getQueryVariable("id");
+		    $.post("counter.php", {
+		        id: chn,
+		        visit: 0
+		    });
+		});
+	
+		// If user submits the form
+		$("#submitmsg").click(function () {
+		    var clientmsg = $("#usermsg").val();
+		    clientmsg = clientmsg.trim();
+		    if (clientmsg != "") {
+		        var board = getQueryVariable("id");
+		        $.post("post.php", {
+		            text: clientmsg,
+		            id: board
+		        });
+		        loadLog();
+		    }
+	
+		    $("#usermsg").val("");
+		    return false;
+		});
+	
+		// Use addfav.php to add to favourites
+		$("#favbtn").click(function () {
+		    var chn = getQueryVariable("id");
+		    $.post("addfav.php", {
+		        id: chn
+		    });
+		    $("#favbtn").attr('disabled', 'disabled');
+		    return false;
 		});
 	
 		var source = chooseVideoSource();
-		
+	
 		// updates chat board every 500ms
-		setInterval (loadLog, 500);
-
+		setInterval(loadLog, 500);
+	
 		function chooseVideoSource() {
-			var errorCount = 0;
-			var source = null;
-			var serverstr = <?php echo json_encode($serverstr); ?>;
-			var esList = [];
-			var ipList = serverstr.split(" ");
-			for (var i = 0; i < ipList.length; i++) {
-			    esList.push({
-			        stream: ipList[i],
-			        domain: extractDomain(ipList[i]),
-			        ping: -1,
-			        starttime: 0,
-			        status: 'nil'
-			    });
-			}
-			
-			for (var i = 0; i < esList.length; i++) {
-			    ping(esList[i]);
-			}
-
-			return source;
+		    var errorCount = 0;
+		    var source = null;
+		    var serverstr = <?php echo json_encode($serverstr); ?> ;
+		    var esList = [];
+		    var ipList = serverstr.split(" ");
+		    for (var i = 0; i < ipList.length; i++) {
+		        esList.push({
+		            stream: ipList[i],
+		            domain: extractDomain(ipList[i]),
+		            ping: -1,
+		            starttime: 0,
+		            status: 'nil'
+		        });
+		    }
+	
+		    for (var i = 0; i < esList.length; i++) {
+		        ping(esList[i]);
+		    }
+	
+		    return source;
 		}
-		
+	
 		function extractDomain(url) {
 		    var domain;
 		    // find & remove protocol (http, ftp, etc.) and get domain
 		    if (url.indexOf("://") > -1) {
 		        domain = url.split('/')[2];
-		    }
-		    else {
+		    } else {
 		        domain = url.split('/')[0];
 		    }
 	
@@ -185,13 +197,13 @@ if (isset($_GET['id'])) {
 		    this.file.onload = function () {
 		        server.ping = Date.now() - server.starttime;
 		        server.status = 'Responded';
-		        
+	
 		        // Set first response as video source
 		        if (source == null) {
 		            source = server.stream;
-					console.log("SELECTED: " + source);
-					
-		            jwplayer("myElement").setup({
+		            console.log("SELECTED: " + source);
+	
+		            jwplayer("playerElement").setup({
 		                file: source,
 		                width: "100%",
 		                aspectratio: "16:9",
@@ -201,58 +213,60 @@ if (isset($_GET['id'])) {
 		        }
 		        console.log(server.ping + " " + server.status + " " + server.stream);
 		    };
-			
+	
 		    this.file.onerror = function (e) {
 		        server.ping = Date.now() - server.starttime;
 		        server.status = 'Test error';
 		        console.log(server.ping + " " + server.status + " " + server.stream);
-
+	
 		        errorCount++;
-		        // all servers error
-		        if (errorCount == esList.length){
-		        	$("#myElement").html("<center><h4>No streaming servers available</h4></center>");
+		        // all servers give error
+		        if (errorCount >= esList.length) {
+		            $("#playerElement").html("<center><h4>No streaming servers available</h4></center>");
 		        }
 		    };
 	
 		    server.starttime = Date.now();
-			
-		    //this.file.src = "http://" + server.domain + "/speedtest.jpg?no-cache=" + Math.floor(Math.random() * 100000);
+	
+		    // this.file.src = "http://" + server.domain + "/speedtest.jpg?no-cache=" + Math.floor(Math.random() * 100000);
 		    this.file.src = "http://google.com/images/srpr/logo11w.png";
 		}
-
-		//Load the file containing the chat log
-		function loadLog(){		
-			//$("#chatbox").width($("#chatbox").width());
-			$("#chatbox").width($(window).width()*0.25 - 73);
-			var oldscrollHeight = $('#chatbox')[0].scrollHeight; //Scroll height before the request
-			var path = "chat/";
-			path += getQueryVariable("id");
-			path += ".html";
-			$.ajax({
-				url: path,
-				cache: false,
-				success: function(html){		
-					$("#chatbox").html(html); //Insert chat log into the #chatbox div	
-					
-					//Auto-scroll			
-					var newscrollHeight = $('#chatbox')[0].scrollHeight; //Scroll height after the request
-					if(newscrollHeight > oldscrollHeight){
-						$("#chatbox").animate({ scrollTop: $('#chatbox')[0].scrollHeight}, 0);
-					}
-			  	},
-			});
-			$("#chat").height($("#video").height()-20);
+	
+		// Load the file containing the chat log
+		function loadLog() {
+		    $("#chatbox").width($(window).width() * 0.25 - 73);
+		    var oldscrollHeight = $('#chatbox')[0].scrollHeight; //Scroll height before the request
+		    var path = "chat/";
+		    path += getQueryVariable("id");
+		    path += ".html";
+		    $.ajax({
+		        url: path,
+		        cache: false,
+		        success: function (html) {
+		            $("#chatbox").html(html); //Insert chat log into the #chatbox div	
+	
+		            //Auto-scroll			
+		            var newscrollHeight = $('#chatbox')[0].scrollHeight; //Scroll height after the request
+		            if (newscrollHeight > oldscrollHeight) {
+		                $("#chatbox").animate({
+		                    scrollTop: $('#chatbox')[0].scrollHeight
+		                }, 0);
+		            }
+		        },
+		    });
+		    $("#chat").height($("#video").height() - 20);
 		}
-		
-		function getQueryVariable(variable)
-		{
-			var query = window.location.search.substring(1);
-	    	var vars = query.split("&");
-	     	for (var i=0;i<vars.length;i++) {
-        		var pair = vars[i].split("=");
-            	if(pair[0] == variable){return pair[1];}
-	    	}
-	    	return(false);
+	
+		function getQueryVariable(variable) {
+		    var query = window.location.search.substring(1);
+		    var vars = query.split("&");
+		    for (var i = 0; i < vars.length; i++) {
+		        var pair = vars[i].split("=");
+		        if (pair[0] == variable) {
+		            return pair[1];
+		        }
+		    }
+		    return (false);
 		}
 	</script>
 </body>

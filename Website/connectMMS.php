@@ -6,7 +6,7 @@ $serverstr = queryMMS($streamkey);
 
 // Obtain streamkey from SQL
 function getStreamkey($conn, $channel) {
-	$stmt = mysqli_prepare($conn, "SELECT streamkey FROM channel WHERE username=?");
+	$stmt = mysqli_prepare($conn, "SELECT `streamkey` FROM `channel` WHERE `username`=?");
 	mysqli_stmt_bind_param($stmt, 's', $channel);
 	mysqli_stmt_execute($stmt);
 	mysqli_stmt_bind_result($stmt, $streamkey);

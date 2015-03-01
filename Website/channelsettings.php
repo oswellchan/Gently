@@ -12,19 +12,6 @@
 	include 'navbar.php';
 	include 'connectsql.php';
 	
-	if (!isset($_SESSION['username'])) {
-		header ( "Location: ../index.php" );
-	}
-	
-	$sql = "SELECT * FROM `channel` WHERE username='".$_SESSION['username']."'";
-	$result = mysqli_query($conn, $sql);
-	
-	if (mysqli_num_rows($result) > 0) {
-		$row = mysqli_fetch_assoc($result);
-	} else {
-		echo "0 results";
-	}
-	
 	if (isset($_POST['channelName'])) {
 		if ($_FILES['thumbnail']['error'] == UPLOAD_ERR_OK){
 			$uploadOk = processFile($conn, $row);
@@ -34,6 +21,19 @@
 		}
 		
 		processForm($conn, $uploadOk);
+	}
+	
+	if (!isset($_SESSION['username'])) {
+		header ( "Location: ../index.php" );
+	}
+	
+	$sql = "SELECT * FROM `channel` WHERE `username`='".$_SESSION['username']."'";
+	$result = mysqli_query($conn, $sql);
+	
+	if (mysqli_num_rows($result) > 0) {
+		$row = mysqli_fetch_assoc($result);
+	} else {
+		echo "0 results";
 	}
 	
 	if (isset($_GET['chatdeleted'])) {
@@ -78,9 +78,9 @@
 		// Check if $uploadOk is set to 0 by an error
 		if ($uploadOk == 0) {
 			echo "Sorry, your file was not uploaded.";
-			// if everything is ok, try to upload file
+		// If everything is ok, try to upload file
 		} else {
-			if ($row["thumbnail"]!="default.jpg"){
+			if ($row["thumbnail"]!="default.jpg" && file_exists($target_dir.$row["thumbnail"])){
 				unlink($target_dir.$row["thumbnail"]);
 			}
 			if (move_uploaded_file($_FILES["thumbnail"]["tmp_name"], $target_file)) {
@@ -91,7 +91,7 @@
 			}
 		}
 			
-		$stmt4 = mysqli_prepare($conn, "UPDATE channel SET thumbnail=? WHERE username=?");
+		$stmt4 = mysqli_prepare($conn, "UPDATE `channel` SET `thumbnail`=? WHERE `username`=?");
 		mysqli_stmt_bind_param($stmt4, 'ss', $newfilename, $_SESSION['username']);
 		$row["thumbnail"] = $newfilename;
 			
@@ -102,14 +102,17 @@
 	}
 	
 	function processForm($conn, $uploadOk) {
-		$stmt1 = mysqli_prepare($conn, "UPDATE channel SET name=? WHERE username=?");
-		mysqli_stmt_bind_param($stmt1, 'ss', $_POST ['channelName'], $_SESSION['username']);
+		$_POST['channelName'] = sanitizeHTML($_POST['channelName']);
+		$_POST['channelDescription'] = sanitizeHTML($_POST['channelDescription']);
 		
-		$stmt2 = mysqli_prepare($conn, "UPDATE channel SET description=? WHERE username=?");
-		mysqli_stmt_bind_param($stmt2, 'ss', $_POST ['channelDescription'], $_SESSION['username']);
+		$stmt1 = mysqli_prepare($conn, "UPDATE `channel` SET `name`=? WHERE `username`=?");
+		mysqli_stmt_bind_param($stmt1, 'ss', $_POST['channelName'], $_SESSION['username']);
 		
-		$stmt3 = mysqli_prepare($conn, "UPDATE channel SET enabled=? WHERE username=?");
-		mysqli_stmt_bind_param($stmt3, 'is', $_POST ['enable'], $_SESSION['username']);
+		$stmt2 = mysqli_prepare($conn, "UPDATE `channel` SET `description`=? WHERE `username`=?");
+		mysqli_stmt_bind_param($stmt2, 'ss', $_POST['channelDescription'], $_SESSION['username']);
+		
+		$stmt3 = mysqli_prepare($conn, "UPDATE `channel` SET `enabled`=? WHERE `username`=?");
+		mysqli_stmt_bind_param($stmt3, 'is', $_POST['enable'], $_SESSION['username']);
 		
 		if ($uploadOk == 1 && mysqli_stmt_execute($stmt1) === TRUE && mysqli_stmt_execute($stmt2) === TRUE && mysqli_stmt_execute($stmt3) === TRUE) {
 			echo '<div class="alert alert-success" role="success"><center>Settings saved.</center></div>';
@@ -120,6 +123,11 @@
 		mysqli_stmt_close($stmt1);
 		mysqli_stmt_close($stmt2);
 		mysqli_stmt_close($stmt3);
+	}
+	
+	function sanitizeHTML($string) {
+		// to be completed
+		return $string;
 	}
 	
 	function chatDeleted() {
@@ -217,12 +225,12 @@
 	
 	<script type="text/javascript">
 		// confirmation for delete chat log
-		$("#delChatBtn").click(function(){
+		$("#delChatBtn").click(function () {
 		    return confirm("Chat log is permanent!\nProceed?");
 		});
-
+	
 		// confirmation for delete chat log
-		$("#delThumbBtn").click(function(){
+		$("#delThumbBtn").click(function () {
 		    return confirm("Thumbnail deletion is permanent!\nProceed?");
 		});
 	</script>
