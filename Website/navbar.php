@@ -1,46 +1,15 @@
 <?php
 session_start ();
 if (isset ( $_GET ['logout'] )) {
-	session_destroy ();
-	echo '
-		<script type="text/javascript">
-			var url = location.href;
-			url=url.replace("?logout=true","");
-			url=url.replace("&logout=true","");
-			location.href =url;
-		</script>
-	';
-	
-	//header ( "Location: ../index.php" );
+	logout();
 }
 if (isset ( $_POST ['usernameInput'] )) {
-
 	include 'connectsql.php';
 	
-	$stmt = mysqli_prepare($conn, "SELECT username,password,salt FROM login WHERE username=?");
-	mysqli_stmt_bind_param($stmt, 's', $_POST['usernameInput']);
-	mysqli_stmt_execute($stmt);
-	mysqli_stmt_bind_result($stmt, $acctusername, $acctpassword, $acctsalt);
-	mysqli_stmt_store_result($stmt);
-	
-	if (mysqli_stmt_num_rows($stmt) > 0) {
-		// output data of each row
-		mysqli_stmt_fetch($stmt);
-		if ($acctusername  == $_POST['usernameInput'] && $acctpassword==md5($_POST['passwordInput'].$acctsalt)){
-			$_SESSION ['username'] = $_POST ['usernameInput'];
-		} else {
-			// wrong password
-			echo '<div class="alert alert-warning" role="warning"><center>Incorrect username or password</center></div>';
-		}
-	} else {
-		// no such user
-		echo '<div class="alert alert-warning" role="warning"><center>Incorrect username or password</center></div>';
-	}
-	
-	mysqli_stmt_close($stmt);
-	mysqli_close($conn);
+	processLogin($conn);
 }
 
+// left half of navbar
 echo '
 	<div class="navbar navbar-default navbar-fixed-top">
 		<div class="container">
@@ -63,7 +32,9 @@ echo '
 				</form>
 ';
 
+// right half of navbar
 if (isset ( $_SESSION ['username'] )) {
+	// if logged in
 	echo '
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="/channel.php?id='.$_SESSION ["username"].'">' . $_SESSION ["username"] . '</a></li>
@@ -94,6 +65,7 @@ if (isset ( $_SESSION ['username'] )) {
 				</ul>
 	';
 } else {
+	// if not logged in
 	echo '
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown">
@@ -131,7 +103,7 @@ echo '
 	</div>
 ';
 
-
+// footer
 echo '
 	<div class="footer">
 		<div class="container">
@@ -139,4 +111,41 @@ echo '
 		</div>
 	</div>
 ';
+
+function logout() {
+	session_destroy ();
+	echo '
+		<script type="text/javascript">
+			var url = location.href;
+			url=url.replace("?logout=true","");
+			url=url.replace("&logout=true","");
+			location.href =url;
+		</script>
+	';
+}
+
+function processLogin($conn) {
+	$stmt = mysqli_prepare($conn, "SELECT username,password,salt FROM login WHERE username=?");
+	mysqli_stmt_bind_param($stmt, 's', $_POST['usernameInput']);
+	mysqli_stmt_execute($stmt);
+	mysqli_stmt_bind_result($stmt, $acctusername, $acctpassword, $acctsalt);
+	mysqli_stmt_store_result($stmt);
+	
+	if (mysqli_stmt_num_rows($stmt) > 0) {
+		// output data of each row
+		mysqli_stmt_fetch($stmt);
+		if ($acctusername  == $_POST['usernameInput'] && $acctpassword==md5($_POST['passwordInput'].$acctsalt)){
+			$_SESSION ['username'] = $_POST ['usernameInput'];
+		} else {
+			// wrong password
+			echo '<div class="alert alert-warning" role="warning"><center>Incorrect username or password</center></div>';
+		}
+	} else {
+		// no such user
+		echo '<div class="alert alert-warning" role="warning"><center>Incorrect username or password</center></div>';
+	}
+	
+	mysqli_stmt_close($stmt);
+	mysqli_close($conn);
+}
 ?>

@@ -27,67 +27,87 @@
 	
 	if (isset($_POST['channelName'])) {
 		if ($_FILES['thumbnail']['error'] == UPLOAD_ERR_OK){
-			$target_dir = "thumbnails/";
-			$temp = explode(".",$_FILES["thumbnail"]["name"]);
-			$newfilename = $_SESSION ['username'] . '.' .end($temp);
-			$target_file = $target_dir . $newfilename;
-			$uploadOk = 1;
-			$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
-			// Check if image file is a actual image or fake image
-			if(isset($_POST["submit"])) {
-				$check = getimagesize($_FILES["thumbnail"]["tmp_name"]);
-				if($check !== false) {
-					echo "File is an image - " . $check["mime"] . ".";
-					$uploadOk = 1;
-				} else {
-					echo "File is not an image.";
-					$uploadOk = 0;
-				}
-			}
-			
-			// Check file size
-			if ($_FILES["thumbnail"]["size"] > 2000000) {
-				echo "Sorry, your file is too large.";
-				$uploadOk = 0;
-			}
-			// Allow certain file formats
-			if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) {
-				echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-				$uploadOk = 0;
-			}
-			// Check if $uploadOk is set to 0 by an error
-			if ($uploadOk == 0) {
-				echo "Sorry, your file was not uploaded.";
-				// if everything is ok, try to upload file
-			} else {
-				if ($row["thumbnail"]!="default.jpg"){
-					unlink($target_dir.$row["thumbnail"]);
-				}
-				if (move_uploaded_file($_FILES["thumbnail"]["tmp_name"], $target_file)) {
-					// echo "The file ". basename( $_FILES["thumbnail"]["name"]). " has been uploaded.";
-				} else {
-					$uploadOk = 0;
-					echo "Sorry, there was an error uploading your file.";
-				}
-			}
-			
-			$stmt4 = mysqli_prepare($conn, "UPDATE channel SET thumbnail=? WHERE username=?");
-			mysqli_stmt_bind_param($stmt4, 'ss', $newfilename, $_SESSION['username']);
-			$row["thumbnail"] = $newfilename;
-			
-			mysqli_stmt_execute($stmt4);
-			mysqli_stmt_close($stmt4);
+			$uploadOk = processFile($conn, $row);
 		} else {
 			// no file uploaded
 			$uploadOk = 1;
 		}
 		
+		processForm($conn, $uploadOk);
+	}
+	
+	if (isset($_GET['chatdeleted'])) {
+		chatDeleted();
+	}
+	
+	if (isset ($_GET['thumbdeleted'])) {
+		thumbDeleted();
+	}
+	
+	mysqli_close($conn);
+	
+	function processFile($conn, $row) {
+		$target_dir = "thumbnails/";
+		$temp = explode(".",$_FILES["thumbnail"]["name"]);
+		$newfilename = $_SESSION ['username'] . '.' .end($temp);
+		$target_file = $target_dir . $newfilename;
+		$uploadOk = 1;
+		$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+		// Check if image file is a actual image or fake image
+		if(isset($_POST["submit"])) {
+			$check = getimagesize($_FILES["thumbnail"]["tmp_name"]);
+			if($check !== false) {
+				echo "File is an image - " . $check["mime"] . ".";
+				$uploadOk = 1;
+			} else {
+				echo "File is not an image.";
+				$uploadOk = 0;
+			}
+		}
+			
+		// Check file size
+		if ($_FILES["thumbnail"]["size"] > 2000000) {
+			echo "Sorry, your file is too large.";
+			$uploadOk = 0;
+		}
+		// Allow certain file formats
+		if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) {
+			echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+			$uploadOk = 0;
+		}
+		// Check if $uploadOk is set to 0 by an error
+		if ($uploadOk == 0) {
+			echo "Sorry, your file was not uploaded.";
+			// if everything is ok, try to upload file
+		} else {
+			if ($row["thumbnail"]!="default.jpg"){
+				unlink($target_dir.$row["thumbnail"]);
+			}
+			if (move_uploaded_file($_FILES["thumbnail"]["tmp_name"], $target_file)) {
+				// echo "The file ". basename( $_FILES["thumbnail"]["name"]). " has been uploaded.";
+			} else {
+				$uploadOk = 0;
+				echo "Sorry, there was an error uploading your file.";
+			}
+		}
+			
+		$stmt4 = mysqli_prepare($conn, "UPDATE channel SET thumbnail=? WHERE username=?");
+		mysqli_stmt_bind_param($stmt4, 'ss', $newfilename, $_SESSION['username']);
+		$row["thumbnail"] = $newfilename;
+			
+		mysqli_stmt_execute($stmt4);
+		mysqli_stmt_close($stmt4);
+		
+		return $uploadOk;
+	}
+	
+	function processForm($conn, $uploadOk) {
 		$stmt1 = mysqli_prepare($conn, "UPDATE channel SET name=? WHERE username=?");
 		mysqli_stmt_bind_param($stmt1, 'ss', $_POST ['channelName'], $_SESSION['username']);
 		
 		$stmt2 = mysqli_prepare($conn, "UPDATE channel SET description=? WHERE username=?");
 		mysqli_stmt_bind_param($stmt2, 'ss', $_POST ['channelDescription'], $_SESSION['username']);
-	
+		
 		$stmt3 = mysqli_prepare($conn, "UPDATE channel SET enabled=? WHERE username=?");
 		mysqli_stmt_bind_param($stmt3, 'is', $_POST ['enable'], $_SESSION['username']);
 		
@@ -102,23 +122,21 @@
 		mysqli_stmt_close($stmt3);
 	}
 	
-	if (isset($_GET['chatdeleted'])) {
+	function chatDeleted() {
 		if ($_GET['chatdeleted'] == "true") {
 			echo '<div class="alert alert-success" role="success"><center>Chat log deleted.</center></div>';
 		} else {
-			echo '<div class="alert alert-warning" role="warning"><center>Error deleting chat log.</center></div>';	
+			echo '<div class="alert alert-warning" role="warning"><center>Error deleting chat log.</center></div>';
 		}
 	}
 	
-	if (isset ($_GET['thumbdeleted'])) {
+	function thumbDeleted() {
 		if ($_GET['thumbdeleted'] == "true") {
 			echo '<div class="alert alert-success" role="success"><center>Thumbnail deleted.</center></div>';
 		} else {
 			echo '<div class="alert alert-warning" role="warning"><center>Error deleting thumbnail.</center></div>';
 		}
 	}
-	
-	mysqli_close($conn);
 	?>		
 	
 	

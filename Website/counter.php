@@ -7,7 +7,7 @@ if ($_POST['visit']==1){
 	$sql = "UPDATE `channel` SET viewers = viewers - 1 WHERE `username`='".$_POST['id']."'";
 }
 	
-$result = mysqli_query($conn, $sql);
+mysqli_query($conn, $sql);
 
 mysqli_close($conn);
 ?>

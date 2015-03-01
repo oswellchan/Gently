@@ -17,10 +17,7 @@
 	}
 	
 	if (isset ($_GET['remove'])) {
-		$sql = "DELETE FROM `favourites` WHERE `username`='".$_SESSION['username']."' AND `favourites`='".$_GET ['remove']."'";
-		$result = mysqli_query($conn, $sql);
-	
-		mysqli_close($conn);
+		processDelete($conn);
 	}
 	
 	$sql = "SELECT * FROM `favourites` WHERE `username`='".$_SESSION['username']."'";
@@ -83,6 +80,11 @@
 	}
 	
 	mysqli_close($conn);
+	
+	function processDelete($conn) {
+		$sql = "DELETE FROM `favourites` WHERE `username`='".$_SESSION['username']."' AND `favourites`='".$_GET ['remove']."'";
+		$result = mysqli_query($conn, $sql);
+	}
 	?>
 </body>
 </html>

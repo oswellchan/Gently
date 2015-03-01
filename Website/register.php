@@ -17,6 +17,10 @@
 	}
 	
 	if (isset ($_POST['username'])) {
+		processForm($conn);
+	}
+	
+	function ($conn) {
 		$stmt = mysqli_prepare($conn, "SELECT username FROM login WHERE username=?");
 		mysqli_stmt_bind_param($stmt, 's', $_POST ['username']);
 		mysqli_stmt_execute($stmt);
@@ -27,26 +31,26 @@
 			$key = rand(1000000, 9999999);
 			$sql = "SELECT streamkey FROM channel WHERE streamkey='".$key."'";
 			$result = mysqli_query($conn, $sql);
-			
+				
 			// if streamkey already exist in sql, generate again
 			while (mysqli_num_rows($result) > 0) {
 				$key = rand(1000000, 9999999);
 				$sql = "SELECT streamkey FROM channel WHERE streamkey='".$key."'";
 				$result = mysqli_query($conn, $sql);
 			}
-			
+				
 			// generate unique salt for security
 			$salt = uniqid();
 			$stmt1 = mysqli_prepare($conn, "INSERT INTO login (username, password, salt) VALUES (?,?,?)");
 			mysqli_stmt_bind_param($stmt1, 'sss', $_POST['username'], md5($_POST['password'].$salt), $salt);
-			
+				
 			$stmt2 = mysqli_prepare($conn, "INSERT INTO channel (username, streamkey, name, description) VALUES (?,?,'Untitled Channel', '')");
 			mysqli_stmt_bind_param($stmt2, 'ss', $_POST['username'], $key);
-			
+				
 			if (mysqli_stmt_execute($stmt1) && mysqli_stmt_execute($stmt2)) {
-			    echo '<div class="alert alert-success" role="success"><center>Account successfully created. You can now sign in above!</center></div>';
+				echo '<div class="alert alert-success" role="success"><center>Account successfully created. You can now sign in above!</center></div>';
 			} else {
-			    echo "Error: ". mysqli_error($conn);
+				echo "Error: ". mysqli_error($conn);
 			}
 		} else if ($_POST ['password']!=$_POST['password2']) {
 			echo '<div class="alert alert-warning" role="warning"><center>Password does not match.</center></div>';

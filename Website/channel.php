@@ -1,7 +1,7 @@
 <?php 
 include 'navbar.php';
 include 'connectsql.php';
-include 'connect.php';
+include 'connectMMS.php';
 
 //Load channel name and description
 if (isset($_GET['id'])) {

@@ -12,8 +12,26 @@
 	include 'navbar.php';
 	include 'connectsql.php';
 	
-	echo '<div class="container">';	
+	echo '
+		<div class="container">
+	';	
 	if (isset ( $_SESSION['username'] )) {
+		outputFavourites($conn);
+	}
+	echo '
+			<div class="row">
+				<h1>Popular</h1>
+	';
+	outputPopular($conn);
+	
+	mysqli_close($conn);
+	
+	echo '
+			</div>
+		</div>		
+	';
+	
+	function outputFavourites($conn) {
 		$sql = "SELECT * FROM `favourites` WHERE `username`='".$_SESSION['username']."'";
 		$result = mysqli_query($conn, $sql);
 		
@@ -23,20 +41,20 @@
 				$fav = $fav."','".$row['favourites'];
 			}
 			$fav = substr($fav, 2)."'";
-			
+				
 			$sql = "SELECT * FROM `channel` WHERE `username` IN (".$fav.") AND `enabled`=1 ORDER BY `viewers` DESC";
 			$result = mysqli_query($conn, $sql);
-			
+				
 			echo '
 				<div class="row">
 				<h1>Favourites</h1>
 			';
-			
+				
 			if (mysqli_num_rows($result) > 0) {
 				// output only 3 channels max
 				for ($i=0; $i < min(3, mysqli_num_rows($result)); $i++) {
 					$row = mysqli_fetch_assoc($result);
-					
+						
 					echo '
 						<div class="col-md-4">
 							<a href="channel.php?id='.$row["username"].'">
@@ -46,28 +64,25 @@
 						</div>
 					';
 				}
-				
+		
 			} else {
 				echo 'Start adding some channels to your favourites!';
 			}
-			
+				
 			echo '</div>';
 		}
-			
 	}
-	echo '
-		<div class="row">
-			<h1>Popular</h1>
-	';
-	$sql = "SELECT * FROM `channel` ORDER BY `viewers` DESC";
-	$result = mysqli_query($conn, $sql);
 	
-	if (mysqli_num_rows($result) > 0) {
-		// output only 3 channels max
-		for ($i=0; $i < min(3, mysqli_num_rows($result)); $i++) {
-			$row = mysqli_fetch_assoc($result);
-			
-			echo '
+	function outputPopular($conn) {
+		$sql = "SELECT * FROM `channel` ORDER BY `viewers` DESC";
+		$result = mysqli_query($conn, $sql);
+		
+		if (mysqli_num_rows($result) > 0) {
+			// output only 3 channels max
+			for ($i=0; $i < min(3, mysqli_num_rows($result)); $i++) {
+				$row = mysqli_fetch_assoc($result);
+					
+				echo '
 				<div class="col-md-4">
 					<a href="channel.php?id='.$row["username"].'">
 						<img src="thumbnails/'.$row["thumbnail"].'" height="240" width="320"><br>
@@ -75,17 +90,11 @@
 					</a>'.$row["viewers"].' viewers watching '.$row["username"].'
 				</div>
 			';
+			}
+		} else {
+			echo "0 results";
 		}
-	} else {
-		echo "0 results";
 	}
-	
-	mysqli_close($conn);
-	
-	echo '
-		</div>
-	</div>		
-	';
 	?>
 	
 </body>
