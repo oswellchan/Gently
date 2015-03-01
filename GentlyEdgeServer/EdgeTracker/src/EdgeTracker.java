@@ -1,4 +1,8 @@
 import java.util.*;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.io.*;
 import java.net.*;
 
@@ -14,6 +18,13 @@ public class EdgeTracker {
 	public static final String NAME = "<name>";
 	public static final String PAGEURL = "<pageurl>";
 	public static final String EDGESERVERNAME = "PLACEHOLDER NAME";
+	public static final String MMSURL = "mediatech-i.comp.nus.edu.sg";
+	public static final int PORTNUMBER = 9000;
+	public static final int EMPTYLINE = 0;
+	
+	//for logging
+	private final static Logger LOGGER = Logger.getLogger("EdgeServer");
+	private static Handler fh = null;
 	
     //Object to be sent to MMS
     private static EdgeServerTransferObject edgeTransferObject = new EdgeServerTransferObject();
@@ -22,53 +33,46 @@ public class EdgeTracker {
 	private static Streamer tempStream = new Streamer();
 	private static ArrayList<Streamer> tempArList = new ArrayList<Streamer>();
 	
+	// At current stage of implementation, user has to manually call the extract() 
+    // method by entering "EXTRACT". This will be automated later.
+	// At current stage of implementation, user also has enter an newLine 
+	// character("\n") to terminate connection.
+	
+	//main function to be further refactored during implementation of other classes
 	public static void main (String args[]) {
-		// Connect to the server process running at host
-		// mediatech-i.comp.nus.edu.sg and port 9000.
 		Socket s;
 		try {
-			s = new Socket("mediatech-i.comp.nus.edu.sg", 9000);
+			s = new Socket(MMSURL, PORTNUMBER);
 
-		    // The next 2 lines create a output stream we can 
-			// write to.  (To write TO SERVER)
 			OutputStream os= s.getOutputStream();
-			//DataOutputStream serverWriter = new DataOutputStream(os); //to write string,otherwise, need to write byte array
 			ObjectOutputStream serverWriter = new ObjectOutputStream(os);
 			
-			// The next 2 lines create a buffer reader that
-			// reads from the standard input. (to read stream FROM SERVER)
+			// isrServer and serverReader to be used during later stage of implementation  
 			InputStreamReader isrServer = new InputStreamReader(s.getInputStream());
 			BufferedReader serverReader = new BufferedReader(isrServer);
 
-	        //create buffer reader to read input from user. Read the user input to string 'sentence'
 	        BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
 	        String sentence;
 	        sentence = inFromUser.readLine();
 	        
 	        // keep repeating until an empty line is read.
-			while (sentence.compareTo("") != 0) {
-	           // Send a user input to server
-				//serverWriter.writeBytes(sentence +"\n");
-				//Scanner sc = new Scanner(System.in);
-	           //String response = serverReader.readLine();
-				//String
+			while (sentence.compareTo("") != EMPTYLINE) {
 			   System.out.println(sentence);
 			   if (sentence.equals(EXTRACT)) {
 				   edgeTransferObject = extractData();
 			   		serverWriter.writeObject(edgeTransferObject);
 			   }
-	           //read user input again
 	           sentence = inFromUser.readLine();
 	       }
-
-			// Send an empty line to server to end communication.
 			serverWriter.writeBytes("\n");
 
 			s.close();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.toString(), e);
 		} catch (IOException e) {
 			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.toString(), e);
 		}	
 	}
 	
@@ -77,40 +81,46 @@ public class EdgeTracker {
 		InputStream is = null;
 	    String line = null;
 	    String temp = null;
+	    
 	    br = statsDownloader(is, br);
-		
 		try {
+			fh = new FileHandler("edgeserver.log"); 
+			LOGGER.addHandler(fh);
+			LOGGER.setLevel(Level.SEVERE);
+			
 			while ((line = br.readLine()) != null) {
-				nviewers = isViewerIncrement(line, nviewers);
-				if (line.indexOf(STREAM) > -1){
+				nviewers = isViewerIncrement(line);
+				if (line.contains(STREAM)){
 					line = br.readLine();
-					if (line.indexOf(NAME) > -1){
+					if (line.contains(NAME)){
 						temp = getString(line, NAME);							
 						tempStream.setStreamkey(Long.parseLong(temp));
 					}
 				}
-				else if (line.indexOf(PAGEURL) > -1){
+				else if (line.contains(PAGEURL)){
 					temp = getString(line, PAGEURL);							
 					tempStream.setPageurl(temp);
 				}	
-				else if(line.indexOf(ENDSTREAM)>-1){
+				else if(line.contains(ENDSTREAM)){
 					setNumberOfViewers();
 					addStreamerToArrayList();
 				}
 			}
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
+			LOGGER.log(Level.SEVERE, ioe.toString(), ioe);
 		} finally {
 			try {
 				if (is != null) is.close();
 	            if (br != null) br.close();
+				if (fh != null) fh.close();
+	    		edgeTransferObject.setServerName(EDGESERVERNAME);
+	    		edgeTransferObject.setStreamer(tempArList);
 	        } catch (IOException ioe) {
-	            // nothing to see here
+	        	ioe.printStackTrace();
+	        	LOGGER.log(Level.SEVERE, ioe.toString(), ioe);
 	        }
 		}
-		edgeTransferObject.setServerName(EDGESERVERNAME);
-		edgeTransferObject.setStreamer(tempArList);
-
 		return edgeTransferObject;		
 	}
 
@@ -124,10 +134,10 @@ public class EdgeTracker {
 		nviewers = 0;
 	}
     
-	private static int isViewerIncrement(String line, int nviewers) {
-		if( (line.indexOf(CLIENT)>-1) && (line.indexOf(PUBLISHING)==-1) ){
+	private static int isViewerIncrement(String line) {
+		if( (line.contains(CLIENT)) && !(line.contains(PUBLISHING)) ){
 			nviewers++;
-			if(line.indexOf(PAGEURL)==-1){
+			if(line.contains(PAGEURL)){
 				//System.out.println("This viewer is pushing the stream elsewhere. Get the destination from log");
 				//remember to implement said log later
 			}
@@ -142,9 +152,10 @@ public class EdgeTracker {
 	        
 	    } catch (MalformedURLException mue) {
 	         mue.printStackTrace();
+	         LOGGER.log(Level.SEVERE, mue.toString(), mue);
 	    } catch (IOException ioe) {
-	 			ioe.printStackTrace();
-	    } finally {
+	 		ioe.printStackTrace();
+	 		LOGGER.log(Level.SEVERE, ioe.toString(), ioe);
 	    }
         return br;
 	}
