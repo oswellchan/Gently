@@ -36,21 +36,17 @@ public class MMSWebRequestProcessor extends RequestProcessor{
 	
 	private void serviceRequest(BufferedReader br, DataOutputStream outputStream) throws IOException {
 		String input = br.readLine();
-		// controller.outputText(input);
 
 		String[] splitInput = input.split(" ");
 		String clientIP = splitInput[0];
 		String streamerID = splitInput[1];
-		// String clientLocation =
-		// getLocationOfIPaddress(clientIP);
+		// String clientLocation = getLocationOfIPaddress(clientIP);
 
-		InternalMemory mem = InternalMemory.getInstance();
+		InternalMemory IM = InternalMemory.getInstance();
 
-		String sources = mem.getStreamSourcesByID(streamerID);
+		String sources = IM.getStreamSourcesByID(streamerID);
 
 		outputStream.writeBytes(sources + "\n");
-
-		// controller.outputText(sources);
 	}
 
 	// Given a IP, return the geo-location of that IP address

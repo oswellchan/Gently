@@ -4,8 +4,7 @@ import java.net.*;
 
 class MMSWeb extends PortListener {
 
-	private static final String _portType = "Web port";
-	GUIController controller;
+	private static final String PORTTYPE = "Web port";
 
 	// Constructor
 	MMSWeb(int portNo) throws IOException {
@@ -17,7 +16,7 @@ class MMSWeb extends PortListener {
 			Socket s = null;
 
 			try {
-				s = waitForConnection(_portType);
+				s = waitForConnection(PORTTYPE);
 				
 			} catch (Exception e) {
 				displayInTextField("Socket failed to accept.");

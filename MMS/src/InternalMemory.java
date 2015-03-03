@@ -1,5 +1,7 @@
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -7,21 +9,32 @@ import javafx.collections.ObservableList;
 //Follows Singleton pattern
 public class InternalMemory {
 
-	private static InternalMemory _internalMem;
 	private static final String MSG_NOSOURCEFOUND = "NULL";
-	private int _webPortNo;
-	private int _serverPortNo;
+	private static final String INFO_INTERNALMEMINITIALISED = "InternalMemory initialised";
+	private static final String INFO_RETRIEVINGSOURCES = "Retrieving stream links";
+	private static final String INFO_SOURCESFOUND = "%1$s found";
+	
+	private final static Logger _logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+	
+	private static InternalMemory _internalMem = null;
+	private int _webPortNo = -1;
+	private int _serverPortNo = -1;
 	private static ConcurrentHashMap<String, ArrayList<String>> _streamerToStreamSourcesMap;
 	private ObservableList<Server> _serverList = FXCollections.observableArrayList();
+	
 
 	private InternalMemory() {
 		_streamerToStreamSourcesMap = new ConcurrentHashMap<String, ArrayList<String>>();
+		
+		//For testing GUI purposes. Delete when done debugging
 		_serverList.add(new Server("Link", "mediatech-i", 1, 2));
 		_serverList.add(new Server("Link", "mediatech-i1", 1, 2));
 		_serverList.add(new Server("Link", "mediatech-i2", 1, 2));
 		_serverList.add(new Server("Link", "mediatech-i3", 1, 2));
 		_serverList.add(new Server("Link", "mediatech-i4", 1, 2));
 		_serverList.add(new Server("Link", "mediatech-i5", 1, 2));
+		
+		_logger.log(Level.INFO, INFO_INTERNALMEMINITIALISED);
 	}
 
 	public static InternalMemory getInstance() {
@@ -32,12 +45,13 @@ public class InternalMemory {
 		return _internalMem;
 	}
 
-	public static String getStreamSourcesByID(String userID) {
+	public String getStreamSourcesByID(String userID) {
+		
+		_logger.log(Level.INFO, INFO_RETRIEVINGSOURCES);
 
 		String sources = "";
 
-		ArrayList<String> arrayOfStreamSources = _streamerToStreamSourcesMap
-				.get(userID);
+		ArrayList<String> arrayOfStreamSources = _streamerToStreamSourcesMap.get(userID);
 
 		if (arrayOfStreamSources == null) {
 			sources = MSG_NOSOURCEFOUND;
@@ -46,7 +60,8 @@ public class InternalMemory {
 				sources += (source + " ");
 			}
 		}
-
+		
+		_logger.log(Level.INFO, String.format(INFO_SOURCESFOUND, sources));
 		return sources;
 	}
 

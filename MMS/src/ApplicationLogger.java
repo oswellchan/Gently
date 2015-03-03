@@ -5,8 +5,9 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 public class ApplicationLogger {
-	static private FileHandler fileTxt;
-	static private SimpleFormatter formatterTxt;
+	static private final String _fileName = "MMSLog.txt";
+	static private FileHandler _fileHandler = null;
+	static private SimpleFormatter _txtFormatter = null;
 
 	static public void setup() throws IOException {
 
@@ -14,12 +15,12 @@ public class ApplicationLogger {
 		Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
 		logger.setLevel(Level.INFO);
-		fileTxt = new FileHandler("logging.txt");
+		_fileHandler = new FileHandler(_fileName);
 
 		// create a TXT formatter
-		formatterTxt = new SimpleFormatter();
-		fileTxt.setFormatter(formatterTxt);
-		logger.addHandler(fileTxt);
-
+		_txtFormatter = new SimpleFormatter();
+		_fileHandler.setFormatter(_txtFormatter);
+		
+		logger.addHandler(_fileHandler);
 	}
 }

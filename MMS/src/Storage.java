@@ -12,7 +12,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Storage {
-
+	
+	private final String SAVEFILENAME = "save.txt";
+	private final String JSONFLAG_PORTNUMBERS = "portNumbers";
+	private final String JSONFLAG_WEBPORT = "webPort";
+	private final String JSONFLAG_SERVERPORT = "serverPort";
+	private final String JSONFLAG_STREAMERMAP ="streamerMap";
+	private final String INFO_CREATEDNEWSAVEFILE = "New save file created";
+	
 	public static Storage _storage;
 	private final static Logger _logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 	InternalMemory IM = InternalMemory.getInstance();
@@ -46,7 +53,7 @@ public class Storage {
 
 	private void setupStreamerToStreamSourcesMap(JSONObject savedState) throws JSONException {
 		
-		JSONObject streamerMapInJSON = savedState.getJSONObject("streamerMap");
+		JSONObject streamerMapInJSON = savedState.getJSONObject(JSONFLAG_STREAMERMAP);
 		String[] arrayOfStreamers = JSONObject.getNames(streamerMapInJSON);
 
 		if (streamersArrayNotEmpty(arrayOfStreamers)) {
@@ -57,8 +64,7 @@ public class Storage {
 	private void convertJSONtoHashMap(JSONObject streamerMap,
 			String[] arrayOfStreamers) throws JSONException {
 		
-		ConcurrentHashMap<String, ArrayList<String>> streamerToStreamSourcesMap = IM
-				.getStreamerToStreamMap();
+		ConcurrentHashMap<String, ArrayList<String>> streamerToStreamSourcesMap = IM.getStreamerToStreamMap();
 
 		for (String streamer : arrayOfStreamers) {
 			ArrayList<String> arrayOfSources = getArrayOfSources(streamerMap, streamer);
@@ -86,9 +92,9 @@ public class Storage {
 
 	private void setupPortNumbers(JSONObject savedState) throws JSONException {
 		
-		JSONObject portNumbers = savedState.getJSONObject("portNumbers");
-		int webPort = portNumbers.getInt("webPort");
-		int serverPort = portNumbers.getInt("serverPort");
+		JSONObject portNumbers = savedState.getJSONObject(JSONFLAG_PORTNUMBERS);
+		int webPort = portNumbers.getInt(JSONFLAG_WEBPORT);
+		int serverPort = portNumbers.getInt(JSONFLAG_SERVERPORT);
 		IM.setPortNumbers(webPort, serverPort);
 	}
 
@@ -103,7 +109,7 @@ public class Storage {
         		try {
         			JSONsource = reader.readLine();
         		} catch (IOException e) {
-        			_logger.log(Level.SEVERE, "Unable to read from JSONFile");
+        			_logger.log(Level.SEVERE, e.getMessage(), e);
         			System.exit(0);
         		}
 		}
@@ -115,9 +121,9 @@ public class Storage {
 		BufferedReader reader = null;
 		
 		try {
-			reader = new BufferedReader(new FileReader("save.txt"));
+			reader = new BufferedReader(new FileReader(SAVEFILENAME));
 		} catch (Exception e) {
-			_logger.log(Level.SEVERE, "Saved file cannot be read");
+			_logger.log(Level.SEVERE, e.getMessage(), e);
 			System.exit(0);
 		}
 		
@@ -129,12 +135,12 @@ public class Storage {
 		boolean fileDoesNotExists = true;
 		
 		try {
-			FileReader reader = new FileReader("save.txt");
+			FileReader reader = new FileReader(SAVEFILENAME);
 			reader.close();
 			
 			fileDoesNotExists = false;
 		} catch (Exception e) {
-			_logger.log(Level.INFO, "New save file created");
+			
 		}
 		
 		return fileDoesNotExists;
@@ -142,12 +148,14 @@ public class Storage {
 
 	private void createNewFile() {
 		try {
-			PrintWriter writer = new PrintWriter("save.txt");
-
+			PrintWriter writer = new PrintWriter(SAVEFILENAME);
+			
 			writer.flush();
 			writer.close();
+			
+			_logger.log(Level.INFO, INFO_CREATEDNEWSAVEFILE);
 		} catch (IOException e) {
-			_logger.log(Level.SEVERE, "Unable to create new file");
+			_logger.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
 
@@ -166,14 +174,14 @@ public class Storage {
 
 	private void writeToFile(JSONObject file) {
 		try {
-			PrintWriter writer = new PrintWriter("save.txt");
+			PrintWriter writer = new PrintWriter(SAVEFILENAME);
 			writer.print("");
 			writer.write(file.toString());
 
 			writer.flush();
 			writer.close();
-		} catch (IOException e1) {
-			_logger.log(Level.SEVERE, "Unable to save to file");
+		} catch (IOException e) {
+			_logger.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
 
@@ -182,8 +190,8 @@ public class Storage {
 		int serverPort = IM.getServerPort();
 
 		JSONObject entry = new JSONObject();
-		entry.put("webPort", webPort);
-		entry.put("serverPort", serverPort);
+		entry.put(JSONFLAG_WEBPORT, webPort);
+		entry.put(JSONFLAG_SERVERPORT, serverPort);
 
 		return entry;
 	}
@@ -192,10 +200,8 @@ public class Storage {
 		
 		JSONObject JSONstreamerMap = new JSONObject();
 
-		ConcurrentHashMap<String, ArrayList<String>> streamerToStreamSourcesMap = IM
-				.getStreamerToStreamMap();
-		Set<Map.Entry<String, ArrayList<String>>> setOfEntries = streamerToStreamSourcesMap
-				.entrySet();
+		ConcurrentHashMap<String, ArrayList<String>> streamerToStreamSourcesMap = IM.getStreamerToStreamMap();
+		Set<Map.Entry<String, ArrayList<String>>> setOfEntries = streamerToStreamSourcesMap.entrySet();
 
 		for (Map.Entry<String, ArrayList<String>> entry : setOfEntries) {
 			JSONArray streamSources = new JSONArray();

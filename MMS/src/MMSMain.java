@@ -17,10 +17,16 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class MMSMain extends Application {
-
-	private double xOffset = 0;
-	private double yOffset = 0;
-	private static FXMLLoader loader;
+	
+	private final String FXMLFILE = "MMSGUI.fxml";
+	private final String FONTAWESOMEFONTFILE = "fontawesome-webfont.ttf";
+	private final String CSSFILE = "gently.css";
+	private final String LOGOFILE = "file:logo.png";
+	private final String CSS_ANCHOR = "anchor";
+	
+	private double _xOffset = 0;
+	private double _yOffset = 0;
+	private static FXMLLoader _loader = null;
 	private final static Logger _logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
 	public static void main(String[] args) {
@@ -41,6 +47,7 @@ public class MMSMain extends Application {
 
 	private void initialiseStorage() {
 		try {
+			_logger.log(Level.INFO, "Storage initialising");
 			Storage.getInstance();
 
 		} catch (JSONException e) {
@@ -50,42 +57,68 @@ public class MMSMain extends Application {
 
 	private void initialiseGUI(Stage primaryStage) throws IOException {
 		
-		// Load resources needed, i.e. FXML file
-		loader = new FXMLLoader(getClass().getResource("MMSGUI.fxml"));
-		AnchorPane root = (AnchorPane) loader.load();
-		Font.loadFont(MMSMain.class.getResource("fontawesome-webfont.ttf").toExternalForm(), 20);
-		root.getStyleClass().add("anchor");
-
-		// Load CSS file used to style GUI
-		Scene scene = new Scene(root);
-		scene.getStylesheets().add(
-				getClass().getResource("gently.css")
-						.toExternalForm());
-		primaryStage.initStyle(StageStyle.TRANSPARENT);
-		primaryStage.getIcons().add(new Image("file:logo.png"));
+		loadFXML(FXMLFILE);
+		loadFont(FONTAWESOMEFONTFILE);
+		String CSS = getClass().getResource(CSSFILE).toExternalForm();
 		
-		primaryStage.setScene(scene);
+		//Create scene
+		AnchorPane root = customiseRoot();
+		Scene scene = createScene(CSS, root);
+		
+		createStage(primaryStage, scene);
 
-		setGuiMovable(primaryStage, root);
+		setGUIMovable(primaryStage, root);
 
 		primaryStage.show();
 	}
 
-	private void setGuiMovable(final Stage primaryStage, AnchorPane root) {
+	private void createStage(Stage primaryStage, Scene scene) {
+		customiseStage(primaryStage);
+		primaryStage.setScene(scene);
+	}
+
+	private void customiseStage(Stage primaryStage) {
+		primaryStage.initStyle(StageStyle.TRANSPARENT);
+		primaryStage.getIcons().add(new Image(LOGOFILE));
+	}
+
+	private Scene createScene(String CSS, AnchorPane root) {
+		Scene scene = new Scene(root);
+		scene.getStylesheets().add(CSS);
+		return scene;
+	}
+
+	private AnchorPane customiseRoot() throws IOException {
+		AnchorPane root = (AnchorPane) _loader.load();
+		root.getStyleClass().add(CSS_ANCHOR);
+		return root;
+	}
+
+	private void loadFXML(String FXMLFilePath) {
+		URL FXML = getClass().getResource(FXMLFilePath);
+		_loader = new FXMLLoader(FXML);
+	}
+
+	private void loadFont(String fontFilePath) {
+		String fontAwesomeFont = getClass().getResource(fontFilePath).toExternalForm();
+		Font.loadFont(fontAwesomeFont, 20);
+	}
+
+	private void setGUIMovable(final Stage primaryStage, AnchorPane root) {
 
 		root.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				xOffset = event.getSceneX();
-				yOffset = event.getSceneY();
+				_xOffset = event.getSceneX();
+				_yOffset = event.getSceneY();
 			}
 		});
 
 		root.setOnMouseDragged(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				primaryStage.setX(event.getScreenX() - xOffset);
-				primaryStage.setY(event.getScreenY() - yOffset);
+				primaryStage.setX(event.getScreenX() - _xOffset);
+				primaryStage.setY(event.getScreenY() - _yOffset);
 			}
 		});
 	}
