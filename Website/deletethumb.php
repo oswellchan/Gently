@@ -11,7 +11,7 @@ if(isset($_SESSION['username'])){
 		unlink("thumbnails/".$row['thumbnail']);
 	}
 	
-	$sql = "UPDATE channel SET thumbnail='default.jpg' WHERE `username`='".$_SESSION['username']."'";
+	$sql = "UPDATE `channel` SET `thumbnail`='default.jpg' WHERE `username`='".$_SESSION['username']."'";
 	$result = mysqli_query($conn, $sql);
 
 	mysqli_close($conn);

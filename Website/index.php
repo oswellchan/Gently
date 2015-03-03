@@ -51,7 +51,7 @@
 			';
 				
 			if (mysqli_num_rows($result) > 0) {
-				// output only 3 channels max
+				// display up to 3 channels
 				for ($i=0; $i < min(3, mysqli_num_rows($result)); $i++) {
 					$row = mysqli_fetch_assoc($result);
 						
@@ -78,7 +78,7 @@
 		$result = mysqli_query($conn, $sql);
 		
 		if (mysqli_num_rows($result) > 0) {
-			// output only 3 channels max
+			// display up to 3 channels
 			for ($i=0; $i < min(3, mysqli_num_rows($result)); $i++) {
 				$row = mysqli_fetch_assoc($result);
 					

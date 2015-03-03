@@ -10,7 +10,7 @@
 <body>
 	<?php
 	if (isset($_GET['search'])) {
-		$searchkey = $_GET['search'];
+		$searchkey = sanitizeHTML($_GET['search']);
 	} else {
 		header("Location: ../browse.php");
 	}
@@ -25,7 +25,7 @@
 			<div class="col-md-8 col-md-offset-2">
 	';
 	$searchkey = "%".$searchkey."%";
-	$stmt = mysqli_prepare($conn, "SELECT username, name, viewers, thumbnail FROM `channel` WHERE `username` LIKE ? AND `enabled`=1 UNION SELECT username, name, viewers, thumbnail FROM `channel` WHERE `name` LIKE ? AND `enabled`=1 UNION SELECT username, name, viewers, thumbnail FROM `channel` WHERE `description` LIKE ? AND `enabled`=1 ORDER BY viewers DESC");
+	$stmt = mysqli_prepare($conn, "SELECT `username`, `name`, `viewers`, `thumbnail` FROM `channel` WHERE `username` LIKE ? AND `enabled`=1 UNION SELECT `username`, `name`, `viewers`, `thumbnail` FROM `channel` WHERE `name` LIKE ? AND `enabled`=1 UNION SELECT `username`, `name`, `viewers`, `thumbnail` FROM `channel` WHERE `description` LIKE ? AND `enabled`=1 ORDER BY `viewers` DESC");
 	mysqli_stmt_bind_param($stmt, 'sss', $searchkey, $searchkey, $searchkey);
 	mysqli_stmt_execute($stmt);
 	mysqli_stmt_bind_result($stmt, $sqlusername, $sqlname, $sqlviewers, $thumbnail);
@@ -56,6 +56,11 @@
 	}
 	mysqli_stmt_close($stmt);
 	mysqli_close($conn);
+	
+	function sanitizeHTML($string) {
+		// to be completed
+		return $string;
+	}
 	?>
 	
 			</div>

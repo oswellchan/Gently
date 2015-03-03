@@ -125,7 +125,7 @@ function logout() {
 }
 
 function processLogin($conn) {
-	$stmt = mysqli_prepare($conn, "SELECT username,password,salt FROM login WHERE username=?");
+	$stmt = mysqli_prepare($conn, "SELECT `username`, `password`, `salt` FROM `login` WHERE `username`=?");
 	mysqli_stmt_bind_param($stmt, 's', $_POST['usernameInput']);
 	mysqli_stmt_execute($stmt);
 	mysqli_stmt_bind_result($stmt, $acctusername, $acctpassword, $acctsalt);
@@ -134,7 +134,7 @@ function processLogin($conn) {
 	if (mysqli_stmt_num_rows($stmt) > 0) {
 		// output data of each row
 		mysqli_stmt_fetch($stmt);
-		if ($acctusername  == $_POST['usernameInput'] && $acctpassword==md5($_POST['passwordInput'].$acctsalt)){
+		if ($acctusername  == $_POST['usernameInput'] && $acctpassword == md5($_POST['passwordInput'].$acctsalt)){
 			$_SESSION ['username'] = $_POST ['usernameInput'];
 		} else {
 			// wrong password
