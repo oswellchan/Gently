@@ -25,7 +25,7 @@ echo '
 				<ul class="nav navbar-nav">
 					<li><a href="/browse.php">Browse</a></li>
 					<li><a href="/random.php">Random</a></li>
-					<li><a href="/applet.php">Applet</a></li>
+					<li><a href="/applet.php">Web Streamer</a></li>
 				</ul>
 				<form id="form" class="navbar-form navbar-right" method="get" action="search.php">
 					<input id="search" name="search" type="text" class="form-control col-lg-8 navsearch" placeholder="Search">
