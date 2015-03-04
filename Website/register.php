@@ -20,7 +20,7 @@
 		processForm($conn);
 	}
 	
-	function ($conn) {
+	function processForm($conn) {
 		$stmt = mysqli_prepare($conn, "SELECT `username` FROM `login` WHERE `username`=?");
 		mysqli_stmt_bind_param($stmt, 's', $_POST ['username']);
 		mysqli_stmt_execute($stmt);
@@ -28,16 +28,12 @@
 		
 		if (mysqli_stmt_num_rows($stmt) == 0 && $_POST ['password']==$_POST ['password2']) {
 			// randomly generate a streamkey
-			$key = rand(1000000, 9999999);
-			$sql = "SELECT `streamkey` FROM `channel` WHERE `streamkey`='".$key."'";
-			$result = mysqli_query($conn, $sql);
-				
 			// if streamkey already exist in sql, generate again
-			while (mysqli_num_rows($result) > 0) {
+			do {
 				$key = rand(1000000, 9999999);
 				$sql = "SELECT `streamkey` FROM `channel` WHERE `streamkey`='".$key."'";
 				$result = mysqli_query($conn, $sql);
-			}
+			} while (mysqli_num_rows($result) > 0);
 				
 			// generate unique salt for security
 			$salt = uniqid();
