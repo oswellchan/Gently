@@ -1,5 +1,6 @@
 import com.xuggle.xuggler.Configuration;
 import com.xuggle.xuggler.ICodec;
+import com.xuggle.xuggler.ICodec.ID;
 import com.xuggle.xuggler.IContainer;
 import com.xuggle.xuggler.IContainerFormat;
 import com.xuggle.xuggler.IPacket;
@@ -14,22 +15,23 @@ import com.xuggle.xuggler.video.IConverter;
 import java.awt.AWTException;
 import java.awt.Rectangle;
 import java.awt.Robot;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
 public class Recorder implements Runnable{
+
 	private static String url = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/123";	  
-	private static int x = 0;
-	private static int y = 0;
-	private static int height = 1080;
-	private static int width = 1920;
 	
 	public static boolean recording;
 	public IContainer container;
 	
-	@SuppressWarnings("deprecation")
+	public Recorder() {
+		return;
+	}
+
 	public void run() {
 	       container = IContainer.make();
 	       IContainerFormat containerFormat_live = IContainerFormat.make();
@@ -43,21 +45,22 @@ public class Recorder implements Runnable{
 	           System.exit(1);
 	       }
 	       
-	       IStream stream = container.addNewStream(0);
+	       
+	       IStream stream = container.addNewStream(ID.CODEC_ID_H264);
 	       IStreamCoder coder = stream.getStreamCoder();
-	       ICodec codec = ICodec.findEncodingCodec(ICodec.ID.CODEC_ID_H264);
 	       coder.setNumPicturesInGroupOfPictures(5);
-	       coder.setCodec(codec);
+	       coder.setCodec(ICodec.ID.CODEC_ID_H264);
 	       coder.setBitRate(450000);
+	       coder.setBitRateTolerance(5000);
 	       coder.setPixelType(IPixelFormat.Type.YUV420P);
-	       coder.setHeight(height);
-	       coder.setWidth(width);
-	       System.out.println("[ENCODER] video size is " + width + "x" + height);
+	       coder.setHeight(Toolkit.getDefaultToolkit().getScreenSize().height);
+	       coder.setWidth(Toolkit.getDefaultToolkit().getScreenSize().width);
 	       coder.setFlag(IStreamCoder.Flags.FLAG_QSCALE, true);
 	       coder.setGlobalQuality(0);
-	       IRational frameRate = IRational.make(5, 1);
-	       coder.setFrameRate(frameRate);
-	       coder.setTimeBase(IRational.make(frameRate.getDenominator(), frameRate.getNumerator()));
+	       IRational frameRate = IRational.make(25, 1);
+	       coder.setFrameRate(IRational.make(25, 1));
+	       coder.setTimeBase(IRational.make(frameRate.getDenominator(), frameRate.getNumerator()));			
+	       
 	       Properties props = new Properties();
 	       InputStream is = Recorder.class.getResourceAsStream("/libx264-normal.ffpreset");
 	       try {
@@ -67,27 +70,35 @@ public class Recorder implements Runnable{
 	           System.exit(1);
 	       }
 	       Configuration.configure(props, coder);
-	       coder.open();
+	       coder.open(null, null);
 	       container.writeHeader();
 	       long firstTimeStamp = System.currentTimeMillis();
-	       long lastTimeStamp = -1;
 	       int i = 0;
 	       
 	       try {
 	           Robot robot = new Robot();
+	           long now;
+	           BufferedImage image;
+	           //Rectangle rec = new Rectangle(x, y, width, height);
+	           Rectangle rec = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
+	           BufferedImage currentScreenshot;
+	           IPacket packet;
+	           IConverter converter;
+	           long timeStamp;
+	           
 	           //while (i < framesToEncode) {
 	           while (recording) {
 	               //long iterationStartTime = System.currentTimeMillis();
-	               long now = System.currentTimeMillis();
+	               now = System.currentTimeMillis();
 	               //grab the screenshot
-	               BufferedImage image = robot.createScreenCapture(new Rectangle(x, y, width, height));
+	               image = robot.createScreenCapture(rec);
 	               //convert it for Xuggler
-	               BufferedImage currentScreenshot = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_3BYTE_BGR);
+	               currentScreenshot = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_3BYTE_BGR);
 	               currentScreenshot.getGraphics().drawImage(image, 0, 0, null);
 	               //start the encoding process
-	               IPacket packet = IPacket.make();
-	               IConverter converter = ConverterFactory.createConverter(currentScreenshot, IPixelFormat.Type.YUV420P);
-	               long timeStamp = (now - firstTimeStamp) * 1000; 
+	               packet = IPacket.make();
+	               converter = ConverterFactory.createConverter(currentScreenshot, IPixelFormat.Type.YUV420P);
+	               timeStamp = (now - firstTimeStamp) * 1000; 
 	               IVideoPicture outFrame = converter.toPicture(currentScreenshot, timeStamp);
 	               if (i == 0) {
 	                   //make first frame keyframe
@@ -98,10 +109,7 @@ public class Recorder implements Runnable{
 	               outFrame.delete();
 	               if (packet.isComplete()) {
 	                   container.writePacket(packet);
-	                   System.out.println("[ENCODER] writing packet of size " + packet.getSize() + " for elapsed time " + ((timeStamp - lastTimeStamp) / 1000));
-	                   lastTimeStamp = timeStamp;
 	               }
-	               System.out.println("[ENCODER] encoded image " + i + " in " + (System.currentTimeMillis() - now));
 	               i++;
 	               try {
 	                   // sleep for framerate milliseconds
@@ -122,7 +130,7 @@ public class Recorder implements Runnable{
 
 	public void stopRecording() {
 		recording = false;
-		container.close();
+		//container.close();
 		
 		try {
             Thread.sleep(100);

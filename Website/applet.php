@@ -6,6 +6,7 @@
 	<script src="jwplayer/jwplayer.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script src="https://www.java.com/js/deployJava.js"></script>
 </head>
 <body>
 	<?php include 'navbar.php';?>
@@ -25,8 +26,19 @@
 	
 	<script>
 		$('#startAppletButton').on('click', function () {
-			$('#start').html("<applet code='StartApplet.class' archive='GentlyRecorder.jar' width='320' height='120'></applet>");
+			$('#start').html("<applet code='testtest.test.class' archive='GentlyRecorder2.jar' width='320' height='120'></applet>");
 		});	
 	</script>
+	
+	<script>
+	    var attributes = {code: 'StartApplet.class',
+	                      archive: 'GentlyRecorder.jar',
+	                      width: '320', 
+	                      height: '120'};
+	    var parameters = {fontSize:16, permissions:'sandbox'}; // customize per your needs
+	    var version = '1.5'; // JDK version
+	    deployJava.runApplet(attributes, parameters, version);
+	</script>
+	
 </body>
 </html>

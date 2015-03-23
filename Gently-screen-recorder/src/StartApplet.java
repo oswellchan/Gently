@@ -4,9 +4,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JApplet;
 import javax.swing.JButton;
 
-@SuppressWarnings("serial")
 public class StartApplet extends JApplet implements ActionListener {
 	
+	private static final long serialVersionUID = 1L;
 	static JButton control;
 	static Recorder recorder;
 
@@ -30,7 +30,7 @@ public class StartApplet extends JApplet implements ActionListener {
 	    	recorder = new Recorder();
 	    	recorder.startRecording();
 	    	
-	    	System.out.println("START");
+	    	//System.out.println("START");
 	    	StartApplet.control.setActionCommand("stop");
 	    	StartApplet.control.setText("Stop Recording");
 	      
@@ -39,7 +39,7 @@ public class StartApplet extends JApplet implements ActionListener {
 	    	recorder.stopRecording();
 	    	recorder = null;
 	    	
-	    	System.out.println("STOP");
+	    	//System.out.println("STOP");
 	    	StartApplet.control.setText("Start Recording");
 	    	StartApplet.control.setActionCommand("start");
 	    }
