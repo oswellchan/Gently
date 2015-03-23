@@ -125,9 +125,11 @@
 		mysqli_stmt_close($stmt3);
 	}
 	
-	function sanitizeHTML($string) {
-		// to be completed
-		return $string;
+	function sanitizeHTML($dirty_html) {
+		require_once 'library/HTMLPurifier.auto.php';
+		$config = HTMLPurifier_Config::createDefault();
+		$purifier = new HTMLPurifier($config);
+		return $purifier->purify($dirty_html);
 	}
 	
 	function chatDeleted() {
