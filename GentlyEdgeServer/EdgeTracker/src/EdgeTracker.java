@@ -18,13 +18,13 @@ public class EdgeTracker {
 	public static final String NAME = "<name>";
 	public static final String PAGEURL = "<pageurl>";
 	public static final String EDGESERVERNAME = "PLACEHOLDER NAME";
-	public static final String MMSURL = "mediatech-i.comp.nus.edu.sg";
-	public static final int PORTNUMBER = 9000;
-	public static final int EMPTYLINE = 0;
+	//public static final String MMSURL = "mediatech-i.comp.nus.edu.sg";
+	//public static final int PORTNUMBER = 9000;
+	//public static final int EMPTYLINE = 0;
 	
 	//for logging
-	private final static Logger LOGGER = Logger.getLogger("EdgeServer");
-	private static Handler fh = null;
+	private final static Logger LOGGER = Logger.getLogger(EdgeHandler.class.getName());
+	private static Handler fh = null;	
 	
     //Object to be sent to MMS
     private static EdgeServerTransferObject edgeTransferObject = new EdgeServerTransferObject();
@@ -39,11 +39,15 @@ public class EdgeTracker {
 	// character("\n") to terminate connection.
 	
 	//main function to be further refactored during implementation of other classes
-	public static void main (String args[]) {
+/*	public static void main (String args[]) {
 		Socket s;
 		try {
+			fh = new FileHandler("edgetracker.log"); 
+			LOGGER.addHandler(fh);
+			LOGGER.setLevel(Level.SEVERE);
+			
 			s = new Socket(MMSURL, PORTNUMBER);
-
+			
 			OutputStream os= s.getOutputStream();
 			ObjectOutputStream serverWriter = new ObjectOutputStream(os);
 			
@@ -69,14 +73,28 @@ public class EdgeTracker {
 			s.close();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
-			LOGGER.log(Level.SEVERE, e.toString(), e);
+			LOGGER.log(Level.SEVERE, e.toString());
 		} catch (IOException e) {
 			e.printStackTrace();
-			LOGGER.log(Level.SEVERE, e.toString(), e);
+			LOGGER.log(Level.SEVERE, e.toString());
 		}	
 	}
-	
-	private static EdgeServerTransferObject extractData(){
+*/	
+	/*
+	public static void main(String args[]) {
+		try {
+			fh = new FileHandler("edgetracker.log");
+		} catch (SecurityException | IOException e) {
+			// TODO Auto-generated catch block
+			LOGGER.log(Level.SEVERE, e.toString());
+		} 
+		LOGGER.addHandler(fh);
+		LOGGER.setLevel(Level.SEVERE);
+		
+	}
+	*/
+	public EdgeServerTransferObject extractData(){
+		
 		BufferedReader br = null;
 		InputStream is = null;
 	    String line = null;
@@ -84,7 +102,7 @@ public class EdgeTracker {
 	    
 	    br = statsDownloader(is, br);
 		try {
-			fh = new FileHandler("edgeserver.log"); 
+			fh = new FileHandler("edgetracker.log");
 			LOGGER.addHandler(fh);
 			LOGGER.setLevel(Level.SEVERE);
 			
@@ -108,7 +126,7 @@ public class EdgeTracker {
 			}
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
-			LOGGER.log(Level.SEVERE, ioe.toString(), ioe);
+			LOGGER.log(Level.SEVERE, ioe.toString());
 		} finally {
 			try {
 				if (is != null) is.close();
@@ -118,7 +136,7 @@ public class EdgeTracker {
 	    		edgeTransferObject.setStreamer(tempArList);
 	        } catch (IOException ioe) {
 	        	ioe.printStackTrace();
-	        	LOGGER.log(Level.SEVERE, ioe.toString(), ioe);
+	        	LOGGER.log(Level.SEVERE, ioe.toString());
 	        }
 		}
 		return edgeTransferObject;		
@@ -152,10 +170,10 @@ public class EdgeTracker {
 	        
 	    } catch (MalformedURLException mue) {
 	         mue.printStackTrace();
-	         LOGGER.log(Level.SEVERE, mue.toString(), mue);
+	         LOGGER.log(Level.SEVERE, mue.toString());
 	    } catch (IOException ioe) {
 	 		ioe.printStackTrace();
-	 		LOGGER.log(Level.SEVERE, ioe.toString(), ioe);
+	 		LOGGER.log(Level.SEVERE, ioe.toString());
 	    }
         return br;
 	}
