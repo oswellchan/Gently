@@ -33,21 +33,17 @@
 		if ($oldpassword==md5($_POST['oldPassword'].$salt) && $_POST['newPassword']==$_POST['newPassword2']) {
 			// generate new salt
 			$salt = uniqid();
-		
-			$stmt1 = mysqli_prepare($conn, "UPDATE `login` SET `password`=? WHERE `username`=?");
-			mysqli_stmt_bind_param($stmt1, 'ss', md5($_POST['newPassword'].$salt), $_SESSION['username']);
-		
-			$stmt2 = mysqli_prepare($conn, "UPDATE `login` SET `salt`=? WHERE `username`=?");
-			mysqli_stmt_bind_param($stmt2, 'ss', $salt, $_SESSION['username']);
-		
-			if (mysqli_stmt_execute($stmt1) === TRUE && mysqli_stmt_execute($stmt2) === TRUE) {
+			
+			$stmt = mysqli_prepare($conn, "UPDATE `login` SET `password`=? , `salt`=? WHERE `username`=?");
+			mysqli_stmt_bind_param($stmt, 'sss', md5($_POST['newPassword'].$salt), $salt, $_SESSION['username']);
+			
+			if (mysqli_stmt_execute($stmt) === TRUE) {
 				echo '<div class="alert alert-success" role="success"><center>Password changed.</center></div>';
 			} else {
 				echo '<div class="alert alert-warning" role="warning"><center>Error updating record: '.$conn->error.'</center></div>';
 			}
 		
-			mysqli_stmt_close($stmt1);
-			mysqli_stmt_close($stmt2);
+			mysqli_stmt_close($stmt);
 		} else if ($_POST['newPassword']!=$_POST['newPassword2']) {
 			echo '<div class="alert alert-warning" role="warning"><center>New password does not match.</center></div>';
 		} else {
