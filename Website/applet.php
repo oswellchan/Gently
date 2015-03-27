@@ -1,14 +1,14 @@
-<html>
+</html>
 <head>
 	<title>Gently down the stream~</title>
-	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
 	<script src="jwplayer/jwplayer.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="https://www.java.com/js/deployJava.js"></script>
 </head>
-<body>
+</body>
 	<?php include 'navbar.php';?>
 	<div class="container">
 		<div class="row">
@@ -26,19 +26,23 @@
 	
 	<script>
 		$('#startAppletButton').on('click', function () {
-			$('#start').html("<applet code='testtest.test.class' archive='GentlyRecorder2.jar' width='320' height='120'></applet>");
+			$('#start').html("<applet code='StartApplet.class' archive='GentlyRecorder.jar' width='320' height='120'></applet>");
 		});	
 	</script>
 	
 	<script>
-	    var attributes = {code: 'StartApplet.class',
-	                      archive: 'GentlyRecorder.jar',
-	                      width: '320', 
-	                      height: '120'};
-	    var parameters = {fontSize:16, permissions:'sandbox'}; // customize per your needs
-	    var version = '1.5'; // JDK version
-	    deployJava.runApplet(attributes, parameters, version);
+// 		var attributes = {code:'StartApplet',  width:320, height:120} ; 
+// 	 	var parameters = {jnlp_href: 'recorder.jnlp'} ; 
+// 	   	deployJava.runApplet(attributes, parameters, '1.7'); 
 	</script>
+	
+	<script>
+        // using JavaScript to get location of JNLP
+        // file relative to HTML page
+        var dir = location.href.substring(0, location.href.lastIndexOf('/')+1);
+        var url = dir + "GentlyRecorderJNLP.jnlp";
+        deployJava.createWebStartLaunchButton(url, '1.7.0');
+    </script>
 	
 </body>
 </html>

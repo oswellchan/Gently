@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0+" codebase="http://localhost/applet.php" href="GentlyRecorderJNLP.jnlp">
+	
+	<security>
+	<all-permissions/>
+	</security>
+	
+    <resources>
+        <!-- Application Resources -->
+        <j2se version="1.7+" href="http://java.sun.com/products/autodl/j2se"/>
+        <jar href="GentlyRecorder.jar" main="true" />
+		<jar href="xuggle-xuggler-5.4.jar" />
+		<jar href="slf4j-api-1.6.4.jar" />
+		<jar href="commons-cli-1.1.jar" />
+		<jar href="commons-lang-2.1.jar" />
+		<jar href="logback-classic-1.0.0.jar" />
+		<jar href="logback-core-1.0.0.jar" />		
+    </resources>
+	
+    <application-desc
+         name="GentlyRecorder"
+         main-class="StartApplet"
+         width="320"
+         height="120">
+     </application-desc>
+	 
+     <update check="background"/>
+</jnlp>                        

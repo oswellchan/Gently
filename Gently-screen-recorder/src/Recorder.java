@@ -1,6 +1,6 @@
-import com.xuggle.xuggler.Configuration;
+//import com.xuggle.xuggler.Configuration;
 import com.xuggle.xuggler.ICodec;
-import com.xuggle.xuggler.ICodec.ID;
+//import com.xuggle.xuggler.ICodec.ID;
 import com.xuggle.xuggler.IContainer;
 import com.xuggle.xuggler.IContainerFormat;
 import com.xuggle.xuggler.IPacket;
@@ -17,9 +17,10 @@ import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
+//import java.io.File;
+//import java.io.IOException;
+//import java.io.InputStream;
+//import java.util.Properties;
 
 public class Recorder implements Runnable{
 
@@ -32,6 +33,7 @@ public class Recorder implements Runnable{
 		return;
 	}
 
+	@Override
 	public void run() {
 	       container = IContainer.make();
 	       IContainerFormat containerFormat_live = IContainerFormat.make();
@@ -46,12 +48,12 @@ public class Recorder implements Runnable{
 	       }
 	       
 	       
-	       IStream stream = container.addNewStream(ID.CODEC_ID_H264);
+	       IStream stream = container.addNewStream(ICodec.ID.CODEC_ID_H264);
 	       IStreamCoder coder = stream.getStreamCoder();
-	       coder.setNumPicturesInGroupOfPictures(5);
+	       coder.setNumPicturesInGroupOfPictures(10);
 	       coder.setCodec(ICodec.ID.CODEC_ID_H264);
 	       coder.setBitRate(450000);
-	       coder.setBitRateTolerance(5000);
+	       coder.setBitRateTolerance(10000);
 	       coder.setPixelType(IPixelFormat.Type.YUV420P);
 	       coder.setHeight(Toolkit.getDefaultToolkit().getScreenSize().height);
 	       coder.setWidth(Toolkit.getDefaultToolkit().getScreenSize().width);
@@ -59,17 +61,44 @@ public class Recorder implements Runnable{
 	       coder.setGlobalQuality(0);
 	       IRational frameRate = IRational.make(25, 1);
 	       coder.setFrameRate(IRational.make(25, 1));
-	       coder.setTimeBase(IRational.make(frameRate.getDenominator(), frameRate.getNumerator()));			
+	       coder.setTimeBase(IRational.make(frameRate.getDenominator(), frameRate.getNumerator()));	
 	       
-	       Properties props = new Properties();
-	       InputStream is = Recorder.class.getResourceAsStream("/libx264-normal.ffpreset");
-	       try {
-	           props.load(is);
-	       } catch (IOException e) {
-	           System.err.println("You need the libx264-normal.ffpreset file from the Xuggle distribution in your classpath.");
-	           System.exit(1);
-	       }
-	       Configuration.configure(props, coder);
+	       coder.setProperty("coder", "1"); 
+           coder.setProperty("flags", "+loop"); 
+           coder.setProperty("cmp", "+chroma"); 
+           coder.setProperty("partitions", "+parti8x8+parti4x4+partp8x8+partb8x8"); 
+           coder.setProperty("me_method", "hex"); 
+           coder.setProperty("subq", "6"); 
+           coder.setProperty("me_range", "16"); 
+           coder.setProperty("g", "250"); 
+           coder.setProperty("keyint_min", "25"); 
+           coder.setProperty("sc_threshold", "40"); 
+           coder.setProperty("i_qfactor", "0.71"); 
+           coder.setProperty("b_strategy", "1"); 
+           coder.setProperty("qcomp", "0.6"); 
+           coder.setProperty("qmin", "10"); 
+           coder.setProperty("qmax", "51"); 
+           coder.setProperty("qdiff", "4"); 
+           coder.setProperty("directpred", "3"); 
+           coder.setProperty("bf", "16"); 
+           coder.setProperty("refs", "2"); 
+           coder.setProperty("directpred", "3");
+           coder.setProperty("trellis", "0"); 
+           //coder.setProperty("flags2", "+bpyramid+wpred+dct8x8+fastpskip"); 
+           //coder.setProperty("cqp", "0"); 
+
+
+	       
+//	       Properties props = new Properties();
+	       //System.out.println(new File(getClass().getResource("/").getFile()).getAbsolutePath());
+//	       InputStream is = Recorder.class.getResourceAsStream("/libx264-normal.ffpreset");
+//	       try {
+//	           props.load(is);
+//	       } catch (IOException e) {
+//	           System.err.println("You need the libx264-normal.ffpreset file from the Xuggle distribution in your classpath.");
+//	           System.exit(1);
+//	       }
+	       //Configuration.configure(props, coder);
 	       coder.open(null, null);
 	       container.writeHeader();
 	       long firstTimeStamp = System.currentTimeMillis();
