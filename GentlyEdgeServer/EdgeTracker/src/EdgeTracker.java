@@ -9,7 +9,7 @@ import java.net.*;
 public class EdgeTracker {
 	public static final String STATS_FILE_LOCATION = "http://localhost/stat";	
 	public static final String BRACKETSLASH = "</";
-	public static final String EXTRACT = "EXTRACT";
+	public static final String EXTRACT = "e";
 	public static final String CLIENT = "<client>";
 	public static final String PUBLISHING = "publishing";
 	public static final String ACTIVE = "<active>";
@@ -18,87 +18,25 @@ public class EdgeTracker {
 	public static final String NAME = "<name>";
 	public static final String PAGEURL = "<pageurl>";
 	public static final String EDGESERVERNAME = "PLACEHOLDER NAME";
-	//public static final String MMSURL = "mediatech-i.comp.nus.edu.sg";
-	//public static final int PORTNUMBER = 9000;
-	//public static final int EMPTYLINE = 0;
+	public static final int EMPTYLINE = 0;
 	
 	//for logging
 	private final static Logger LOGGER = Logger.getLogger(EdgeHandler.class.getName());
 	private static Handler fh = null;	
-	
-    //Object to be sent to MMS
-    private static EdgeServerTransferObject edgeTransferObject = new EdgeServerTransferObject();
-    
-    private static int nviewers = 0; 
-	private static Streamer tempStream = new Streamer();
-	private static ArrayList<Streamer> tempArList = new ArrayList<Streamer>();
-	
-	// At current stage of implementation, user has to manually call the extract() 
-    // method by entering "EXTRACT". This will be automated later.
-	// At current stage of implementation, user also has enter an newLine 
-	// character("\n") to terminate connection.
-	
-	//main function to be further refactored during implementation of other classes
-/*	public static void main (String args[]) {
-		Socket s;
-		try {
-			fh = new FileHandler("edgetracker.log"); 
-			LOGGER.addHandler(fh);
-			LOGGER.setLevel(Level.SEVERE);
-			
-			s = new Socket(MMSURL, PORTNUMBER);
-			
-			OutputStream os= s.getOutputStream();
-			ObjectOutputStream serverWriter = new ObjectOutputStream(os);
-			
-			// isrServer and serverReader to be used during later stage of implementation  
-			InputStreamReader isrServer = new InputStreamReader(s.getInputStream());
-			BufferedReader serverReader = new BufferedReader(isrServer);
 
-	        BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
-	        String sentence;
-	        sentence = inFromUser.readLine();
-	        
-	        // keep repeating until an empty line is read.
-			while (sentence.compareTo("") != EMPTYLINE) {
-			   System.out.println(sentence);
-			   if (sentence.equals(EXTRACT)) {
-				   edgeTransferObject = extractData();
-			   		serverWriter.writeObject(edgeTransferObject);
-			   }
-	           sentence = inFromUser.readLine();
-	       }
-			serverWriter.writeBytes("\n");
-
-			s.close();
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-			LOGGER.log(Level.SEVERE, e.toString());
-		} catch (IOException e) {
-			e.printStackTrace();
-			LOGGER.log(Level.SEVERE, e.toString());
-		}	
-	}
-*/	
-	/*
-	public static void main(String args[]) {
-		try {
-			fh = new FileHandler("edgetracker.log");
-		} catch (SecurityException | IOException e) {
-			// TODO Auto-generated catch block
-			LOGGER.log(Level.SEVERE, e.toString());
-		} 
-		LOGGER.addHandler(fh);
-		LOGGER.setLevel(Level.SEVERE);
-		
-	}
-	*/
 	public EdgeServerTransferObject extractData(){
 		
 		BufferedReader br = null;
 		InputStream is = null;
 	    String line = null;
 	    String temp = null;
+	    
+	    //Object to be sent to MMS
+	    EdgeServerTransferObject edgeTransferObject = new EdgeServerTransferObject();
+	    
+	    int nviewers = 0; 
+		Streamer tempStream = new Streamer();
+		ArrayList<Streamer> tempArList = new ArrayList<Streamer>();
 	    
 	    br = statsDownloader(is, br);
 		try {
@@ -107,7 +45,7 @@ public class EdgeTracker {
 			LOGGER.setLevel(Level.SEVERE);
 			
 			while ((line = br.readLine()) != null) {
-				nviewers = isViewerIncrement(line);
+				nviewers = isViewerIncrement(line, nviewers);
 				if (line.contains(STREAM)){
 					line = br.readLine();
 					if (line.contains(NAME)){
@@ -120,8 +58,11 @@ public class EdgeTracker {
 					tempStream.setPageurl(temp);
 				}	
 				else if(line.contains(ENDSTREAM)){
-					setNumberOfViewers();
-					addStreamerToArrayList();
+					tempStream.setNviewers(nviewers);
+					nviewers = 0;
+					
+					tempArList.add(tempStream);
+					tempStream = new Streamer();
 				}
 			}
 		} catch (IOException ioe) {
@@ -141,18 +82,8 @@ public class EdgeTracker {
 		}
 		return edgeTransferObject;		
 	}
-
-	private static void addStreamerToArrayList() {
-		tempArList.add(tempStream);
-		tempStream = new Streamer();
-	}
-
-	private static void setNumberOfViewers() {
-		tempStream.setNviewers(nviewers);
-		nviewers = 0;
-	}
     
-	private static int isViewerIncrement(String line) {
+	private static int isViewerIncrement(String line, int nviewers) {
 		if( (line.contains(CLIENT)) && !(line.contains(PUBLISHING)) ){
 			nviewers++;
 			if(line.contains(PAGEURL)){
