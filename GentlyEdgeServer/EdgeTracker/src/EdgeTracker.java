@@ -22,28 +22,38 @@ public class EdgeTracker {
 	
 	//for logging
 	private final static Logger LOGGER = Logger.getLogger(EdgeHandler.class.getName());
-	private static Handler fh = null;	
 
-	public EdgeServerTransferObject extractData(){
+	public EdgeServerTransferObject trackStatus(){
 		
 		BufferedReader br = null;
 		InputStream is = null;
-	    String line = null;
-	    String temp = null;
-	    
 	    //Object to be sent to MMS
 	    EdgeServerTransferObject edgeTransferObject = new EdgeServerTransferObject();
 	    
-	    int nviewers = 0; 
-		Streamer tempStream = new Streamer();
-		ArrayList<Streamer> tempArList = new ArrayList<Streamer>();
-	    
 	    br = statsDownloader(is, br);
-		try {
-			fh = new FileHandler("edgetracker.log");
-			LOGGER.addHandler(fh);
-			LOGGER.setLevel(Level.SEVERE);
+		ArrayList<Streamer> tempArList = extractData(br);
 			
+		try {
+			if (br != null) br.close();
+    		edgeTransferObject.setServerName(EDGESERVERNAME);
+    		edgeTransferObject.setStreamer(tempArList);
+        } catch (IOException ioe) {
+        	ioe.printStackTrace();
+        	LOGGER.log(Level.SEVERE, ioe.toString());
+        }
+		
+		return edgeTransferObject;		
+	}
+    
+	public ArrayList<Streamer> extractData(BufferedReader br){
+		ArrayList<Streamer> tempArList = new ArrayList<Streamer>();
+
+		String line = null;
+		String temp = null;
+		int nviewers = 0; 
+		Streamer tempStream = new Streamer();
+		
+		try {
 			while ((line = br.readLine()) != null) {
 				nviewers = isViewerIncrement(line, nviewers);
 				if (line.contains(STREAM)){
@@ -65,34 +75,16 @@ public class EdgeTracker {
 					tempStream = new Streamer();
 				}
 			}
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
-			LOGGER.log(Level.SEVERE, ioe.toString());
-		} finally {
-			try {
-				if (is != null) is.close();
-	            if (br != null) br.close();
-				if (fh != null) fh.close();
-	    		edgeTransferObject.setServerName(EDGESERVERNAME);
-	    		edgeTransferObject.setStreamer(tempArList);
-	        } catch (IOException ioe) {
-	        	ioe.printStackTrace();
-	        	LOGGER.log(Level.SEVERE, ioe.toString());
-	        }
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return edgeTransferObject;		
+		return tempArList;
 	}
-    
-	private static int isViewerIncrement(String line, int nviewers) {
-		if( (line.contains(CLIENT)) && !(line.contains(PUBLISHING)) ){
-			nviewers++;
-			if(line.contains(PAGEURL)){
-				//System.out.println("This viewer is pushing the stream elsewhere. Get the destination from log");
-				//remember to implement said log later
-			}
-		}
-		return nviewers;
-	}	
+	
 	private static BufferedReader statsDownloader(InputStream is, BufferedReader br) {
 	    try {
 	        URL url = new URL(STATS_FILE_LOCATION);
@@ -108,6 +100,17 @@ public class EdgeTracker {
 	    }
         return br;
 	}
+	
+	private static int isViewerIncrement(String line, int nviewers) {
+		if( (line.contains(CLIENT)) && !(line.contains(PUBLISHING)) ){
+			nviewers++;
+			if(line.contains(PAGEURL)){
+				//System.out.println("This viewer is pushing the stream elsewhere. Get the destination from log");
+				//remember to implement said log later
+			}
+		}
+		return nviewers;
+	}	
 	
 	private static String getString(String line, String input) {
 		int startingIndex = line.indexOf(input);
