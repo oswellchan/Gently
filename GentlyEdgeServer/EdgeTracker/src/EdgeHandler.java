@@ -30,15 +30,19 @@ public class EdgeHandler {
     private static EdgeServerTransferObject edgeTransferObject = new EdgeServerTransferObject();
     
     class ExtractTask extends TimerTask{
-    	EdgeTracker edgeTracker;
+    	EdgeTracker edgeTracker = null;
     	ObjectOutputStream serverWriter;
     	
     	public ExtractTask(EdgeTracker edgeTracker, ObjectOutputStream serverWriter){
     		this.edgeTracker = edgeTracker;
     		this.serverWriter = serverWriter;
     	}
+    	
+    	public ExtractTask(EdgeTracker edgeTracker){
+    		this.edgeTracker = edgeTracker;
+    	}
 		public void run() {
-			edgeTransferObject = edgeTracker.extractData();
+			edgeTransferObject = edgeTracker.trackStatus();
 			
 			try {
 				serverWriter.writeObject(edgeTransferObject);
@@ -47,9 +51,7 @@ public class EdgeHandler {
 				LOGGER.log(Level.SEVERE, e.toString());
 			}
 			
-			
 		}
-    	
     }
     
 	public static void main (String args[]) {
@@ -81,16 +83,18 @@ public class EdgeHandler {
 	        
 	        serverWriter.writeBytes("\n");
 	        
-			s.close();
-			fh.close();
-			
+	        s.close();
+	       
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 			LOGGER.log(Level.SEVERE, e.toString());
 		} catch (IOException e) {
 			e.printStackTrace();
 			LOGGER.log(Level.SEVERE, e.toString());
-		}	
+		} finally {
+			fh.close();
+		}
 	}
 	
 }
+
