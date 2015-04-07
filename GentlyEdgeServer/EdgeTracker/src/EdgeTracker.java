@@ -45,7 +45,7 @@ public class EdgeTracker {
 		return edgeTransferObject;		
 	}
     
-	public ArrayList<Streamer> extractData(BufferedReader br){
+	private ArrayList<Streamer> extractData(BufferedReader br){
 		ArrayList<Streamer> tempArList = new ArrayList<Streamer>();
 
 		String line = null;
@@ -104,16 +104,28 @@ public class EdgeTracker {
 	private static int isViewerIncrement(String line, int nviewers) {
 		if( (line.contains(CLIENT)) && !(line.contains(PUBLISHING)) ){
 			nviewers++;
-			if(line.contains(PAGEURL)){
+			//if(line.contains(PAGEURL)){
 				//System.out.println("This viewer is pushing the stream elsewhere. Get the destination from log");
 				//remember to implement said log later
-			}
+			//}
 		}
 		return nviewers;
 	}	
 	
 	private static String getString(String line, String input) {
-		int startingIndex = line.indexOf(input);
-		return line.substring(startingIndex+input.length(), line.indexOf(BRACKETSLASH, startingIndex));
+		String toBeReturned = null;
+		if(line.equals("") || input.equals("")){
+			toBeReturned = "";
+		}
+		else{
+			int startingIndex = line.indexOf(input);
+			if(startingIndex == -1){
+				toBeReturned = "";
+			}
+			else{
+				toBeReturned = line.substring(startingIndex+input.length(), line.indexOf(BRACKETSLASH, startingIndex));
+			}
+		}
+		return toBeReturned;
 	}
 }

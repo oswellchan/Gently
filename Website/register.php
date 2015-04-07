@@ -16,7 +16,10 @@
 		header ( "Location: ../index.php" );
 	}
 	
-	if (isset ($_POST['username'])) {
+	if (isset ($_POST['username']) && 
+			ctype_alnum($_POST['username']) && 
+			strlen($_POST['username']) >= 5 && 
+			strlen($_POST['username']) <= 32) {
 		processForm($conn);
 	}
 	
