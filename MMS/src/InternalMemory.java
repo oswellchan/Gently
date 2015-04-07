@@ -23,16 +23,16 @@ public class InternalMemory {
 	private ObservableList<Server> _serverList = FXCollections.observableArrayList();
 	
 
-	private InternalMemory() {
+	public InternalMemory() {
 		_streamerToStreamSourcesMap = new ConcurrentHashMap<String, ArrayList<String>>();
 		
-		//For testing GUI purposes. Delete when done debugging
-		_serverList.add(new Server("Link", "mediatech-i", 1, 2));
-		_serverList.add(new Server("Link", "mediatech-i1", 1, 2));
-		_serverList.add(new Server("Link", "mediatech-i2", 1, 2));
-		_serverList.add(new Server("Link", "mediatech-i3", 1, 2));
-		_serverList.add(new Server("Link", "mediatech-i4", 1, 2));
-		_serverList.add(new Server("Link", "mediatech-i5", 1, 2));
+//		//For testing GUI purposes. Delete when done debugging
+//		_serverList.add(new Server("Link", "mediatech-i", 1, 2));
+//		_serverList.add(new Server("Link", "mediatech-i1", 1, 2));
+//		_serverList.add(new Server("Link", "mediatech-i2", 1, 2));
+//		_serverList.add(new Server("Link", "mediatech-i3", 1, 2));
+//		_serverList.add(new Server("Link", "mediatech-i4", 1, 2));
+//		_serverList.add(new Server("Link", "mediatech-i5", 1, 2));
 		
 		_logger.log(Level.INFO, INFO_INTERNALMEMINITIALISED);
 	}
@@ -50,18 +50,24 @@ public class InternalMemory {
 		_logger.log(Level.INFO, INFO_RETRIEVINGSOURCES);
 
 		String sources = "";
+		
+		if (userID != null) {
 
-		ArrayList<String> arrayOfStreamSources = _streamerToStreamSourcesMap.get(userID);
+			ArrayList<String> arrayOfStreamSources = _streamerToStreamSourcesMap.get(userID);
 
-		if (arrayOfStreamSources == null) {
-			sources = MSG_NOSOURCEFOUND;
-		} else {
-			for (String source : arrayOfStreamSources) {
-				sources += (source + " ");
+			if (arrayOfStreamSources == null) {
+				sources = MSG_NOSOURCEFOUND;
+			} else {
+				for (String source : arrayOfStreamSources) {
+					sources += (source + " ");
+				}
 			}
+		
+			_logger.log(Level.INFO, String.format(INFO_SOURCESFOUND, sources));
+		} else {
+			sources = MSG_NOSOURCEFOUND;
 		}
 		
-		_logger.log(Level.INFO, String.format(INFO_SOURCESFOUND, sources));
 		return sources;
 	}
 

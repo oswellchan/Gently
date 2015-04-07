@@ -1,1 +1,1 @@
-{"portNumbers":{"serverPort":9002,"webPort":9001},"streamerMap":{"a":["hello","world","is","good"],"b":["aint","nobody","got","time","fo","dat"]}}
+{"portNumbers":{"serverPort":9002,"webPort":9001},"streamerMap":{"a":["hello","world"],"b":["random","string","in","file"]}}

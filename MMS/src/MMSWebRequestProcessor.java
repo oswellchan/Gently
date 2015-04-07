@@ -7,18 +7,29 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.application.Platform;
 
 
 public class MMSWebRequestProcessor extends RequestProcessor{
-
+	
+	private static final String MSG_STREAMISNULL = "Stream is null";
+	private static final String MSG_SOCKETISNULL = "Socket is null";
+	private static final String MSG_INVALIDINPUT = "Input is invalid.";
+	private final static Logger _logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+	
 	public MMSWebRequestProcessor(Socket socket) throws Exception {
 		super(socket);
 	}
 	
 	public void run() {
 		try {
+			if (s == null) {
+				throw new Exception(MSG_STREAMISNULL);
+			}
+			
 			// Create a reader to read from webComponent
 			BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
 
@@ -29,27 +40,38 @@ public class MMSWebRequestProcessor extends RequestProcessor{
 
 			s.close();
 
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		} catch (Exception e) {
+			_logger.log(Level.SEVERE, e.getMessage(), e);
 		}
 	}
 	
-	private void serviceRequest(BufferedReader br, DataOutputStream outputStream) throws IOException {
+	private void serviceRequest(BufferedReader br, DataOutputStream outputStream) throws Exception {
+		
+		if (br == null || outputStream == null) {
+			_logger.log(Level.SEVERE, MSG_STREAMISNULL);
+			throw new Exception(MSG_STREAMISNULL);
+		}
+		
 		String input = br.readLine();
 
 		String[] splitInput = input.split(" ");
-		String clientIP = splitInput[0];
-		String streamerID = splitInput[1];
-		// String clientLocation = getLocationOfIPaddress(clientIP);
-
-		InternalMemory IM = InternalMemory.getInstance();
-
-		String sources = IM.getStreamSourcesByID(streamerID);
+		
+		String clientIP = "";
+		String streamerID = "";
+		String sources = MSG_INVALIDINPUT;
+		
+		if (splitInput.length == 2) {
+			clientIP = splitInput[0];
+			streamerID = splitInput[1];
+			
+			InternalMemory IM = InternalMemory.getInstance();
+			sources = IM.getStreamSourcesByID(streamerID);
+		}
 
 		outputStream.writeBytes(sources + "\n");
 	}
 
-	// Given a IP, return the geo-location of that IP address
+	// Given a IP, return the geo-location of that IP address (currently unused)
 	private static String getLocationOfIPaddress(String clientIP) {
 		Connection conn;
 		try {
@@ -79,7 +101,7 @@ public class MMSWebRequestProcessor extends RequestProcessor{
 		return null;
 	}
 
-	// for IPV4
+	// for IPV4 (currently unused)
 	public static double convertToIPNumber(String IPAddress) {
 
 		String[] arrDec;
