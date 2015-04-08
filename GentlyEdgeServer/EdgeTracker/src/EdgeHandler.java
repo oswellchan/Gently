@@ -16,10 +16,10 @@ import java.util.logging.Logger;
 
 public class EdgeHandler {
 	public static final String EXTRACT = "e";
-	//public static final String MMSURL = "mediatech-i.comp.nus.edu.sg";
+	public static final String MMSURL = "mediatech-i.comp.nus.edu.sg";
 	//localhost used for testing with MMSStub
-	public static final String MMSURL = "localhost";
-	public static final int PORTNUMBER = 9001;
+	//public static final String MMSURL = "localhost";
+	public static final int PORTNUMBER = 9000;
 	public static final int EMPTYLINE = 0;
 
 	public static final int SECONDS = 5;
