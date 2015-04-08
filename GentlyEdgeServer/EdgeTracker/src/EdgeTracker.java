@@ -41,7 +41,6 @@ public class EdgeTracker {
         	ioe.printStackTrace();
         	LOGGER.log(Level.SEVERE, ioe.toString());
         }
-		
 		return edgeTransferObject;		
 	}
     
