@@ -28,6 +28,9 @@ public class GUIController {
 	private static final String CSS_CLOSEBUTTON = "closeButton";
 	private static final String CSS_SERVERLISTCELL = "serverListCell";
 	
+	private static final int MINSERVERPORT = 1;
+	private static final int MAXSERVERPORT = 65535;
+	
 	private final static Logger _logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
 	static GUIController controller= null;
@@ -206,8 +209,8 @@ public class GUIController {
 		} catch (Exception e) {
 			return -1;
 		}
-
-		if (i < 1 && i > 65535) {
+		
+		if (i < MINSERVERPORT || i > MAXSERVERPORT) {
 			return -1;
 		}
 
@@ -250,7 +253,7 @@ public class GUIController {
 	private static String convertToDoubleDigits(int number) {
 		String numberInString;
 		
-		if (number < 10) {
+		if (number < 10 && number >= 0) {
 			numberInString = "0" + number;
 		} else {
 			numberInString = "" + number;
