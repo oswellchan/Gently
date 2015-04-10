@@ -72,23 +72,23 @@ import javax.jnlp.*;
 
 
 
-public class StartApplet extends JFrame {
-	/**
-	 * 
-	 */
+public class StartApplet extends JFrame implements ActionListener{
+
 	private static final long serialVersionUID = 1L;
 	static Recorder recorder;
-
+	JButton button;
+	
+	static AudioRec audioRec;
+	
 	 public static void main(String[] args) {
 		 javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			
 			 public void run() {
 			
 			     createAndShowGUI();
-			     recorder = new Recorder();
-			     recorder.startRecording();
+			     audioRec = new AudioRec();
+			     audioRec.startRecording();
 			     
-			 
 			 }
 		 });
 
@@ -112,19 +112,44 @@ public class StartApplet extends JFrame {
 	 public StartApplet() {
 		
 			        // set flow layout for the frame
-		
 			        this.getContentPane().setLayout(new FlowLayout());
+
+			    	
 			
-			        JButton button1 = new JButton();
-		
-			        button1.setText("Start Recording");
+			        button = new JButton();
+			        button.addActionListener(this);
+			        button.setText("Start Recording");
+			        button.setActionCommand("start");
 	
-		
 			        // add buttons to frame
-	
-			        add(button1);
+			        add(button);
 			
 	 }
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getActionCommand().equals("start")) {
+	    	
+	    	//start recording
+	    	recorder = new Recorder();
+	    	recorder.startRecording();
+	    	
+	    	System.out.println("START");
+	    	button.setActionCommand("stop");
+	    	button.setText("Stop Recording");
+	      
+	    } else if (e.getActionCommand().equals("stop")) {
+	    	
+	    	recorder.stopRecording();
+	    	recorder = null;
+	    	
+	    	System.out.println("STOP");
+	    	button.setText("Start Recording");
+	    	button.setActionCommand("start");
+	    }
+		
+	}
 }
 
 
