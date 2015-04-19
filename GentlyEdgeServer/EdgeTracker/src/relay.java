@@ -81,7 +81,7 @@ final class tcpRequestProcessor implements Runnable{
 
 
 	static void relayStream (String streamKey, String destination) throws IOException {
-		String startStream = "rtmp://3283server2-i.comp.nus.edu.sg:1970/live1/" + streamKey;
+		String startStream = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/" + streamKey;
 		String endStream = destination + "/" + streamKey; 		
 		String[] cmd = {"C:/Users/jiajie/Desktop/nginx_original/ffmpeg/bin/ffmpeg", "-i", startStream, "-vcodec", "flv", "-acodec", "copy", "-s", "1920x1200", "-r", "20", "-f", "flv", endStream};
 		Runtime.getRuntime().exec(cmd);	

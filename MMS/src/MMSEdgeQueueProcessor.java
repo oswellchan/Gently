@@ -121,10 +121,14 @@ public class MMSEdgeQueueProcessor implements Runnable {
 			Streamer match = null;
 			for (Iterator<Streamer> iterator = noLongerStreamingList.iterator(); iterator.hasNext();) {
 				Streamer s2 = iterator.next();
-				if (s1.getStreamkey() == s2.getStreamkey() && s1.getPageurl().equals(s2.getPageurl())) {
-					match = s2;
-					iterator.remove();
-					break;
+				if (s1.getPageurl() == null || s2.getPageurl() == null) {
+					
+				} else {
+					if (s1.getStreamkey() == s2.getStreamkey() && s1.getPageurl().equals(s2.getPageurl())) {
+						match = s2;
+						iterator.remove();
+						break;
+					}
 				}
 			}
 
