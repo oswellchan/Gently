@@ -21,6 +21,14 @@ class MMSEdge extends PortListener {
 	}
 	
 	public void run() {
+		MMSEdgeQueueProcessor queueProcessor = new MMSEdgeQueueProcessor();
+		Thread queueThread = new Thread(queueProcessor);
+		queueThread.start();
+		
+		MMSEdgeActivityChecker activityChecker = new MMSEdgeActivityChecker();
+		Thread acThread = new Thread(activityChecker);
+		acThread.start();
+		
 		while (true) {
 			Socket s = null;
 

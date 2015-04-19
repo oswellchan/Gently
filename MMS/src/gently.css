@@ -16,6 +16,18 @@
     -fx-font-size: 12;
 }
 
+.fontawesome20Active {
+    -fx-font-family: FontAwesome;
+    -fx-font-size: 20;
+    -fx-text-fill: #27be2a;
+}
+
+.fontawesome20InActive {
+    -fx-font-family: FontAwesome;
+    -fx-font-size: 20;
+    -fx-text-fill: #ff6d2c;
+}
+
 .font20 {
     -fx-font-size: 20;
 }
@@ -30,7 +42,7 @@
 .serverListPanel {
 	-fx-background-color: #e8e8e2;
 } 
-
+ 
 .serverListCell {
 	-fx-padding: 2px 3px;
 	-fx-background-color: white;

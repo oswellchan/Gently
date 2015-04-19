@@ -1,24 +1,23 @@
 import java.util.*;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
+
 public class Server {
-	private String _serverIP;
 	private String _serverName;
 	private int _viewerCount;
 	private int _streamerCount;
-	
-	Server(String serverIP, String serverName, int viewerCount, int streamerCount) {
-		this._serverIP = serverIP;
+	private EdgeServerTransferObject _ob;
+	private Calendar _timeAtLastUpdate;
+	private boolean _isActive;
+
+	Server(String serverName, int viewerCount, int streamerCount, EdgeServerTransferObject _ob, Calendar time, boolean isActive) {
 		this._serverName = serverName;
 		this._viewerCount = viewerCount;
 		this._streamerCount = streamerCount;
-	}
-
-	public String getServerIP() {
-		return _serverIP;
-	}
-
-	public void set_serverIP(String serverIP) {
-		this._serverIP = serverIP;
+		this._ob = _ob;
+		this._timeAtLastUpdate = time;
+		this._isActive = isActive;
 	}
 
 	public String getServerName() {
@@ -43,6 +42,30 @@ public class Server {
 
 	public void setStreamerCount(int streamerCount) {
 		this._streamerCount = streamerCount;
+	}
+	
+	public EdgeServerTransferObject getOb() {
+		return _ob;
+	}
+
+	public void setOb(EdgeServerTransferObject _ob) {
+		this._ob = _ob;
+	}
+
+	public Calendar getTimeAtLastUpdate() {
+		return _timeAtLastUpdate;
+	}
+
+	public void setTimeAtLastUpdate(Calendar _timeAtLastUpdate) {
+		this._timeAtLastUpdate = _timeAtLastUpdate;
+	}
+	
+	public boolean isActive() {
+		return _isActive;
+	}
+
+	public void setIsActive(boolean _isActive) {
+		this._isActive = _isActive;
 	}
 
 }
