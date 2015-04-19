@@ -8,7 +8,7 @@ import java.net.*;
 
 public class EdgeTracker {
 	// EDIT STAT FILE LOCATION
-	public static final String STATS_FILE_LOCATION = "http://localhost:455/stat";	
+	public static final String STATS_FILE_LOCATION = "http://localhost:555/stat";	
 	public static final String BRACKETSLASH = "</";
 	public static final String CLIENT = "<client>";
 	public static final String PUBLISHING = "publishing";
@@ -17,7 +17,8 @@ public class EdgeTracker {
 	public static final String ENDSTREAM = "</stream>";
 	public static final String STREAM = "<stream>";
 	public static final String NAME = "<name>";
-	public static final String PAGEURL = "<pageurl>";
+	public static final String SWFURL = "<swfurl>";
+	//public static final String PAGEURL = "<pageurl>";
 	public static final int EMPTYLINE = 0;
 	
 	//for logging
@@ -68,8 +69,8 @@ public class EdgeTracker {
 						tempStream.setStreamkey(Long.parseLong(temp));
 					}
 				}
-				else if (line.contains(PAGEURL)){
-					temp = getString(line, PAGEURL);							
+				else if (line.contains(SWFURL)){
+					temp = getString(line, SWFURL) + "/" + tempStream.getStreamkey();							
 					tempStream.setPageurl(temp);
 				}	
 				else if(line.contains(ENDSTREAM)){
