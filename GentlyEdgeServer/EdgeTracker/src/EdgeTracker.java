@@ -7,7 +7,8 @@ import java.io.*;
 import java.net.*;
 
 public class EdgeTracker {
-	public static final String STATS_FILE_LOCATION = "http://localhost/stat";	
+	// EDIT STAT FILE LOCATION
+	public static final String STATS_FILE_LOCATION = "http://localhost:455/stat";	
 	public static final String BRACKETSLASH = "</";
 	public static final String CLIENT = "<client>";
 	public static final String PUBLISHING = "publishing";
