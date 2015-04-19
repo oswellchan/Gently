@@ -1,3 +1,4 @@
+/*
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
@@ -23,7 +24,7 @@ import static org.junit.Assert.assertEquals;
  *  - statsDownloader(),
  *  - trackStatus()
  */
-
+/*
 public class TestEdgeTracker {
 	private static final String EXTRACTDATA = "extractData";
 	private static final String GETSTRING = "getString";
@@ -244,3 +245,4 @@ public class TestEdgeTracker {
 	}
 	
 }
+*/

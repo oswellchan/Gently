@@ -75,6 +75,8 @@ public class MMSWebRequestProcessor extends RequestProcessor{
 			InternalMemory IM = InternalMemory.getInstance();
 			checkStatusOfEdgeServers(streamerID);
 			sources = IM.getStreamSourcesByID(streamerID);
+			sources = sources.trim();
+			System.out.println(sources);
 		}
 
 		outputStream.writeBytes(sources + "\n");
@@ -142,6 +144,7 @@ public class MMSWebRequestProcessor extends RequestProcessor{
 		
 		if (list != null) {
 			for (String s : list) {
+				System.out.println(s);
 				String domain = extractDomain(s);
 				Integer index = serverToIndexMap.get(domain);
 				

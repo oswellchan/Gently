@@ -15,17 +15,17 @@ import java.util.logging.Logger;
 	
 
 public class EdgeHandler {
-	//public static final String MMSURL = "mediatech-i.comp.nus.edu.sg";
-	//localhost used for testing with MMSStub
-	public static final String MMSURL = "localhost";
-	public static final int PORTNUMBER = 9000;
+	public static final String MMSURL = "mediatech-i.comp.nus.edu.sg";
+	public static final int PORTNUMBER = 9002;
 	public static final int EMPTYLINE = 0;
 	public static final String INIT = "INIT";
-	public static final String EDGESERVERNAME = "PLACEHOLDER NAME";
 	public static final String UPDATE = "UPDATE";
 
 	public static final int SECONDS = 5;
 	
+	// EDIT BELOW
+	public static final String EDGESERVERNAME = "kiangkuang-i.comp.nus.edu.sg";
+		
 	//for logging
 	private final static Logger LOGGER = Logger.getLogger(EdgeHandler.class.getName());
 	

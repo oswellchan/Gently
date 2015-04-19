@@ -1,0 +1,690 @@
+Apr 19, 2015 9:49:52 PM EdgeHandler main
+INFO: Edge Server starting up.
+Apr 19, 2015 9:49:53 PM EdgeHandler$ExtractTask run
+INFO: Sending INIT over to MMS
+Apr 19, 2015 9:49:53 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:49:57 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:50:02 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:50:07 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:50:12 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:50:17 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:50:23 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:50:28 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:50:33 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:50:38 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:50:43 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:50:48 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:50:53 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:50:58 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:51:03 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:51:08 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:51:13 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:51:18 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:51:23 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:51:28 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:51:33 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:51:38 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:51:43 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:51:48 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:51:53 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:51:58 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:52:03 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:52:08 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:52:13 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:52:19 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:52:24 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:52:29 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:52:34 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:52:39 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:52:44 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:52:49 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:52:54 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:52:59 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:53:04 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:53:09 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:53:14 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:53:19 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:53:24 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:53:29 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:53:34 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:53:39 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:53:44 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:53:49 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:53:54 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:53:59 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:54:04 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:54:10 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:54:15 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:54:20 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:54:25 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:54:30 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:54:35 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:54:40 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:54:45 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:54:50 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:54:55 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:55:00 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:55:05 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:55:10 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:55:15 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:55:20 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:55:25 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:55:31 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:55:36 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:55:41 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:55:46 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:55:51 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:55:56 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:56:01 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:56:06 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:56:11 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:56:16 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:56:21 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:56:26 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:56:31 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:56:36 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:56:41 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:56:46 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:56:51 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:56:57 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:57:02 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:57:07 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:57:12 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:57:17 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:57:22 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:57:27 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:57:32 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:57:37 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:57:42 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:57:47 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:57:52 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:57:57 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:58:02 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:58:07 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:58:12 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:58:18 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:58:23 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:58:28 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:58:33 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:58:38 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:58:43 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:58:48 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:58:53 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:58:58 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:59:03 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:59:08 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:59:13 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:59:18 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:59:23 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:59:28 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:59:33 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:59:38 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:59:43 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:59:48 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:59:54 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 9:59:59 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:00:04 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:00:09 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:00:14 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:00:19 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:00:24 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:00:29 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:00:34 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:00:39 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:00:44 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:00:49 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:00:54 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:00:59 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:01:04 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:01:09 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:01:14 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:01:19 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:01:24 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:01:29 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:01:34 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:01:39 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:01:45 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:01:50 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:01:55 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:02:00 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:02:05 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:02:10 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:02:15 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:02:20 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:02:25 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:02:30 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:02:35 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:02:40 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:02:45 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:02:50 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:02:55 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:03:00 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:03:06 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:03:11 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:03:15 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:03:21 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:03:26 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:03:31 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:03:36 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:03:41 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:03:46 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:03:51 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:03:56 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:04:01 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:04:06 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:04:11 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:04:16 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:04:21 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:04:26 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:04:31 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:04:36 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:04:41 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:04:46 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:04:52 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:04:57 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:05:02 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:05:07 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:05:12 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:05:17 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:05:22 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:05:27 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:05:32 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:05:37 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:05:42 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:05:47 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:05:52 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:05:57 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:06:02 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:06:07 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:06:12 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:06:17 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:06:22 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:06:28 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:06:33 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:06:38 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:06:43 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:06:48 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:06:53 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:06:58 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:07:03 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:07:08 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:07:13 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:07:18 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:07:23 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:07:28 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:07:33 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:07:38 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:07:43 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:07:48 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:07:53 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:07:58 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:08:03 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:08:08 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:08:13 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:08:18 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:08:24 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:08:29 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:08:34 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:08:39 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:08:44 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:08:49 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:08:54 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:08:59 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:09:04 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:09:09 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:09:14 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:09:19 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:09:24 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:09:29 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:09:34 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:09:39 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:09:44 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:09:49 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:09:54 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:10:00 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:10:05 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:10:10 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:10:15 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:10:20 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:10:25 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:10:30 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:10:35 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:10:40 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:10:45 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:10:50 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:10:55 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:11:00 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:11:05 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:11:10 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:11:16 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:11:21 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:11:26 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:11:31 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:11:36 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:11:41 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:11:46 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:11:51 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:11:56 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:12:01 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:12:06 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:12:11 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:12:16 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:12:21 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:12:26 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:12:31 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:12:36 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:12:42 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:12:47 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:12:52 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:12:57 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:13:02 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:13:07 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:13:12 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:13:17 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:13:22 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:13:27 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:13:32 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:13:37 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:13:42 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:13:47 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:13:52 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:13:57 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:14:02 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:14:08 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:14:13 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:14:18 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:14:23 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:14:28 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:14:33 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:14:38 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:14:43 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:14:48 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:14:53 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:14:58 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:15:03 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:15:08 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:15:13 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:15:18 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:15:23 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:15:28 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:15:33 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:15:38 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:15:43 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:15:49 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:15:54 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:15:59 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:16:04 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:16:09 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:16:14 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:16:19 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:16:24 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:16:29 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:16:34 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:16:39 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:16:44 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:16:49 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:16:54 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:16:59 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:17:04 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:17:10 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:17:15 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:17:20 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:17:25 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:17:30 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:17:35 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:17:40 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:17:45 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:17:50 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:17:56 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:18:01 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:18:06 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:18:11 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:18:16 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:18:21 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:18:26 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:18:31 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:18:36 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
+Apr 19, 2015 10:18:41 PM EdgeHandler$ExtractTask run
+INFO: EdgeTransferObject sent successfully to MMS.
