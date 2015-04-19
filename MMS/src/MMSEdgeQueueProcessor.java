@@ -14,6 +14,12 @@ import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 
 public class MMSEdgeQueueProcessor implements Runnable {
 	private GUIController controller = GUIController.getInstance();
@@ -23,6 +29,12 @@ public class MMSEdgeQueueProcessor implements Runnable {
 
 	@Override
 	public void run() {
+		try {
+			 Class.forName("com.mysql.jdbc.Driver").newInstance();
+		} catch (Exception e) {
+			_logger.log(Level.SEVERE, e.getMessage(), e);
+		}
+		
 		while (true) {
 			if (!requestQueue.isEmpty()) {
 				EdgeServerTransferObject request = requestQueue.remove(0);
@@ -134,6 +146,23 @@ public class MMSEdgeQueueProcessor implements Runnable {
 		}
 
 		return totalNumViewers;
+	}
+	
+	private void modifyViewerCount(long user, int modify) {
+		try {
+			Connection conn;
+			conn = DriverManager.getConnection(
+					"jdbc:mysql://localhost/gently",
+					"gently", "downthestream");
+
+			String query = "UPDATE `channel` SET `viewers` = `viewers` + "+ modify + 
+					" WHERE `streamkey` = '" + user + "'";
+			Statement stmt = conn.createStatement();
+			stmt.executeQuery(query);
+			
+		} catch (Exception e) {
+			_logger.log(Level.SEVERE, e.getMessage(), e);
+		}
 	}
 
 	private void removeStreamersNoLongerStreaming(ArrayList<Streamer> noLongerStreamingList) {

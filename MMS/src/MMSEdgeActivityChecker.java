@@ -18,7 +18,6 @@ public class MMSEdgeActivityChecker implements Runnable {
 	
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		while (true) {
 			int size = serverList.getSize();
 			Calendar now = Calendar.getInstance();

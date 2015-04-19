@@ -24,6 +24,7 @@ public class MMSWebRequestProcessor extends RequestProcessor{
 	private static final String MSG_STREAMISNULL = "Stream is null";
 	private static final String MSG_SOCKETISNULL = "Socket is null";
 	private static final String MSG_INVALIDINPUT = "Input is invalid.";
+	private static final int EDGERELAYPORT = 9001;
 	private final static Logger _logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 	private final static int MAXDROPPEDFRAMES = 10;
 
@@ -179,9 +180,8 @@ public class MMSWebRequestProcessor extends RequestProcessor{
 			}
 			
 			if (bestServer != null) {
-				int port = 9000;
 				try {
-					sendRelayRequest(leastBurdenedServer, port, bestServer);
+					sendRelayRequest(leastBurdenedServer, EDGERELAYPORT, bestServer, identity);
 				} catch (Exception e) {
 					_logger.log(Level.SEVERE, e.getMessage(), e);
 				}
@@ -189,21 +189,19 @@ public class MMSWebRequestProcessor extends RequestProcessor{
 		}
 	}
 	
-	public void sendRelayRequest(String url, int port, String relay) throws Exception {
+	public void sendRelayRequest(String url, int port, String relay, String identity) throws Exception {
 
 		Socket s = new Socket(url, port);
 		
-		EdgeServerTransferObject edgeTransferObject = new EdgeServerTransferObject();
+		String command = "STARTRELAY$" + identity + "$" + relay;
 		
-		OutputStream os = s.getOutputStream();
-		ObjectOutputStream serverWriter = new ObjectOutputStream(os);
+		OutputStream os= s.getOutputStream();
+		DataOutputStream serverWriter = new DataOutputStream(os); //to write string,otherwise, need towrite byte array
 		
-		serverWriter.writeObject(edgeTransferObject);
+		serverWriter.writeBytes(command +"\n");
 
 		s.close();
 	}
-
-
 
 	public String extractDomain(String url) {
 		String domain = "";
