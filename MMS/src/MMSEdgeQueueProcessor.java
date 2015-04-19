@@ -137,12 +137,15 @@ public class MMSEdgeQueueProcessor implements Runnable {
 					
 				} else {
 					if (s1.getStreamkey() == s2.getStreamkey() && s1.getPageurl().equals(s2.getPageurl())) {
+						modifyViewerCount(s2.getStreamkey(), -s2.getNviewers());
 						match = s2;
 						iterator.remove();
 						break;
 					}
 				}
 			}
+			
+			modifyViewerCount(s1.getStreamkey(), s1.getNviewers());
 
 			if (match == null) {
 				listOfNewStreamers.add(s1);
