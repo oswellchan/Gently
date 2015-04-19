@@ -1,6 +1,9 @@
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -45,6 +48,20 @@ public class Storage {
 			setupPortNumbers(savedState);
 			setupStreamerToStreamSourcesMap(savedState);
 		}
+	}
+	
+	private HashMap<String, Integer> loadServerToIndexMapFromFile(File file){
+		try {
+			FileInputStream fin = new FileInputStream(file);
+			ObjectInputStream ois = new ObjectInputStream(fin);
+			HashMap<String, Integer> serverToIndexMap =  (HashMap<String, Integer>) ois.readObject();
+			ois.close();
+			
+			return serverToIndexMap;
+		} catch (Exception e) {
+			_logger.log(Level.SEVERE, e.getMessage(), e);
+		}
+		return null;
 	}
 
 	private boolean JSONsourceIsNotEmpty(String JSONsource) {

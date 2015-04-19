@@ -3,7 +3,7 @@ import java.util.*;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 
-public class Server {
+public class Server implements java.io.Serializable {
 	private String _serverName;
 	private int _viewerCount;
 	private int _streamerCount;

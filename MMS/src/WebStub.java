@@ -29,7 +29,7 @@ public class WebStub {
 	
 	public static void main(String[] args) {
 		try {
-			String r = sendRequest("Ip hello", "localhost", 9001);
+			String r = sendRequest("1000001 120", "localhost", 9001);
 			System.out.println(r);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

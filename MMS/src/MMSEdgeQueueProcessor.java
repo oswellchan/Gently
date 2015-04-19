@@ -200,39 +200,4 @@ public class MMSEdgeQueueProcessor implements Runnable {
 			}
 		});
 	}
-	
-	public static void printIMState() {
-		InternalMemory IM = InternalMemory.getInstance();
-		ObservableList<Server> obList = IM.getServerList().getList();
-		HashMap<String, Integer> map = IM.getServerToIndexMap();
-		ConcurrentHashMap<String, List<String>> map2 = IM.getStreamerToStreamMap();
-		
-		int i = 0;
-		for (Server s : obList) {
-			i++;
-			System.out.println(i + ". Server: " + s.getServerName());
-		}
-		
-		Set<Entry<String, Integer>> setOfEntries = map.entrySet();
-		
-		i = 0;
-		for (Map.Entry<String, Integer> e : setOfEntries) {
-			i++;
-			System.out.println(i + ". Name: " + e.getKey() + " index: " + e.getValue());
-		}
-		
-		Set<Entry<String, List<String>>> setOfEntries2 = map2.entrySet();
-		
-		i = 0;
-		for (Entry<String, List<String>> e2 : setOfEntries2) {
-			i++;
-			String r = i + ". Name: " + e2.getKey()+ " List: ";
-			for (String l : e2.getValue()) {
-				r += l + ", ";
-			}
-			
-			System.out.println(r);
-		}
-	}
-
 }
