@@ -106,7 +106,7 @@ public class MMSEdgeQueueProcessor implements Runnable {
 
 	private void addNewStreamers(EdgeServerTransferObject edgeTransferObject, Server server, ArrayList<Streamer> newListOfStreamers, ArrayList<Streamer> listOfNewStreamers) {
 		ConcurrentHashMap<String, List<String>> streamerToStreamSourcesMap = IM.getStreamerToStreamMap();
-
+		
 		int totalNumStreamers = newListOfStreamers.size();
 		for (Streamer s : listOfNewStreamers) {
 			List<String> URLs = streamerToStreamSourcesMap.get(s.getStreamkey() + "");
