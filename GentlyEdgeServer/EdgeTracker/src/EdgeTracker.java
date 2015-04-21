@@ -20,8 +20,6 @@ public class EdgeTracker {
 	public static final String ENDSTREAM = "</stream>";
 	public static final String STREAM = "<stream>";
 	public static final String NAME = "<name>";
-	//public static final String SWFURL = "<swfurl>";
-	//public static final String PAGEURL = "<pageurl>";
 	public static final int EMPTYLINE = 0; 
 	
 	//for logging
@@ -32,15 +30,13 @@ public class EdgeTracker {
 		BufferedReader br = null;
 		InputStream is = null;
 	    //Object to be sent to MMS
-	    //EdgeServerTransferObject edgeTransferObject = new EdgeServerTransferObject();
+	    EdgeServerTransferObject edgeTransferObject = new EdgeServerTransferObject();
 	    
 	    br = statsDownloader(is, br);
-	    //Object to be sent to MMS
-	    EdgeServerTransferObject edgeTransferObject = extractData(br);
+	    edgeTransferObject = extractData(br);
 			
 		try {
 			if (br != null) br.close();
-    		//edgeTransferObject.setStreamer(tempArList);
         } catch (IOException ioe) {
         	ioe.printStackTrace();
         	LOGGER.log(Level.SEVERE, ioe.toString());
@@ -63,21 +59,16 @@ public class EdgeTracker {
 				nviewers = isViewerIncrement(line, nviewers);
 				if (line.contains(DROPPED)){
 					temp = getString(line, DROPPED);
-					ndroppedframes += Integer.parseInt("11");
+					ndroppedframes += Integer.parseInt(temp);
 				}
 				if (line.contains(STREAM)){
 					line = br.readLine();
 					if (line.contains(NAME)){
 						temp = getString(line, NAME);							
 						tempStream.setStreamkey(Long.parseLong(temp));
-						System.out.println(LINK + "/" + temp);
 						tempStream.setPageurl(LINK + "/" + temp);
 					}
-				}/*
-				else if (line.contains(SWFURL)){
-					temp = getString(line, SWFURL) + "/" + tempStream.getStreamkey();							
-					tempStream.setPageurl(temp);
-				}*/	
+				}
 				else if(line.contains(ENDSTREAM)){
 					tempStream.setNviewers(nviewers);
 					nviewers = 0;
