@@ -18,13 +18,13 @@ public class MMSEdgeActivityChecker implements Runnable {
 	
 	@Override
 	public void run() {
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		while (true) {
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			int size = serverList.getSize();
 			Calendar now = Calendar.getInstance();
 			for (int i = 0; i < size; i++) {
