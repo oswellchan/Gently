@@ -254,11 +254,5 @@ public class TestEdgeTracker {
 				e.printStackTrace();
 			} 
 		}
-		
-	@Ignore
-	public void testTrackStatus(){
-		EdgeTracker edgeTracker = new EdgeTracker();
-		assertEquals(edgeTracker.trackStatus().getServerName(), "PLACEHOLDER NAME");
-	}
 	
 }
