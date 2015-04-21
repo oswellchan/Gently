@@ -44,7 +44,7 @@
 			$stmt1 = mysqli_prepare($conn, "INSERT INTO `login` (`username`, `password`, `salt`) VALUES (?,?,?)");
 			mysqli_stmt_bind_param($stmt1, 'sss', $_POST['username'], md5($_POST['password'].$salt), $salt);
 				
-			$stmt2 = mysqli_prepare($conn, "INSERT INTO `channel` (`username`, `streamkey`, `name`, `description`) VALUES (?,?,'Untitled Channel', '')");
+			$stmt2 = mysqli_prepare($conn, "INSERT INTO `channel` (`username`, `streamkey`, `name`, `description`, `thumbnail`) VALUES (?,?,'Untitled Channel', '', 'default.jpg')");
 			mysqli_stmt_bind_param($stmt2, 'ss', $_POST['username'], $key);
 				
 			if (mysqli_stmt_execute($stmt1) && mysqli_stmt_execute($stmt2)) {

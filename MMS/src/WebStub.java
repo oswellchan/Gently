@@ -8,7 +8,7 @@ public class WebStub {
 
 	}
 
-	public String sendRequest(String sentence, String url, int port) throws Exception {
+	public static String sendRequest(String sentence, String url, int port) throws Exception {
 
 		Socket s = new Socket(url, port);
 
@@ -25,5 +25,15 @@ public class WebStub {
 		s.close();
 
 		return response;
+	}
+	
+	public static void main(String[] args) {
+		try {
+			String r = sendRequest("1000001 120", "localhost", 9001);
+			System.out.println(r);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

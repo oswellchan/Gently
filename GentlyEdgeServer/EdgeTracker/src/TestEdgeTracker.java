@@ -1,3 +1,4 @@
+
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
@@ -154,7 +155,7 @@ public class TestEdgeTracker {
 		String contains = "";
 		BufferedReader br = new BufferedReader(new StringReader(contains));
 		Object result = makeExtractDataPublic(br);
-		assertEquals(((ArrayList<Streamer>) result).size(), 0);
+		assertEquals(((EdgeServerTransferObject) result).getStreamers().size(), 0);
 	}
 	
 	@Test
@@ -162,7 +163,7 @@ public class TestEdgeTracker {
 		String contains = "</stream>";
 		BufferedReader br = new BufferedReader(new StringReader(contains));
 		Object result = makeExtractDataPublic(br);
-		assertEquals(((ArrayList<Streamer>) result).size(), 1);
+		assertEquals(((EdgeServerTransferObject) result).getStreamers().size(), 1);
 	}
 	
 	@Test
@@ -170,15 +171,32 @@ public class TestEdgeTracker {
 		String contains = "<stream>\n<name>480</name>\n</stream>";
 		BufferedReader br = new BufferedReader(new StringReader(contains));
 		Object result = makeExtractDataPublic(br);
-		assertEquals(((ArrayList<Streamer>) result).get(0).getStreamkey(), 480);
+		assertEquals(((EdgeServerTransferObject) result).getStreamers().get(0).getStreamkey(), 480);
 	}
 	
 	@Test
 	public void testExtractDataBrContainsPageUrl(){
-		String contains = "<pageurl>http://localhost/</pageurl>\n</stream>";
+		String contains = "<stream>\n<name>480</name>\n</stream>";
 		BufferedReader br = new BufferedReader(new StringReader(contains));
 		Object result = makeExtractDataPublic(br);
-		assertEquals(((ArrayList<Streamer>) result).get(0).getPageurl(), "http://localhost/");
+		String expected = EdgeTracker.LINK + "/" + ((EdgeServerTransferObject) result).getStreamers().get(0).getStreamkey();
+		assertEquals(((EdgeServerTransferObject) result).getStreamers().get(0).getPageurl(), expected);
+	}
+	
+	@Test
+	public void testExtractDataDroppedOneFrame(){
+		String contains = "<dropped>1</dropped>";
+		BufferedReader br = new BufferedReader(new StringReader(contains));
+		Object result = makeExtractDataPublic(br);
+		assertEquals(((EdgeServerTransferObject) result).getDroppedFrames(), 1);
+	}
+	
+	@Test
+	public void testExtractDataDroppedZeroFrame(){
+		String contains = "";
+		BufferedReader br = new BufferedReader(new StringReader(contains));
+		Object result = makeExtractDataPublic(br);
+		assertEquals(((EdgeServerTransferObject) result).getDroppedFrames(), 0);
 	}
 	
 	@Ignore
@@ -236,11 +254,5 @@ public class TestEdgeTracker {
 				e.printStackTrace();
 			} 
 		}
-		
-	@Test
-	public void testTrackStatus(){
-		EdgeTracker edgeTracker = new EdgeTracker();
-		assertEquals(edgeTracker.trackStatus().getServerName(), "PLACEHOLDER NAME");
-	}
 	
 }

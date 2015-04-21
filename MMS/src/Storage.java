@@ -1,6 +1,9 @@
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -46,6 +49,20 @@ public class Storage {
 			setupStreamerToStreamSourcesMap(savedState);
 		}
 	}
+	
+	private HashMap<String, Integer> loadServerToIndexMapFromFile(File file){
+		try {
+			FileInputStream fin = new FileInputStream(file);
+			ObjectInputStream ois = new ObjectInputStream(fin);
+			HashMap<String, Integer> serverToIndexMap =  (HashMap<String, Integer>) ois.readObject();
+			ois.close();
+			
+			return serverToIndexMap;
+		} catch (Exception e) {
+			_logger.log(Level.SEVERE, e.getMessage(), e);
+		}
+		return null;
+	}
 
 	private boolean JSONsourceIsNotEmpty(String JSONsource) {
 		return JSONsource != null;
@@ -64,10 +81,10 @@ public class Storage {
 	private void convertJSONtoHashMap(JSONObject streamerMap,
 			String[] arrayOfStreamers) throws JSONException {
 		
-		ConcurrentHashMap<String, ArrayList<String>> streamerToStreamSourcesMap = IM.getStreamerToStreamMap();
+		ConcurrentHashMap<String, List<String>> streamerToStreamSourcesMap = IM.getStreamerToStreamMap();
 
 		for (String streamer : arrayOfStreamers) {
-			ArrayList<String> arrayOfSources = getArrayOfSources(streamerMap, streamer);
+			List<String> arrayOfSources = getArrayOfSources(streamerMap, streamer);
 			streamerToStreamSourcesMap.put(streamer, arrayOfSources);
 		}
 	}
@@ -76,11 +93,11 @@ public class Storage {
 		return arrayOfStreamers != null;
 	}
 
-	private ArrayList<String> getArrayOfSources(JSONObject streamerMap,
+	private List<String> getArrayOfSources(JSONObject streamerMap,
 			String streamer) throws JSONException {
 		
 		JSONArray JSONArrayOfSources = streamerMap.getJSONArray(streamer);
-		ArrayList<String> arrayOfSources = new ArrayList<String>();
+		List<String> arrayOfSources = Collections.synchronizedList(new ArrayList<String>());
 
 		for (int i = 0; i < JSONArrayOfSources.length(); i++) {
 			String source = JSONArrayOfSources.getString(i);
@@ -200,13 +217,13 @@ public class Storage {
 		
 		JSONObject JSONstreamerMap = new JSONObject();
 
-		ConcurrentHashMap<String, ArrayList<String>> streamerToStreamSourcesMap = IM.getStreamerToStreamMap();
-		Set<Map.Entry<String, ArrayList<String>>> setOfEntries = streamerToStreamSourcesMap.entrySet();
+		ConcurrentHashMap<String, List<String>> streamerToStreamSourcesMap = IM.getStreamerToStreamMap();
+		Set<Map.Entry<String, List<String>>> setOfEntries = streamerToStreamSourcesMap.entrySet();
 
-		for (Map.Entry<String, ArrayList<String>> entry : setOfEntries) {
+		for (Map.Entry<String, List<String>> entry : setOfEntries) {
 			JSONArray streamSources = new JSONArray();
 			
-			ArrayList<String> arrayOfSources = entry.getValue();
+			List<String> arrayOfSources = entry.getValue();
 			String streamer = entry.getKey();
 			
 			for (String source : arrayOfSources) {

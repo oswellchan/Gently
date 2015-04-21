@@ -13,7 +13,10 @@ import javafx.scene.text.FontWeight;
 public class ServerListCell extends ListCell<Server>{
 	private final String ICONVIEWER = "\uf1e5";
 	private final String ICONSTREAMER = "\uf21a";
+	private final String ICONCIRCLE = "\uf111";
 	private final String CSS_SERVERLISTPANEL = "serverListPanel";
+	private final String CSS_ACTIVE = "fontawesome20Active";
+	private final String CSS_INACTIVE = "fontawesome20InActive";
 	private final String CSS_FONTSIZE20 = "font20";
 	private final String CSS_FONTAWESOME12 = "fontawesome12";
 	
@@ -56,12 +59,18 @@ public class ServerListCell extends ListCell<Server>{
 	private final int COLUMNSPAN_STREAMERCOUNT = 1;
 	private final int ROWSPAN_STREAMERCOUNT= 1;
 	
+	private final int COLUMNINDEX_ISACTIVE = 5; 
+	private final int ROWINDEX_ISACTIVE = 0;
+	private final int COLUMNSPAN_ISACTIVE = 1;
+	private final int ROWSPAN_ISACTIVE = 2;
+	
 	private GridPane _grid = new GridPane();
 	private Label _iconViewer = new Label();
 	private Label _iconStreamer = new Label();
 	private Label _serverName = new Label();
 	private Label _viewerCount = new Label();
 	private Label _streamerCount = new Label();
+	private Label _iconIsActive = new Label();
 	
 	public ServerListCell() {
 		configureGrid();
@@ -87,6 +96,7 @@ public class ServerListCell extends ListCell<Server>{
 
 		_grid.setHalignment(_iconViewer, HPos.CENTER);
 		_grid.setHalignment(_iconStreamer, HPos.CENTER);
+		_grid.setHalignment(_iconIsActive, HPos.RIGHT);
 		
 		_grid.getStyleClass().add(CSS_SERVERLISTPANEL);
 		//_grid.setGridLinesVisible(true); //for debugging GUI
@@ -117,6 +127,7 @@ public class ServerListCell extends ListCell<Server>{
 		_grid.add(_iconStreamer, COLUMNINDEX_ICONSTREAMER, ROWINDEX_ICONSTREAMER, COLUMNSPAN_ICONSTREAMER, ROWSPAN_ICONSTREAMER);
 		_grid.add(_viewerCount, COLUMNINDEX_VIEWERCOUNT, ROWINDEX_VIEWERCOUNT, COLUMNSPAN_VIEWERCOUNT, ROWSPAN_VIEWERCOUNT);
 		_grid.add(_streamerCount, COLUMNINDEX_STREAMERCOUNT, ROWINDEX_STREAMERCOUNT, COLUMNSPAN_STREAMERCOUNT, ROWSPAN_STREAMERCOUNT);
+		_grid.add(_iconIsActive, COLUMNINDEX_ISACTIVE, ROWINDEX_ISACTIVE, COLUMNSPAN_ISACTIVE, ROWSPAN_ISACTIVE);
 	}
 
 	@Override
@@ -134,18 +145,29 @@ public class ServerListCell extends ListCell<Server>{
 		setServerName(server);
 		setViewerCount(server);
 		setStreamerCount(server);
-		setAllIcons(server);
+		setAllIcons();
 		setText(null);
+		setServerActive(server);
 		setGraphic(_grid);
 	}
 
 	private void setStreamerCount(Server server) {
 		String streamerCount = server.getStreamerCount() + "";
+		
+		if (!server.isActive()) {
+			streamerCount = "0";
+		}
+		
 		_streamerCount.setText(streamerCount);
 	}
 
 	private void setViewerCount(Server server) {
 		String viewerCount = server.getViewerCount() + "";
+		
+		if (!server.isActive()) {
+			viewerCount = "0";
+		}
+		
 		_viewerCount.setText(viewerCount);
 	}
 
@@ -154,8 +176,17 @@ public class ServerListCell extends ListCell<Server>{
 		_serverName.setText(serverName);
 	}
 	
-	private void setAllIcons(Server server) {
+	private void setServerActive(Server server) {
+		if (server.isActive()) {
+			_iconIsActive.getStyleClass().add(CSS_ACTIVE);
+		} else {
+			_iconIsActive.getStyleClass().add(CSS_INACTIVE);
+		}
+	}
+	
+	private void setAllIcons() {
 		_iconViewer.setText(ICONVIEWER);
 		_iconStreamer.setText(ICONSTREAMER);
+		_iconIsActive.setText(ICONCIRCLE);
 	}
 }

@@ -7,18 +7,20 @@ import java.io.*;
 import java.net.*;
 
 public class EdgeTracker {
-	public static final String STATS_FILE_LOCATION = "http://localhost/stat";	
+	// EDIT STAT FILE LOCATION
+	public static final String STATS_FILE_LOCATION = "http://localhost:455/stat";	
+	//EDIT LINK
+	public static final String LINK = "rtmp://kiangkuang-i.comp.nus.edu.sg:1935/live1";
+	
 	public static final String BRACKETSLASH = "</";
-	public static final String EXTRACT = "e";
 	public static final String CLIENT = "<client>";
 	public static final String PUBLISHING = "publishing";
+	public static final String DROPPED = "<dropped>";
 	public static final String ACTIVE = "<active>";
 	public static final String ENDSTREAM = "</stream>";
 	public static final String STREAM = "<stream>";
 	public static final String NAME = "<name>";
-	public static final String PAGEURL = "<pageurl>";
-	public static final String EDGESERVERNAME = "PLACEHOLDER NAME";
-	public static final int EMPTYLINE = 0;
+	public static final int EMPTYLINE = 0; 
 	
 	//for logging
 	private final static Logger LOGGER = Logger.getLogger(EdgeHandler.class.getName());
@@ -31,12 +33,10 @@ public class EdgeTracker {
 	    EdgeServerTransferObject edgeTransferObject = new EdgeServerTransferObject();
 	    
 	    br = statsDownloader(is, br);
-		ArrayList<Streamer> tempArList = extractData(br);
+	    edgeTransferObject = extractData(br);
 			
 		try {
 			if (br != null) br.close();
-    		edgeTransferObject.setServerName(EDGESERVERNAME);
-    		edgeTransferObject.setStreamer(tempArList);
         } catch (IOException ioe) {
         	ioe.printStackTrace();
         	LOGGER.log(Level.SEVERE, ioe.toString());
@@ -44,28 +44,31 @@ public class EdgeTracker {
 		return edgeTransferObject;		
 	}
     
-	private ArrayList<Streamer> extractData(BufferedReader br){
+	private EdgeServerTransferObject extractData(BufferedReader br){
+		EdgeServerTransferObject tempEdgeTransferObject = new EdgeServerTransferObject();
 		ArrayList<Streamer> tempArList = new ArrayList<Streamer>();
 
 		String line = null;
 		String temp = null;
 		int nviewers = 0; 
+		int ndroppedframes = 0;
 		Streamer tempStream = new Streamer();
 		
 		try {
 			while ((line = br.readLine()) != null) {
 				nviewers = isViewerIncrement(line, nviewers);
+				if (line.contains(DROPPED)){
+					temp = getString(line, DROPPED);
+					ndroppedframes += Integer.parseInt(temp);
+				}
 				if (line.contains(STREAM)){
 					line = br.readLine();
 					if (line.contains(NAME)){
 						temp = getString(line, NAME);							
 						tempStream.setStreamkey(Long.parseLong(temp));
+						tempStream.setPageurl(LINK + "/" + temp);
 					}
 				}
-				else if (line.contains(PAGEURL)){
-					temp = getString(line, PAGEURL);							
-					tempStream.setPageurl(temp);
-				}	
 				else if(line.contains(ENDSTREAM)){
 					tempStream.setNviewers(nviewers);
 					nviewers = 0;
@@ -75,13 +78,16 @@ public class EdgeTracker {
 				}
 			}
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.toString());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.toString());
+		} finally {
+			tempEdgeTransferObject.setDroppedFrames(ndroppedframes);
+			tempEdgeTransferObject.setStreamer(tempArList);
 		}
-		return tempArList;
+		return tempEdgeTransferObject;
 	}
 	
 	private static BufferedReader statsDownloader(InputStream is, BufferedReader br) {
