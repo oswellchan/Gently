@@ -58,18 +58,20 @@ final class tcpRequestProcessor implements Runnable{
 
 			//create output stream to write to/send TO CLINET
 			DataOutputStream output = new DataOutputStream(s.getOutputStream());
-
+			System.out.println(input);
 			// keep repeating until an empty line is read.
 				if (input.contains("$")) {
-					String[] parts = input.split("$");
-					if (parts.length == 3) {
+					System.out.println("in-1");
+					String[] parts = input.split("\\$");
+					System.out.println(parts.length);
+					if (parts.length >= 3) {
+						System.out.println("in-2");
 						if (parts[0].equals("STARTRELAY")){
+							System.out.println("in-3");
 							relayStream (parts[1], parts[2]);			
 						}
 					}
 				}
-				input = br.readLine();
-			
 			// close current connection
 			s.close();
 
@@ -81,10 +83,12 @@ final class tcpRequestProcessor implements Runnable{
 
 
 	static void relayStream (String streamKey, String destination) throws IOException {
-		String startStream = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1/" + streamKey;
-		String endStream = destination + "/" + streamKey; 		
-		String[] cmd = {"C:/Users/jiajie/Desktop/nginx_original/ffmpeg/bin/ffmpeg", "-i", startStream, "-vcodec", "flv", "-acodec", "copy", "-s", "1920x1200", "-r", "20", "-f", "flv", endStream};
+		String startStream = "rtmp://kiangkuang-i.comp.nus.edu.sg:1935/live1/" + streamKey;
+		String endStream = "rtmp://" + destination + ":1935/live1/" + streamKey; 	
+		System.out.println(endStream);
+		String[] cmd = {"C:/Users/a0096677/Desktop/nginx_1.7.4_rtmp_1.1.4/ffmpeg/bin/ffmpeg", "-i", startStream, "-vcodec", "flv", "-acodec", "copy", "-s", "1920x1200", "-r", "20", "-f", "flv", endStream};
 		Runtime.getRuntime().exec(cmd);	
+		System.out.println("relayed");
 	}
 
 }
