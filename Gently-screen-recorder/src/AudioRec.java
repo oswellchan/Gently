@@ -161,18 +161,17 @@ public class AudioRec implements Runnable {
 	        if(sz>0) {
 	        	long nanoTs = System.nanoTime()-startTime; 
 	            IBuffer iBuf = IBuffer.make(null,data,0,sz); 
-	            System.out.println(iBuf.toString());
 		        IAudioSamples pSamples = IAudioSamples.make(iBuf, 2,IAudioSamples.Format.FMT_S16);
 		        pSamples.setComplete(true,sz/2,rateInt,2,Format.FMT_S16,  nanoTs / 1000);
 		        
 		        int samplesConsumed = 0;
-		        //System.out.println("pSamples = " + pSamples.getNumSamples());
+		        System.out.println("pSamples = " + pSamples.getNumSamples());
 		        while(samplesConsumed<pSamples.getNumSamples()){
 		        	IPacket packet= IPacket.make(); 
 			        //outAudioCoder.encodeAudio(packet, as, 0);	 
 		        	samplesConsumed += outAudioCoder.encodeAudio(packet, pSamples, samplesConsumed);
 		        	
-		        	//System.out.println("samplesConsumed = " + samplesConsumed);
+		        	System.out.println("samplesConsumed = " + samplesConsumed);
 		        	
 		        	
 			        if (packet.isComplete()) {

@@ -33,23 +33,26 @@ import javax.sound.sampled.TargetDataLine;
 
 public class Recorder implements Runnable{
 
-	private static String url = "rtmp://3283server2-i.comp.nus.edu.sg:1970/live1/123";	  
+	private static String url = "rtmp://3283server2-i.comp.nus.edu.sg:1970/live1/";	  
 	
 	public static boolean recording;
-	public IContainer container;
+	public IContainer containerVideo;
 	
-	public Recorder() {
+	public Recorder(String streamKey) {
+		
+		url = url.concat(streamKey);
+		
 		return;
 	}
 
 	@Override
 	public void run() {
-	       container = IContainer.make();
+	       containerVideo = IContainer.make();
 	       IContainerFormat containerFormat_live = IContainerFormat.make();
 	       containerFormat_live.setOutputFormat("flv", url, null);
-	       container.setInputBufferLength(0);
+	       containerVideo.setInputBufferLength(0);
 	       
-	       int retVal = container.open(url, IContainer.Type.WRITE, containerFormat_live);
+	       int retVal = containerVideo.open(url, IContainer.Type.WRITE, containerFormat_live);
 	   
 	       if (retVal < 0) {
 	           System.err.println("Could not open output container for live stream");
@@ -57,7 +60,7 @@ public class Recorder implements Runnable{
 	       }
 	       
 	       
-	       IStream stream = container.addNewStream(ICodec.ID.CODEC_ID_H264);
+	       IStream stream = containerVideo.addNewStream(ICodec.ID.CODEC_ID_H264);
 	       
 	       IStreamCoder coder = stream.getStreamCoder();
 	       
@@ -114,7 +117,7 @@ public class Recorder implements Runnable{
            
            //VIDEO
 	       coder.open(null, null);
-	       container.writeHeader();
+	       containerVideo.writeHeader();
 	       long firstTimeStamp = System.currentTimeMillis();
 	       int i = 0;
 	       
@@ -167,7 +170,7 @@ public class Recorder implements Runnable{
 	            	  
 		               if (packet.isComplete()) {  
 		            
-		                   container.writePacket(packet);
+		                   containerVideo.writePacket(packet);
 		                   
 		                   i++;
 			               try {
@@ -190,7 +193,7 @@ public class Recorder implements Runnable{
 	           e.printStackTrace();
 	       }
 	       
-	       container.writeTrailer();
+	       containerVideo.writeTrailer();
 	}
 
 
@@ -198,7 +201,7 @@ public class Recorder implements Runnable{
 
 	public void stopRecording() {
 		recording = false;
-		container.close();
+		containerVideo.close();
 		
 		try {
             Thread.sleep(100);
