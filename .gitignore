@@ -30,3 +30,5 @@ MMS/MMSLog.txt
 MMS/MMSLog.txt.1
 MMS/MMSLog.txt.2
 GentlyEdgeServer/EdgeTracker/EdgeServerLog.txt
+MMS/MMSLog.txt.lck
+GentlyEdgeServer/EdgeTracker/EdgeServerLog.txt

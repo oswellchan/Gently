@@ -24,7 +24,7 @@ public class EdgeHandler {
 	public static final int SECONDS = 5;
 	
 	// EDIT BELOW
-	public static final String EDGESERVERNAME = "kiangkuang-i.comp.nus.edu.sg";
+	public static final String EDGESERVERNAME = "mediatech-i.comp.nus.edu.sg";
 		
 	//for logging
 	private final static Logger LOGGER = Logger.getLogger(EdgeHandler.class.getName());
