@@ -36,6 +36,12 @@ public class MMSEdgeQueueProcessor implements Runnable {
 		}
 		
 		while (true) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			if (!requestQueue.isEmpty()) {
 				EdgeServerTransferObject request = requestQueue.remove(0);
 
@@ -138,7 +144,7 @@ public class MMSEdgeQueueProcessor implements Runnable {
 					
 				} else {
 					if (s1.getStreamkey() == s2.getStreamkey() && s1.getPageurl().equals(s2.getPageurl())) {
-						modifyViewerCount(s2.getStreamkey(), -s2.getNviewers());
+						// modifyViewerCount(s2.getStreamkey(), -s2.getNviewers());
 						match = s2;
 						iterator.remove();
 						break;
@@ -146,7 +152,7 @@ public class MMSEdgeQueueProcessor implements Runnable {
 				}
 			}
 			
-			modifyViewerCount(s1.getStreamkey(), s1.getNviewers());
+			// modifyViewerCount(s1.getStreamkey(), s1.getNviewers());
 
 			if (match == null) {
 				listOfNewStreamers.add(s1);

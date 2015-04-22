@@ -129,10 +129,10 @@ public class EdgeStub {
 	
 	public static void main(String[] args) {
 		try {
-			sendRequest("localhost", 9002);
+			//sendRequest("localhost", 9002);
 			sendRequest1("localhost", 9002);
-			sendRequest2("localhost", 9002);
-			sendRequest3("localhost", 9002);
+			//sendRequest2("localhost", 9002);
+			//sendRequest3("localhost", 9002);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
