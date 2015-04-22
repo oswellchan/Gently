@@ -51,11 +51,12 @@ public class MMSEdgeQueueProcessor implements Runnable {
 					Integer index = serverToIndexMap.get(serverName);
 
 					if (index == null) {
-
+						
 					} else {
 						Server server = serverList.getItem(index);
 						updateEdgeStateInIM(request, server);
 						server.setIsActive(true);
+						server.setTimeAtLastUpdate(Calendar.getInstance());
 					}
 
 					serverList.refresh();
