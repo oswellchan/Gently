@@ -10,7 +10,7 @@ public class EdgeTracker {
 	// EDIT STAT FILE LOCATION
 	public static final String STATS_FILE_LOCATION = "http://localhost:455/stat";	
 	//EDIT LINK
-	public static final String LINK = "rtmp://kiangkuang-i.comp.nus.edu.sg:1935/live1";
+	public static final String LINK = "rtmp://mediatech-i.comp.nus.edu.sg:1935/live1";
 	
 	public static final String BRACKETSLASH = "</";
 	public static final String CLIENT = "<client>";
